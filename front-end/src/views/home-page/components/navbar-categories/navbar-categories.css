@@ -1,0 +1,11 @@
+.category-navbar-item {
+    background-color: yellow;
+}
+
+.category-navbar-item--icon {
+    width: 32px;
+}
+
+.category-navbar-item--text{
+    text-decoration: none;
+}

@@ -1,8 +1,11 @@
+import { NavBarCategories } from "views/home-page/components"
 
 export const HomePage = () => {
   return (
     <div className="App">
-      :3
+      <div>
+        <NavBarCategories />
+      </div>
     </div>
   );
 }
