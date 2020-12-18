@@ -4,7 +4,7 @@ import { getCategoriesByID } from "services";
 import { Category } from "models"
 
 
-export const ProductDetail = () => {
+export const CategoryDetail = () => {
 
     const [datosCategoria, setDatosCategoria] = useState<Category | null>(null);
 

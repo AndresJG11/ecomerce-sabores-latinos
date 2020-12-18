@@ -1,0 +1,16 @@
+.carrousel-wraper {
+    width: 90%;
+    margin: auto;
+}
+
+.carrousel-wraper .carrousel-item{
+    width: 100%;
+    padding-top: calc(591.44 / 1127.34 * 100%);
+}
+
+.carrousel-wraper img{
+    max-height: 350px !important;
+    display: none;
+    object-fit: fill;
+}
+

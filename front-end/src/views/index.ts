@@ -1,1 +1,6 @@
 export * from './home-page'
+export * from './category-detail'
+export * from './carrito'
+export * from './contacto'
+export * from './components'
+export * from './nosotros'
