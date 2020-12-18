@@ -1,4 +1,5 @@
 import { NavBarCategories, BannerHomepage } from "views/home-page/components"
+import {CategoriesSlider } from 'views/categories-slider'
 
 export const HomePage = () => {
   return (
@@ -6,7 +7,9 @@ export const HomePage = () => {
       <div>
         <NavBarCategories />
         <BannerHomepage />
-        <h1> :3 </h1>
+        <CategoriesSlider />
+        <CategoriesSlider />
+        
       </div>
     </div>
   );
