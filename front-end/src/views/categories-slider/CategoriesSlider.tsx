@@ -39,7 +39,7 @@ export const CategoriesSlider = () => {
             <div className="nav-slider nav-slider--left" onClick={() => handleSliderScroll("left")}>
                 <img style={{ width: 30 }} id="left" alt="chevron nav" src={ChevronLeft} />
             </div>
-            <div ref={sliderRef} className="d-flex my-4 mb-5 w-100 categories-slider">
+            <div ref={sliderRef} className="d-flex w-100 categories-slider">
                 {getItems()}
             </div>
             <div className="nav-slider nav-slider--right"  onClick={() => handleSliderScroll("right")} >

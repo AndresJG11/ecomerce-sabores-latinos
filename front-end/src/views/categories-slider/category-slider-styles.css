@@ -4,18 +4,23 @@
 
 .categories-slider--wraper{
     position: relative;
-    overflow: hidden;
+    overflow: visible;
     margin: auto;
     width: 75%;
 }
 
+.categories-slider--wraper:hover .nav-slider{
+    opacity: 1;
+}
+
 .categories-slider{
     overflow: hidden;
+    height: 410px;
+    margin-top: 30px;
 }
 
 .nav-slider{
     background-color: #ffffff;
-    position: absolute;
     z-index: 1000!important;
     border-radius: 100%;
     padding: 15px;
@@ -25,12 +30,15 @@
     -webkit-box-shadow: 0px 0px 16px -3px rgba(0,0,0,1);
     -moz-box-shadow: 0px 0px 16px -3px rgba(0,0,0,1);
     box-shadow: 0px 0px 16px -3px rgba(0,0,0,1);
+    position: absolute;
+    opacity: 0;
+    transition: opacity 0.1s linear;
 }
 
 .nav-slider--right{
-    right: 0px;
+    right: -40px;
 }
 
 .nav-slider--left{
-    left: 0px;
+    left: -40px;
 }
