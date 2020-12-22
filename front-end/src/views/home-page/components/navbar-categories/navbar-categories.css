@@ -1,5 +1,14 @@
-.category-navbar-item {
-    /* background-color: yellow; */
+.category-navbar {
+    /* background-color: #2d88ff; */
+    margin: 10px 0px;
+}
+
+.category-navbar-item{
+    border-bottom: 5px solid #f0f0f0 ;
+}
+
+.category-navbar-item:hover{
+    border-bottom: 5px solid #2d88ff ;
 }
 
 .category-navbar-item--icon {
@@ -7,5 +16,6 @@
 }
 
 .category-navbar-item--text{
+    /* color: #ffffff!important; */
     text-decoration: none;
 }

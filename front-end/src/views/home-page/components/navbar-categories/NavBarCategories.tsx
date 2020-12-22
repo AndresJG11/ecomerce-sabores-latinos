@@ -14,10 +14,10 @@ export const NavBarCategories = () => {
     }, []);
 
     return (
-        <div className="category-navbar-item d-flex flex-row justify-content-around">
+        <div className="category-navbar d-flex flex-row justify-content-around">
             {categories?.categories.map((category) =>
             <Link to={`${Routes.detailCategory.replace(':id', category.idCategoria.toString())}` } style={{textDecoration: 'none'}} key={category.idCategoria}>
-                <div className="d-flex flex-column justify-content-center align-items-center btn">
+                <div className="category-navbar-item d-flex flex-column justify-content-center align-items-center btn">
                     <img src={category.icono} alt={`${category.nombre} icon`} className="category-navbar-item--icon" />
                     <p className="category-navbar-item--text" > {category.nombre} </p>
                 </div>
