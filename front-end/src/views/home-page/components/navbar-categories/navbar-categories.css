@@ -5,10 +5,14 @@
 
 .category-navbar-item{
     border-bottom: 5px solid #f0f0f0 ;
+    max-width: 100px;
+    min-width: 100px;
+    overflow: hidden;
 }
 
 .category-navbar-item:hover{
     border-bottom: 5px solid #2d88ff ;
+    background-color: #2d88ff10;
 }
 
 .category-navbar-item--icon {

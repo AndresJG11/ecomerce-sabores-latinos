@@ -1,5 +1,5 @@
 import { useRef } from 'react'
-import { CategoryCard } from "views/category-card"
+import { CategoryCard } from "views/components"
 import ChevronRight from 'assets/icons/chevron-right.svg'
 import ChevronLeft from 'assets/icons/chevron-left.svg'
 import './category-slider-styles.css'
