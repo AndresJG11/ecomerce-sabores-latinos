@@ -1,0 +1,28 @@
+.footer-items
+{
+    border-top: 2px solid red;
+    text-decoration: none;
+    border-radius: 30px;
+    list-style-type: none;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0px;
+    padding: 0px 10%;
+    background-color: #ffffff;
+}
+
+.footer-items li
+{
+    padding: 20px;
+    margin: 10px;
+    cursor: pointer;
+    border-bottom: 1px solid red;
+    border-radius: 10px;
+}
+
+.footer-items li:hover 
+{
+    background-color: #ff000010;
+    font-weight: bold;
+}
