@@ -1,4 +1,4 @@
-import { NavBarCategories, BannerHomepage } from "views/home-page/components"
+import { NavBarCategories, BannerHomepage, CardInfo } from "views/home-page/components"
 import { WrapperCategory } from 'views/components'
 
 export const HomePage = () => {
@@ -28,6 +28,8 @@ export const HomePage = () => {
         <NavBarCategories />
 
         <BannerHomepage />
+
+        <CardInfo />
 
         {getCategories()}
 
