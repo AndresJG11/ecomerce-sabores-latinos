@@ -23,3 +23,9 @@
     /* color: #ffffff!important; */
     text-decoration: none;
 }
+
+@media (max-width: 576px) {
+    .category-navbar{
+        display: none!important;
+    }
+ }
