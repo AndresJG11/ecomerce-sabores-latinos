@@ -1,7 +1,8 @@
 package com.saboreslatinos.core.dto;
 
+import java.util.List;
 
-
+import com.saboreslatinos.core.entity.Producto;
 
 public class ProductoDto {
 
@@ -17,6 +18,18 @@ public class ProductoDto {
 	
 	private int stock;
 	
+	private List<ImagenDto> imagenes;
+	
+	
+	public ProductoDto(Producto producto) {
+		super();
+		this.idProducto = producto.getId();
+		this.descripcion = producto.getDescripcion();
+		this.descuento = producto.getDescuento();
+		this.nombre = producto.getNombre();
+		this.precio = producto.getPrecio();
+		this.stock = producto.getStock();
+	}
 	
 	public ProductoDto(long idProducto, String descripcion, int descuento, String nombre, int precio, int stock) {
 		super();
@@ -75,5 +88,15 @@ public class ProductoDto {
 	public void setDescuento(int descuento) {
 		this.descuento = descuento;
 	}
+
+	public List<ImagenDto> getImagenes() {
+		return imagenes;
+	}
+
+	public void setImagenes(List<ImagenDto> imagenes) {
+		this.imagenes = imagenes;
+	}
+
+	
 	
 }

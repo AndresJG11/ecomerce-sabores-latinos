@@ -16,6 +16,7 @@ import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.dto.ProductoDto;
+import com.saboreslatinos.core.model.CategoriaModel;
 
 
 @NamedNativeQueries({

@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import com.saboreslatinos.core.converter.Converter;
+import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.model.CategoriaModel;
 import com.saboreslatinos.core.repository.CategoriaRepository;
@@ -48,7 +49,7 @@ public class CategoriaService {
 		}
 	}
 	
-	public List<CategoriaModel> obtener(){
+	public List<CategoriaDto> obtener(){
 		return convertidor.convertirListaCategorias(categoriaRepositorio.findAll());
 	}
 	

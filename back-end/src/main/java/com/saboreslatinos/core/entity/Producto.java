@@ -29,6 +29,7 @@ public class Producto implements Serializable {
 	
 	public static final String OBTENER_PRODUCTOS_POR_CATEGORIA = "OBTENER_PRODUCTOS_POR_CATEGORIA";
 	
+	
 	public Producto() {
 		
 		

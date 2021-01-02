@@ -7,12 +7,21 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 
+@NamedQueries({
+
+
+	@NamedQuery(name = Imagen.OBTENER_IMAGENES_POR_PRODUCTO, query = "select i from Imagen i where i.producto.id = :id  ")
+
+})
 @Table(name="imagen")
 @Entity
 public class Imagen {
 	
+	public static final String OBTENER_IMAGENES_POR_PRODUCTO = "OBTENER_IMAGENES_POR_PRODUCTO";
 	
 	public Imagen() {
 		

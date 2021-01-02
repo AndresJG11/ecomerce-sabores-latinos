@@ -26,11 +26,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.dto.ProductoDto;
 import com.saboreslatinos.core.entity.Categoria;
+import com.saboreslatinos.core.entity.Imagen;
+import com.saboreslatinos.core.entity.Producto;
 import com.saboreslatinos.core.model.CategoriaModel;
 import com.saboreslatinos.core.service.CategoriaService;
+import com.saboreslatinos.core.service.ProductoService;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -42,16 +47,22 @@ public class CategoriaController {
 	@Qualifier("categoria_servicio")
 	private CategoriaService categoriaService;
 	
+	@Autowired
+	@Qualifier("producto_servicio")
+	private ProductoService productoService;
+	
+	@Autowired
+	@Qualifier("converter")
+	private Converter convertidor;
+	
 	@PersistenceContext
 	EntityManager entityManager;
 
 	
 	@GetMapping("/home")
 	public ResponseEntity<List<CategoriaDto>> obtenerCategoriasHome() {
-		List<CategoriaDto> categorias = new ArrayList<>();
-		TypedQuery<CategoriaDto> queryCategorias= entityManager.createNamedQuery(Categoria.GET_CATEGORIAS_HOME, CategoriaDto.class);
 		
-		categorias = queryCategorias.getResultList();
+		List<CategoriaDto> categorias = categoriaService.obtener();
 		
 		if(!categorias.isEmpty()) {
 			
@@ -59,19 +70,20 @@ public class CategoriaController {
 				
 				long idCategoria = categoriaDto.getIdCategoria();
 				
-				List<ProductoDto> productos = new ArrayList<>();
-				TypedQuery<ProductoDto> queryProductos= entityManager.createNamedQuery(Categoria.GET_PRODUCTOS_HOME,ProductoDto.class);
-				queryProductos.setParameter(1, idCategoria);
-				productos = queryProductos.getResultList();
-				
+				List<ProductoDto> productos = productoService.obtenerProductoCategoria(idCategoria);
+			
 				if (!productos.isEmpty()) {
 					categoriaDto.setProductos(productos);
+					
+					for (ProductoDto productoDto : productos) {
+						
+						productoDto.setImagenes(productoService.obtenerImagenesProducto(productoDto.getIdProducto()));
+						
+					}
 				}
-				
 			}
 			
 			return  new ResponseEntity<List<CategoriaDto>>(categorias, HttpStatus.ACCEPTED);
-			
 			
 		}else{
 			return  new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -81,16 +93,12 @@ public class CategoriaController {
 	
 	
 	@GetMapping("/categoria")
-	public ResponseEntity<List<CategoriaModel>> obtenerCategorias() {
-		return  new ResponseEntity<List<CategoriaModel>>(categoriaService.obtener(), HttpStatus.ACCEPTED);
+	public ResponseEntity<List<CategoriaDto>> obtenerCategorias() {
+		return  new ResponseEntity<List<CategoriaDto>>(categoriaService.obtener(), HttpStatus.ACCEPTED);
 		
 	}
 	
-	@GetMapping("/categoria/{idCategoria}")
-	public boolean obtenerProductos(@PathVariable("idCategoria") long  id) {
-		return categoriaService.eliminar(id);
-	}
-	
+
 	
 	@PostMapping("/categoria")
 	public boolean agregarCategoria(@RequestParam("file") MultipartFile imagen, @RequestParam("nombre") String nombre) {

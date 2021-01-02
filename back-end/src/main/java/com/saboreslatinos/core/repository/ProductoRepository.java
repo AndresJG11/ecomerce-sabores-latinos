@@ -10,6 +10,8 @@ import com.saboreslatinos.core.entity.Producto;
 @Repository("producto_repository")
 public interface ProductoRepository extends JpaRepository<Producto, Serializable> {
 	
-	public abstract List<Producto> findByNombre(String categoria);
+	public abstract Producto findById(long id);
+
+	
 
 }

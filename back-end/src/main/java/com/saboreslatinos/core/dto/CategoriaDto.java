@@ -2,6 +2,8 @@ package com.saboreslatinos.core.dto;
 
 import java.util.List;
 
+import com.saboreslatinos.core.entity.Categoria;
+
 public class CategoriaDto {
 	
 	private long idCategoria;
@@ -11,6 +13,13 @@ public class CategoriaDto {
 	private String icono;
 	
 	private List<ProductoDto> productos;
+	
+	public CategoriaDto(Categoria categoria) {
+		super();
+		this.idCategoria = categoria.getId();
+		this.nombre = categoria.getNombre();
+		this.icono = categoria.getIcono();
+	}
 
 	public CategoriaDto(long idCategoria, String icono, String nombre) {
 		super();

@@ -1,5 +1,7 @@
 package com.saboreslatinos.core.model;
 
+import java.util.List;
+
 import com.saboreslatinos.core.entity.Categoria;
 
 public class CategoriaModel {
@@ -18,7 +20,7 @@ public class CategoriaModel {
 		super();
 	}
 
-	public CategoriaModel(long id, String nombre, String icono) {
+	public CategoriaModel(long id, String icono,String nombre) {
 		super();
 		this.id = id;
 		this.nombre = nombre;
@@ -30,7 +32,8 @@ public class CategoriaModel {
 	private String nombre;
 	
 	private String icono;
-
+	
+	
 	public long getId() {
 		return id;
 	}
