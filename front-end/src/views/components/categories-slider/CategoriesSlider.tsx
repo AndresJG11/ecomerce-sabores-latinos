@@ -13,9 +13,9 @@ export const CategoriesSlider : FC<any> = () => {
     const handleSliderScroll = (direction: "left" | "right") => {
         const { current } = sliderRef
 
-        const elementWidth = 260
+        const elementWidth = 270
 
-        const elementsOnScreen =  current.clientWidth / elementWidth 
+        const elementsOnScreen =  Math.floor( current.clientWidth / elementWidth )
 
         const scroll = elementWidth * elementsOnScreen
         

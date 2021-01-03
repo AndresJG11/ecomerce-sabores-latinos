@@ -29,6 +29,7 @@ export const BannerHomepage = () => {
                 interval={3000} 
                 prevLabel={""}
                 nextLabel={""}
+                indicators={!window.mobileCheck()}
             >
                 <Carousel.Item>
                     <img
