@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import { getCategories } from "services"
 import { Link, useHistory, useLocation } from 'react-router-dom'
+import SaboresLatinosIcono from 'assets/icons/icono_sabores_latinos.png'
 
 import './navbar-styles.css'
 
@@ -37,7 +38,7 @@ export const NavBar = () => {
         <Navbar expand="lg" className="navbar--yellow">
 
             <Link to={Routes.homePage} className="no-link">
-                <Brand>  Sabores Latinos  </Brand>
+                <Brand> <img src={SaboresLatinosIcono} alt="" style={{width:50}}/> Sabores Latinos  </Brand>
             </Link>
 
             <Navbar.Toggle aria-controls="basic-navbar-nav" />

@@ -1,3 +1,8 @@
+footer
+{
+    overflow: hidden;
+}
+
 .footer-items
 {
     border-top: 2px solid red;
@@ -6,7 +11,7 @@
     list-style-type: none;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: center;
     margin: 0px;
     padding: 0px 10%;
     background-color: #ffffff;
@@ -15,6 +20,7 @@
 
 .contact-icon{
     width: 30px;
+    cursor: pointer;
 }
 
 .footer-items li
@@ -31,7 +37,7 @@
 }
 
 @media (max-width: 576px) {
-    footer{
-        display: none;
+    .footer-items{
+        flex-direction: column;
     }
  }

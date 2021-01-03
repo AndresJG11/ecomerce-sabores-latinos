@@ -4,6 +4,11 @@
     align-items: center;
 }
 
+.info-item--card
+{
+    width: 75%;
+}
+
 .info-item{
     display: flex;
     width: 100%;
@@ -34,16 +39,32 @@
     display: inline-block;
     overflow: hidden;
 }
+.info-carousel
+{
+    display: none;
+}
+.info-carousel .carousel-item h5
+{
+    color: #23a8cc!important;
+}
 
 @media (max-width: 576px) {
-
-    .info-item--step{
+    .info-item--card
+    {
+        width: 90%;
+    }
+    .info-item--step
+    {
         width: 28px;
         line-height: 28px;
     }
-    
-    .info-item span{
+    .info-item span
+    {
         display: none;
+    }
+    .info-carousel
+    {
+        display: block;
     }
  }
 

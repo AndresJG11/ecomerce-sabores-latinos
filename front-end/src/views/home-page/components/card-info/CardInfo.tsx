@@ -1,4 +1,4 @@
-import {Card} from 'react-bootstrap'
+import {Card, Carousel} from 'react-bootstrap'
 import AddShoppingCar from 'assets/icons/add-shopping-car.svg'
 import Search from 'assets/icons/buscar.svg'
 import Buy from 'assets/icons/bolsa-de-la-compra.svg'
@@ -9,7 +9,7 @@ const { Body } = Card;
 
 export const CardInfo = () => {
     return (
-            <Card className="mt-3 w-75 mx-auto">
+            <Card className="info-item--card mt-3 mx-auto">
                 <Body className="row" >
 
                     <div className="col-3">
@@ -61,6 +61,31 @@ export const CardInfo = () => {
                     </div>
                     
                 </Body>
+
+
+                <div className="info-carousel">
+                    <Carousel 
+                        fade={true}
+                        interval={1500} 
+                        prevLabel={""}
+                        nextLabel={""}
+                        controls={false}
+                        indicators={false}
+                    >
+                    <Carousel.Item>
+                        <h5 className="text-center"> 1. Busca Productos </h5>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <h5 className="text-center"> 2. Agrega al carrito </h5>
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <h5 className="text-center"> 3. Concreta la compra </h5>                    
+                    </Carousel.Item>
+                    <Carousel.Item>
+                        <h5 className="text-center"> 4. Recibe tus productos </h5>                    
+                    </Carousel.Item>
+                    </Carousel>
+                </div>
             </Card>
     )
 }

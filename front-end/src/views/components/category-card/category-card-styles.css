@@ -26,3 +26,32 @@
 .tarjeta-producto:hover .tarjeta-producto--precio{
     display: block;
 }
+
+
+@media (max-width: 576px) {
+    .tarjeta-producto .card-title
+    {
+        font-weight: normal;
+        font-size: 1rem;
+    }
+    .tarjeta-producto
+    {
+        width: 100%;
+    }
+    .tarjeta-producto--precio
+    {
+        font-size: 1rem;
+        display: block;
+    }
+    .tarjeta-producto--precio span{
+        font-weight: 500;
+    }
+    .tarjeta-producto--precio img
+    {
+        display: none;
+    }
+    .tarjeta-producto--descripcion
+    {
+        display: none;
+    }
+ }

@@ -24,11 +24,11 @@ export const CategoryCard : FC<CategoryCardProps> = ({image, title, text, price}
                 <Img src={image} variant="top" />
                 <Body>
                     <Title>{title}</Title>
-                    <Text>{text}</Text>
-                <div className="tarjeta-producto--precio">
-                    <span>{price}$ CL</span>
-                    <img style={{width:30}} alt="price tag" src={PriceTag} />
-                </div>
+                    <Text className="tarjeta-producto--descripcion">{text}</Text>
+                    <div className="tarjeta-producto--precio">
+                        <span>{price}$ CL</span>
+                        <img style={{width:30}} alt="price tag" src={PriceTag} />
+                    </div>
                 </Body>
             </Card>
         </Link>

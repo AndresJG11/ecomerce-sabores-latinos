@@ -7,9 +7,11 @@ export const HomePage = () => {
 
     let components = []
 
-    for (let i = 0; i < 4; i++) {
+    const numCategorias = window.mobileCheck() ? 4 : 10; 
+
+    for (let i = 0; i < numCategorias; i++) {
       components.push(
-        <div className="category-item">
+        <div key={i}>
           <WrapperCategory
             title={`Conoce más productos de ${i}`}
           />

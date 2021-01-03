@@ -42,3 +42,29 @@
 .nav-slider--left{
     left: -40px;
 }
+
+@media (max-width: 576px) 
+{
+    .category-item
+    {
+        margin: 0px;
+        width: 45%;
+    }
+    .categories-slider{
+        height: auto;
+        margin-top: 30px;
+
+        display: flex;
+        flex-wrap: nowrap;
+        flex-flow: wrap;
+        justify-content: center;
+    }
+    .categories-slider--wraper
+    {
+        width: 100%;
+    }
+    .nav-slider
+    {
+        display: none;
+    }
+ }
