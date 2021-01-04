@@ -1,7 +1,13 @@
 import { NavBarCategories, BannerHomepage, CardInfo } from "views/home-page/components"
 import { WrapperCategory } from 'views/components'
+import { useEffect } from "react"
+import { useDispatch } from 'react-redux'
+import CategoriasAction from "stores/categorias/categoriasAction"
+
 
 export const HomePage = () => {
+
+  const dispatch = useDispatch()
 
   const getCategories = () => {
 
@@ -22,6 +28,10 @@ export const HomePage = () => {
     return components
 
   }
+
+  useEffect(() => {
+    dispatch( CategoriasAction.requestCategorias() )
+  }, []);
 
   return (
     <div className="App">

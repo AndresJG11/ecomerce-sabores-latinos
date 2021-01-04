@@ -2,7 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Root } from 'root';
 import {BrowserRouter as Router} from 'react-router-dom'
-
+import { Provider } from 'react-redux';
+import rootStore from 'stores/rootStore';
 
 declare global {
   interface Window {
@@ -17,9 +18,14 @@ window.mobileCheck = function() {
   return check;
 };
 
+
+const store = rootStore()
+
 ReactDOM.render(
-    <Router>
-      <Root />
-    </Router>,
+    <Provider store={store}>
+      <Router>
+        <Root />
+      </Router>
+    </Provider>,
   document.getElementById('root')
 );
