@@ -123,11 +123,11 @@ public class CategoriaController {
 				return new ResponseEntity<>("Categoria creada  con exito", HttpStatus.OK);
 			} catch (IOException e) {
 				e.printStackTrace();
-				return false;
+				return new ResponseEntity<>("Ha ocurrido un errro al guardar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 				
 		}else {
-			return false;
+			return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
 		}
 		
 	}
