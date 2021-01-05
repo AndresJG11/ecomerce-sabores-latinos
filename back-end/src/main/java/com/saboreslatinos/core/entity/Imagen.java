@@ -1,5 +1,7 @@
 package com.saboreslatinos.core.entity;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -19,8 +21,13 @@ import javax.persistence.Table;
 })
 @Table(name="imagen")
 @Entity
-public class Imagen {
+public class Imagen implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String OBTENER_IMAGENES_POR_PRODUCTO = "OBTENER_IMAGENES_POR_PRODUCTO";
 	
 	public Imagen() {

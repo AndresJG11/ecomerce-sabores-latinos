@@ -27,6 +27,11 @@ import javax.persistence.Table;
 public class Producto implements Serializable {
 	
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public static final String OBTENER_PRODUCTOS_POR_CATEGORIA = "OBTENER_PRODUCTOS_POR_CATEGORIA";
 	
 	

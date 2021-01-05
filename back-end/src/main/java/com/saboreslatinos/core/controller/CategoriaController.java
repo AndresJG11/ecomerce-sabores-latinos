@@ -1,11 +1,13 @@
 package com.saboreslatinos.core.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -59,7 +61,7 @@ public class CategoriaController {
 	EntityManager entityManager;
 
 	
-	@GetMapping("/home")
+	@GetMapping("/categoria/home")
 	public ResponseEntity<List<CategoriaDto>> obtenerCategoriasHome() {
 		
 		List<CategoriaDto> categorias = categoriaService.obtener();
@@ -86,28 +88,25 @@ public class CategoriaController {
 			return  new ResponseEntity<List<CategoriaDto>>(categorias, HttpStatus.ACCEPTED);
 			
 		}else{
+			
 			return  new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 		}
-		
 	}
 	
 	
 	@GetMapping("/categoria")
 	public ResponseEntity<List<CategoriaDto>> obtenerCategorias() {
 		return  new ResponseEntity<List<CategoriaDto>>(categoriaService.obtener(), HttpStatus.ACCEPTED);
-		
 	}
 	
 
 	
 	@PostMapping("/categoria")
-	public boolean agregarCategoria(@RequestParam("file") MultipartFile imagen, @RequestParam("nombre") String nombre) {
+	public ResponseEntity<String>  agregarCategoria(@RequestParam("file") MultipartFile imagen, @RequestParam("nombre") String nombre) {
 		
 		Categoria categoria = new Categoria();
 		categoria.setNombre(nombre);
 		
-		
-
 		
 		if(!imagen.isEmpty()) {
 			Path directorioImagenes = Paths.get("src//main//resources//static/images");
@@ -121,7 +120,7 @@ public class CategoriaController {
 				Files.write(rutaCompleta, bytesImg);
 				categoria.setIcono(imagen.getOriginalFilename());
 				categoriaService.agregar(categoria);
-				return true;
+				return new ResponseEntity<>("Categoria creada  con exito", HttpStatus.OK);
 			} catch (IOException e) {
 				e.printStackTrace();
 				return false;
@@ -133,9 +132,61 @@ public class CategoriaController {
 		
 	}
 	
-	@PutMapping("/categoria")
-	public boolean actualizarCategoria(@RequestBody @Validated Categoria categoria) {
-		return categoriaService.actualizar(categoria);
+	@PutMapping("/categoria/{id}")
+	public ResponseEntity<String>  actualizarCategoria(@RequestParam("nombre") String nombre,@PathVariable("id") long  id) {
+		Optional<Categoria> categoriaEntidad = categoriaService.obtenerCategoriaPorId(id);
+		
+		if (categoriaEntidad.isPresent()) {
+			Categoria categoriaActualizada = categoriaEntidad.get();
+			categoriaActualizada.setNombre(nombre);
+			categoriaService.actualizar(categoriaActualizada);
+			return new ResponseEntity<>("Categoria actualizada con exito", HttpStatus.OK);
+		}
+		return new ResponseEntity<>("No existe una categoria con el id: "+id, HttpStatus.NOT_FOUND);
+		
+	}
+	
+	
+	@PutMapping("/categoria/imagen/{id}")
+	public ResponseEntity<String>  actualizarImagenCategoria(@RequestParam("file") MultipartFile imagen,@PathVariable("id") long  id) {
+		
+	
+		Optional<Categoria> categoriaEntidad = categoriaService.obtenerCategoriaPorId(id);
+		if (categoriaEntidad.isPresent()) {
+			
+			Categoria categoriaActualizada = categoriaEntidad.get();
+			
+			if(!imagen.isEmpty()) {
+				
+				File imagenAntigua = new File("src//main//resources//static/images//"+categoriaActualizada.getIcono());
+				if(imagenAntigua.exists()) {
+					imagenAntigua.delete();
+				}
+				
+				Path directorioImagenes = Paths.get("src//main//resources//static/images");
+				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
+				
+				byte[] bytesImg;
+				
+				try {
+					bytesImg = imagen.getBytes();
+					Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+imagen.getOriginalFilename());
+					Files.write(rutaCompleta, bytesImg);
+					categoriaActualizada.setIcono(imagen.getOriginalFilename());
+					categoriaService.actualizar(categoriaActualizada);
+					return new ResponseEntity<>("Imagen actualizada con exito", HttpStatus.OK);
+				} catch (IOException e) {
+					e.printStackTrace();
+					return new ResponseEntity<>("Ha ocurrido un errro al guardar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
+				}
+					
+			}else {
+				return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
+			}
+		
+		}
+		return new ResponseEntity<>("No existe una categoria con el id"+id, HttpStatus.NOT_FOUND);
+		
 	}
 	
 	@DeleteMapping("/categoria/{id}")
