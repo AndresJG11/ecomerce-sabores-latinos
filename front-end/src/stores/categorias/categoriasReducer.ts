@@ -2,7 +2,8 @@ import CategoriasAction from "./categoriasAction";
 
 export class CategoriasReducer {
     static initialState = {
-        categorias : []
+        categoriasHome : [],
+        listaCategorias : []
     };
   
     static reducer(state = CategoriasReducer.initialState, action : any) {
@@ -13,10 +14,16 @@ export class CategoriasReducer {
   
       switch (action.type) {
 
-        case CategoriasAction.REQUEST_CATEGORIAS_FINISHED:
+        case CategoriasAction.REQUEST_CATEGORIAS_HOME_FINISHED:
           return {
             ...state,
-            categorias: action.payload,
+            categoriasHome: action.payload,
+          };
+
+        case CategoriasAction.REQUEST_CATEGORIAS_LISTA_FINISHED:
+          return {
+            ...state,
+            listaCategorias: action.payload,
           };
 
         default:

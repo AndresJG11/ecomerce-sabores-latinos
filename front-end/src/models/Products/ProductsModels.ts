@@ -1,29 +1,17 @@
-export interface PrecioProducto {
-    readonly descuento : boolean,
-
-    readonly porcentajeDescuento : number,
-
-    readonly precioActual : number,
-
-    readonly precioPasado : number,
-}
-
-export interface productItem {
+export interface Producto {
         
     readonly idProducto : number,
 
-    readonly imagenes : Array<string>,
+    readonly descripcion : string,
     
-    readonly precio : PrecioProducto,
-    
-    readonly nombre : number,
-    
+    readonly descuento : number,
+
+    readonly nombre : string,
+
+    readonly precio : number,
+
     readonly stock : number,
 
-    readonly descripcion : string, 
-
-    readonly vendidos : number,
-
-    readonly pais : string | null,
-
+    readonly imagenes : Array<string>,
+    
 }

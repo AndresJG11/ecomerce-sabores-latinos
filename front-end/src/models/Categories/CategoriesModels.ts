@@ -1,30 +1,24 @@
-export interface CategoriesListItem {
+import { Producto } from "models/Products/ProductsModels";
+
+export interface Categoria {
     
     readonly idCategoria : number,
 
     readonly nombre : string,
 
-    readonly icono : string
+    readonly icono : string,
+
+    readonly productos : Array<Producto>
 }
 
-export interface CategoriesList {
-
-    readonly categories : Array<CategoriesListItem>,
-
-    readonly codigoError : number,
-
-    readonly mensajeError : string | null,
-
-}
-
-export interface Category {
+export interface CategoriaListItem {
 
     readonly idCategoria : number,
 
     readonly nombre : string,
 
-    readonly codigoError : number,
+    readonly icono : string,
 
-    readonly mensajeError : string | null,
+    readonly productos : null
 
 }

@@ -1,12 +1,11 @@
 import { Routes } from "constantes"
-import { CategoriesList } from "models"
-import { useEffect, useState } from "react"
 import { Nav, Navbar, NavDropdown } from "react-bootstrap"
-import { getCategories } from "services"
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import SaboresLatinosIcono from 'assets/icons/icono_sabores_latinos.png'
 
 import './navbar-styles.css'
+import { CategoriaListItem } from "models"
+import { useSelector } from "react-redux"
 
 const {
     Brand,
@@ -24,15 +23,11 @@ export const NavBar = () => {
         {titulo: 'Carrito', url: Routes.carrito},
     ]
 
-    const [listaCategorias, setListaCategorias] = useState<CategoriesList | null>(null)
+    const listaCategorias : Array<CategoriaListItem> = useSelector((state: any) => state.CategoriasReducer.listaCategorias);
 
     const {push} = useHistory();
 
     const location = useLocation();
-
-    useEffect(() => {
-        setListaCategorias( getCategories()  )
-    }, []);
 
     return (
         <Navbar expand="lg" className="navbar--yellow">
@@ -54,8 +49,19 @@ export const NavBar = () => {
                 )}
                         <NavDropdown title="Categorías" id="basic-nav-dropdown">
                             {
-                                listaCategorias?.categories.map( ({nombre, idCategoria}) => 
-                                    <Item as='span' key={idCategoria}> <Link className="no-link" to={Routes.detailCategory.replace(':id', idCategoria.toString())}>  {nombre} </Link> </Item>  )
+                                listaCategorias && listaCategorias.map( ({nombre, idCategoria} : CategoriaListItem ) => 
+                                    <Item 
+                                        as='span' 
+                                        key={idCategoria}
+                                    > 
+                                        <Link 
+                                            className="no-link" 
+                                            to={Routes.detailCategory.replace(':id', idCategoria.toString())}
+                                        >  
+                                            {nombre} 
+                                        </Link> 
+                                    </Item>  
+                                )
                             }
                         </NavDropdown>
                 </Nav>

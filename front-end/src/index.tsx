@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import { Root } from 'root';
 import {BrowserRouter as Router} from 'react-router-dom'
 import { Provider } from 'react-redux';
-import rootStore from 'stores/rootStore';
+import {rootStore} from 'stores/rootStore';
 
 declare global {
   interface Window {
