@@ -1,6 +1,6 @@
 import CategoriasAction from "./categoriasAction";
 
-export default class CategoriasReducer {
+export class CategoriasReducer {
     static initialState = {
         categorias : []
     };
