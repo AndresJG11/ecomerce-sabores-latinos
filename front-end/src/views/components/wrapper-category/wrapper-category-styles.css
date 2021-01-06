@@ -1,6 +1,6 @@
 .category-title{
-    margin-left: 12%;
-    /* border-bottom: 4px solid #fff705; */
-    display: inline;
+    display: block;
+    margin: 0 10%;
     border-radius: 10px;
+    text-align: center;
 }

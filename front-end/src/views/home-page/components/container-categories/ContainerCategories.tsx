@@ -15,6 +15,7 @@ export const ContainerCategories = () => {
                     <div key={i}>
                         <WrapperCategory
                             title={`Conoce más productos de ${categoria.nombre}`}
+                            productos={categoria.productos}
                         />
                     </div>)
             }

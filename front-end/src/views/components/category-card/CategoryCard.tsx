@@ -9,24 +9,22 @@ import { Routes } from 'constantes'
 interface CategoryCardProps {
 
     readonly image : string, 
-    readonly title : string, 
-    readonly text : string, 
-    readonly price : number, 
+    readonly nombre : string, 
+    readonly precio : number, 
 
 }
 
-const { Img, Title, Body, Text } = Card
+const { Img, Title, Body } = Card
 
-export const CategoryCard : FC<CategoryCardProps> = ({image, title, text, price}) => {
+export const CategoryCard : FC<CategoryCardProps> = ({image, nombre, precio}) => {
     return (
         <Link to={Routes.carrito} className="no-link" >
             <Card className="tarjeta-producto">
                 <Img src={image} variant="top" />
                 <Body>
-                    <Title>{title}</Title>
-                    <Text className="tarjeta-producto--descripcion">{text}</Text>
+                    <Title>{nombre}</Title>
                     <div className="tarjeta-producto--precio">
-                        <span>{price}$ CL</span>
+                        <span>{precio}$ CL</span>
                         <img style={{width:30}} alt="price tag" src={PriceTag} />
                     </div>
                 </Body>

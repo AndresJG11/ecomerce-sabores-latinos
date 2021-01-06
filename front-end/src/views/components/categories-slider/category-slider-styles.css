@@ -14,8 +14,9 @@
 }
 
 .categories-slider{
-    overflow: hidden;
-    height: 410px;
+    overflow-y: visible;
+    overflow-x: hidden;
+    padding: 20px 0px;
     margin-top: 30px;
 }
 
