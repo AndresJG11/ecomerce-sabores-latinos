@@ -4,4 +4,6 @@ export const Routes = {
     nosotros: '/nosotros',
     contacto: '/contacto',
     carrito: '/carrito',
+    admin: '/admin',
+    adminHome: '/admin-home',
 }

@@ -9,10 +9,10 @@
 
 *{
     color: #0b0156!important;
-    font-family: 'Roboto';
 }
 
 body
 {
+    font-family: 'Roboto', Verdana;
     background-color: #f7f7f7;
 }
