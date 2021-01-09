@@ -1,10 +1,10 @@
 
 import React from 'react'
-import { Switch, Route, Redirect } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { Routes } from '../constantes'
 import {
-    HomePage, CategoryDetail, NavBar, Contacto,
-    Nosotros, Carrito, Footer, UserLayout, PageNotFound
+    HomePage, CategoryDetail, Contacto,
+    Nosotros, Carrito, UserLayout,
 } from 'views'
 import { 
     AdminLogin, AdminLadingPage, AdminLayout, 
