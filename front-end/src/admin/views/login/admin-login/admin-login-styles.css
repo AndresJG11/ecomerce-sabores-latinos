@@ -9,7 +9,7 @@
 
 .admin-login--container::before{
     content: '';
-    background-image: url('../../../assets/images/background-admin.jpg');
+    background-image: url('assets/images/background-admin.jpg');
     background-size: cover; 
     filter: grayscale(0.2);
     width: 100%;

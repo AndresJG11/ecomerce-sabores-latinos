@@ -1,0 +1,18 @@
+.admin-sidebar--container
+{
+    background-color: black;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    color: white!important;
+    justify-content: center;
+}
+.admin-sidebar--container a
+{
+    color: white!important;
+}
+
+.admin-sidebar--container a.active
+{
+    background-color: #c38800;
+}
