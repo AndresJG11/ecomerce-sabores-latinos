@@ -1,0 +1,4 @@
+.system-manager--tabs a[aria-selected="false"]
+{
+    background-color: #d4d4d4;
+}

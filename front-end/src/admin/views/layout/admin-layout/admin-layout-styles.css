@@ -24,3 +24,8 @@
     -moz-box-shadow: 0px 0px 31px -6px rgba(0,0,0,0.75);
     box-shadow: 0px 0px 31px -6px rgba(0,0,0,0.75);
 }
+
+.btn-admin--yellow
+{
+    background-color: #ffb200;
+}
