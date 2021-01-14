@@ -2,6 +2,7 @@ package com.saboreslatinos.core.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,6 +17,7 @@ import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ProductoDto;
 import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.entity.Imagen;
+import com.saboreslatinos.core.entity.Producto;
 import com.saboreslatinos.core.model.ProductoModel;
 import com.saboreslatinos.core.repository.ProductoRepository;
 
@@ -35,8 +37,39 @@ public class ProductoService {
 	private Converter convertidor;
 	
 	
+	public boolean agregar(Producto producto) {
+		try {
+			
+			productoRepositorio.save(producto);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public boolean actualizar(Producto producto) {
+		try {
+			
+			productoRepositorio.save(producto);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
+	public Optional<Producto> obtenerProductoPorId(long idProducto){
+		return productoRepositorio.findById(idProducto);
+	}
+	
+	
 	public ProductoDto obtenerProducto(long idCategoria){
-		return new ProductoDto(productoRepositorio.findById(idCategoria));
+		Optional<Producto> producto = productoRepositorio.findById(idCategoria);
+		if (producto.isPresent()) {
+			return new ProductoDto(producto.get());
+		}else {
+			return null;
+		}
+		
 	}
 	
 	public List<ImagenDto> obtenerImagenesProducto(long idProducto) {

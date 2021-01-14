@@ -96,7 +96,7 @@ public class CategoriaController {
 	
 	@GetMapping("/categoria")
 	public ResponseEntity<List<CategoriaDto>> obtenerCategorias() {
-		return  new ResponseEntity<List<CategoriaDto>>(categoriaService.obtener(), HttpStatus.ACCEPTED);
+		return  new ResponseEntity<List<CategoriaDto>>(categoriaService.obtener(), HttpStatus.OK);
 	}
 	
 
