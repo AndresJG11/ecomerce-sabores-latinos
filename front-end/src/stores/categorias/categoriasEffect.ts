@@ -4,7 +4,7 @@ export default class CategoriasEffect {
 
     static async requestCategoriasHome() {
 
-        const response = await fetch(`${apiURL}/v1/home`);
+        const response = await fetch(`${apiURL}/v1/categoria/home`);
 
         const data = await response.json();
 
@@ -22,19 +22,19 @@ export default class CategoriasEffect {
 
     }
 
-    static async requestAgregarCategoria(formData : FormData) {
+    static async requestAgregarCategoria({formData, nombre}:{formData : FormData, nombre : string}) {
 
         const response = await fetch(
-            `${apiURL}/v1/categoria`,
+            `${apiURL}/v1/categoria?nombre=${nombre}`,
             {
                 method: 'POST',
                 body: formData
             }
             );
 
-        const data = await response.json();
+        // const data = await response.json();
 
-        return data;
+        return response;
 
     }
 

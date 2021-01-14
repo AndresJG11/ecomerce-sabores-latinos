@@ -31,9 +31,10 @@ export default class CategoriasAction {
     };
   }
 
-  static requestAgregarCategoria(formData : FormData) {
+  static requestAgregarCategoria(formData : FormData, nombre : string) {
     return async (dispatch: Dispatch, getState: any) => {
-      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_SAVE, CategoriasEffect.requestAgregarCategoria, formData);
+      const args = {formData, nombre}
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_SAVE, CategoriasEffect.requestAgregarCategoria, args);
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_HOME, CategoriasEffect.requestCategoriasHome);
     };
   }

@@ -48,11 +48,10 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
         const formData = new FormData();
 
         if (newFile) {
-            formData.append('nombre', nombre)
-            formData.append('file', newFile)
+            formData.append('file', new Blob([newFile], {type:"application/octet-stream"} ))
 
-            Categoria?.idCategoria ?
-                dispatch(CategoriasAction.requestAgregarCategoria(formData))
+            !Categoria?.idCategoria ?
+                dispatch(CategoriasAction.requestAgregarCategoria(formData, nombre as string))
                 : dispatch(CategoriasAction.requestActualizarCategoria(formData))
 
             handleCancel()
@@ -116,8 +115,7 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
                 <button onClick={() => handleCancel()} className="btn btn-secondary text-white d-block mt-5" type="button">
                     Cancelar
                 </button>
-                {/* Validar actualización, se debe re convertir para volver a subir */}
-                <button className="btn btn-admin--yellow d-block mt-5" type="submit" disabled>
+                <button className="btn btn-admin--yellow d-block mt-5" type="submit">
                     {Categoria?.idCategoria ? `Editar ${Categoria.nombre}` : 'Crear'}
                 </button>
             </div>
