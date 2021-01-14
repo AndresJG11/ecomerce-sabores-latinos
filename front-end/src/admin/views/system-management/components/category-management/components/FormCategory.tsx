@@ -4,22 +4,22 @@ import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import CategoriasAction from 'stores/categorias/categoriasAction';
-import {imagesURL} from 'environments/base'
+import { imagesURL } from 'environments/base'
 
 const ValidationSchema: Record<string, RegisterOptions> = {
     nombre: { required: 'Debes ingresar un nombre a la categoría' },
-    icono: { required: 'Debes subir un icono para la categoría' }
+    icono: { required: false }
 }
 
-interface FormCategoryProps{
+interface FormCategoryProps {
 
-    readonly Categoria ? : Partial<Categoria> | null 
+    readonly Categoria?: Partial<Categoria> | null
 
-    readonly cancelSelect : VoidFunction
+    readonly cancelSelect: VoidFunction
 
 }
 
-export const FormCategory : FC<FormCategoryProps> = ({Categoria, cancelSelect}) => {
+export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect }) => {
 
     const { register, handleSubmit, errors, setValue, clearErrors } = useForm({ mode: 'onBlur' });
 
@@ -28,12 +28,13 @@ export const FormCategory : FC<FormCategoryProps> = ({Categoria, cancelSelect}) 
     const dispatch = useDispatch()
 
     useEffect(() => {
-        
-        setValue('nombre', Categoria?.nombre )
+
+        setValue('nombre', Categoria?.nombre)
+        setNewFile(Categoria?.icono || null)
 
     }, [Categoria, setValue]);
 
-    const handleCancel = () =>{
+    const handleCancel = () => {
         cancelSelect()
         setValue('icono', null)
         setValue('nombre', null)
@@ -41,30 +42,35 @@ export const FormCategory : FC<FormCategoryProps> = ({Categoria, cancelSelect}) 
         clearErrors()
     }
 
-    const onSubmit : SubmitHandler< Record<string, any> > = (data) =>{
-        const {nombre, icono} = data
+    const onSubmit: SubmitHandler<Record<string, any>> = (data) => {
+        const { nombre } = data
 
-        const formData  = new FormData();
+        const formData = new FormData();
 
-        formData.append('nombre', nombre)
-        formData.append('file', icono[0])
+        if (newFile) {
+            formData.append('nombre', nombre)
+            formData.append('file', newFile)
 
-        dispatch(CategoriasAction.requestAgregarCategoria(formData))
+            Categoria?.idCategoria ?
+                dispatch(CategoriasAction.requestAgregarCategoria(formData))
+                : dispatch(CategoriasAction.requestActualizarCategoria(formData))
 
-        handleCancel()
+            handleCancel()
+        }
+
     }
 
-    const onUploadIcon = (event : any) =>{
+    const onUploadIcon = (event: any) => {
 
-        const { target : { files } } = event
+        const { target: { files } } = event
 
-        if(files.length > 0){
-            const fileReader : FileReader  = new FileReader();
-    
+        if (files.length > 0) {
+            const fileReader: FileReader = new FileReader();
+
             fileReader.onload = function () {
                 setNewFile(fileReader.result as string | null)
             }
-    
+
             fileReader.readAsDataURL(files[0]);
         } else {
             setNewFile(null)
@@ -82,7 +88,7 @@ export const FormCategory : FC<FormCategoryProps> = ({Categoria, cancelSelect}) 
                     ref={register(ValidationSchema.nombre)}
                     name="nombre"
                     isInvalid={Boolean(errors.nombre)}
-                    />
+                />
                 {errors.nombre && <FormControl.Feedback type="invalid">{errors.nombre.message}</FormControl.Feedback>}
             </FormGroup>
 
@@ -100,18 +106,19 @@ export const FormCategory : FC<FormCategoryProps> = ({Categoria, cancelSelect}) 
             </FormGroup>
 
             {
-                (Categoria?.icono || !!newFile) && 
-                    <div className="d-flex justify-content-center mt-3">
-                        <img src={ newFile ? newFile : imagesURL+Categoria?.icono  } alt="" style={{width: 50}} />
-                    </div>
+                newFile &&
+                <div className="d-flex justify-content-center mt-3">
+                    <img src={newFile.includes('data:image') ? newFile : imagesURL + newFile} alt="" style={{ width: 50 }} />
+                </div>
             }
 
             <div className="d-flex justify-content-around">
-                <button onClick={() => handleCancel()} className="btn btn-secondary text-white d-block mt-5" type="button"> 
+                <button onClick={() => handleCancel()} className="btn btn-secondary text-white d-block mt-5" type="button">
                     Cancelar
                 </button>
-                <button className="btn btn-admin--yellow d-block mt-5" type="submit"> 
-                    {Categoria?.idCategoria ? `Editar ${Categoria.nombre}` : 'Crear'} 
+                {/* Validar actualización, se debe re convertir para volver a subir */}
+                <button className="btn btn-admin--yellow d-block mt-5" type="submit" disabled>
+                    {Categoria?.idCategoria ? `Editar ${Categoria.nombre}` : 'Crear'}
                 </button>
             </div>
 

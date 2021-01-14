@@ -15,6 +15,9 @@ export default class CategoriasAction {
   
   static REQUEST_CATEGORIAS_DELETE = 'CategoriasAction.REQUEST_CATEGORIAS_DELETE';
   static REQUEST_CATEGORIAS_DELETE_FINISHED = 'CategoriasAction.REQUEST_CATEGORIAS_DELETE_FINISHED';
+  
+  static REQUEST_CATEGORIAS_EDIT = 'CategoriasAction.REQUEST_CATEGORIAS_EDIT';
+  static REQUEST_CATEGORIAS_EDIT_FINISHED = 'CategoriasAction.REQUEST_CATEGORIAS_EDIT_FINISHED';
 
   static requestCategoriasHome() {
     return async (dispatch: Dispatch, getState: any) => {
@@ -31,6 +34,13 @@ export default class CategoriasAction {
   static requestAgregarCategoria(formData : FormData) {
     return async (dispatch: Dispatch, getState: any) => {
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_SAVE, CategoriasEffect.requestAgregarCategoria, formData);
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_HOME, CategoriasEffect.requestCategoriasHome);
+    };
+  }
+
+  static requestActualizarCategoria(formData : FormData) {
+    return async (dispatch: Dispatch, getState: any) => {
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_EDIT, CategoriasEffect.requestActualizarCategoria, formData);
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_HOME, CategoriasEffect.requestCategoriasHome);
     };
   }

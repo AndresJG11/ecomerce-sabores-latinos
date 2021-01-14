@@ -38,6 +38,22 @@ export default class CategoriasEffect {
 
     }
 
+    static async requestActualizarCategoria(formData : FormData) {
+
+        const response = await fetch(
+            `${apiURL}/v1/categoria`,
+            {
+                method: 'PUT',
+                body: formData
+            }
+            );
+
+        const data = await response.json();
+
+        return data;
+
+    }
+
     static async requestEliminarCategoria(id : number) {
 
         const response = await fetch(
