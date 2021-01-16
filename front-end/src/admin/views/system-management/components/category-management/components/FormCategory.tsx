@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from 'react'
+import { FC, useEffect, useState, useRef } from 'react'
 import { Categoria } from "models";
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap'
@@ -23,9 +23,11 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
 
     const { register, handleSubmit, errors, setValue, clearErrors } = useForm({ mode: 'onBlur' });
 
-    const [newFile, setNewFile] = useState<string | null>(null)
+    const [newFile, setNewFile] = useState<string | null | Blob>(null)
 
     const dispatch = useDispatch()
+
+    const imgRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
 
@@ -33,6 +35,21 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
         setNewFile(Categoria?.icono || null)
 
     }, [Categoria, setValue]);
+
+    useEffect(() => {
+        
+        const { current } = imgRef
+
+        if(typeof newFile === 'string' && current){
+            current.src = imagesURL + newFile || ''
+        } else if (newFile && current){
+            const fileReader = new FileReader()
+            fileReader.onload = () =>{
+                current.src = fileReader.result as string
+            }
+            fileReader.readAsDataURL(newFile as Blob)
+        }
+    }, [newFile]);
 
     const handleCancel = () => {
         cancelSelect()
@@ -47,15 +64,25 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
 
         const formData = new FormData();
 
-        if (newFile) {
-            formData.append('file', new Blob([newFile], {type:"application/octet-stream"} ))
+            newFile && formData.append('file', newFile )
 
-            !Categoria?.idCategoria ?
-                dispatch(CategoriasAction.requestAgregarCategoria(formData, nombre as string))
-                : dispatch(CategoriasAction.requestActualizarCategoria(formData))
+            if( Categoria?.idCategoria ){
+                /* Actualizar Categoría */
+
+                dispatch( CategoriasAction.requestActualizarCategoria(nombre, Categoria.idCategoria) )
+
+                typeof newFile !== 'string' &&  
+                    dispatch( CategoriasAction.requestActualizarCategoriaImagen(formData, Categoria.idCategoria) )
+
+            }else{
+                /* Crear Categoría */
+
+                newFile &&
+                    dispatch(CategoriasAction.requestAgregarCategoria(formData, nombre as string))
+            }
 
             handleCancel()
-        }
+        
 
     }
 
@@ -63,17 +90,7 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
 
         const { target: { files } } = event
 
-        if (files.length > 0) {
-            const fileReader: FileReader = new FileReader();
-
-            fileReader.onload = function () {
-                setNewFile(fileReader.result as string | null)
-            }
-
-            fileReader.readAsDataURL(files[0]);
-        } else {
-            setNewFile(null)
-        }
+        setNewFile(files[0])
 
     }
 
@@ -107,7 +124,7 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
             {
                 newFile &&
                 <div className="d-flex justify-content-center mt-3">
-                    <img src={newFile.includes('data:image') ? newFile : imagesURL + newFile} alt="" style={{ width: 50 }} />
+                    <img ref={imgRef} alt="" style={{ width: 50 }} />
                 </div>
             }
 

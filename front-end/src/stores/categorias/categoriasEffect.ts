@@ -32,26 +32,34 @@ export default class CategoriasEffect {
             }
             );
 
-        // const data = await response.json();
+        return response;
+
+    }
+
+    static async requestActualizarCategoria({nombre, id} : {nombre : string, id : number}) {
+
+        const response = await fetch(
+            `${apiURL}/v1/categoria/${id}?nombre=${nombre}`,
+            {
+                method: 'PUT'
+            }
+        );
 
         return response;
 
     }
 
-    static async requestActualizarCategoria(formData : FormData) {
+    static async requestActualizarImagenCategoria({formData, id}:{formData : FormData, id : number}) {
 
         const response = await fetch(
-            `${apiURL}/v1/categoria`,
+            `${apiURL}/v1/categoria/imagen/${id}`,
             {
                 method: 'PUT',
                 body: formData
             }
-            );
+        );
 
-        const data = await response.json();
-
-        return data;
-
+        return response;
     }
 
     static async requestEliminarCategoria(id : number) {
@@ -69,6 +77,6 @@ export default class CategoriasEffect {
         const data = await response.json();
 
         return data;
-
+        
     }
 }
