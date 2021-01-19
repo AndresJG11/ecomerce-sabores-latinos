@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,7 @@ import com.saboreslatinos.core.service.PaisService;
 import com.saboreslatinos.core.service.ProductoService;
 
 
-
+@CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/v1")
 public class ProductoController {
@@ -103,7 +104,7 @@ public class ProductoController {
 	
 	
 	@PutMapping("/producto")
-	public ResponseEntity<String>  actualizarProducto(@RequestBody @Validated Producto producto) {
+	public ResponseEntity<String>  actualizarProducto(@RequestBody Producto producto) {
 		
 		Optional<Producto> productoData =  productoService.obtenerProductoPorId(producto.getId());
 		
