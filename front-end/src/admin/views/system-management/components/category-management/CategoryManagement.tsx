@@ -40,7 +40,7 @@ export const CategoryManagement : FC<{}> = () => {
     }
 
     return (
-        <div className="p-3">
+        <>
             <h5> Administrar Categorías </h5>
             <div className="row w-100">
                 <div className="col-6">
@@ -59,6 +59,6 @@ export const CategoryManagement : FC<{}> = () => {
                     />
                 </div>
             </div>        
-        </div>
+        </>
     )
 }

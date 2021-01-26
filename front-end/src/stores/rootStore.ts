@@ -1,8 +1,8 @@
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
-import {CategoriasReducer} from 'stores'
+import {CategoriasReducer, ProductosReducer} from 'stores'
 
-const reducers = combineReducers({CategoriasReducer: CategoriasReducer.reducer})
+const reducers = combineReducers({CategoriasReducer: CategoriasReducer.reducer, ProductosReducer: ProductosReducer.reducer})
         
 
 

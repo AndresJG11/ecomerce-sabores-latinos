@@ -3,7 +3,7 @@ import { CategoryCard } from "views/components"
 import ChevronRight from 'assets/icons/chevron-right.svg'
 import ChevronLeft from 'assets/icons/chevron-left.svg'
 import './category-slider-styles.css'
-import { Producto } from 'models/Products/ProductsModels'
+import { Producto } from 'models/Products/Product'
 
 export const CategoriesSlider: FC<any> = ({ productos }) => {
 
@@ -57,7 +57,7 @@ export const CategoriesSlider: FC<any> = ({ productos }) => {
                             <CategoryCard
                                 image={'//img-s-msn-com.akamaized.net/tenant/amp/entityid/BB19xtUs?w=300&h=174&q=60&m=6&f=jpg&u=t'}
                                 nombre={nombre}
-                                precio={precio}
+                                precio={precio!}
                             />
                         </div>
                     )

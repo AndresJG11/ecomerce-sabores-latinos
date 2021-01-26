@@ -49,9 +49,9 @@ export const CRUDTable: FC<CRUDTableProps> = ({ listHeader, listRow, action, onE
                                     }
                                 </tr>
                             )
-                        : <tr><td colSpan={listHeader.length} className="text-center p-3">No existen registros</td></tr>
+                        : <tr><td colSpan={action ? listHeader.length + 1 : listHeader.length} className="text-center p-3">No existen registros</td></tr>
 
-                    : <tr><td colSpan={listHeader.length} className="text-center p-3">Cargando datos...</td></tr>
+                    : <tr><td colSpan={action ? listHeader.length + 1 : listHeader.length } className="text-center p-3">Cargando datos...</td></tr>
                 }
             </tbody>
         </Table>

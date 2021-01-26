@@ -1,16 +1,16 @@
 export interface Producto {
         
-    readonly idProducto : number,
+    readonly idProducto : number | null,
 
     readonly descripcion : string,
     
-    readonly descuento : number,
+    readonly descuento : number | null,
 
     readonly nombre : string,
 
-    readonly precio : number,
+    readonly precio : number | null,
 
-    readonly stock : number,
+    readonly stock : number | null,
 
     readonly imagenes : Array<string>,
     

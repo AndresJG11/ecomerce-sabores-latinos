@@ -6,7 +6,7 @@ import './admin-system-management-styles.css'
 
 export const AdminSystemManagement : FC = () => {
 
-    const [key, setKey] = useState<string | null>('categorias');
+    const [key, setKey] = useState<string | null>('productos');
     
     return (
         <Tabs
@@ -16,10 +16,14 @@ export const AdminSystemManagement : FC = () => {
             onSelect={(k) => setKey(k)}
         >
             <Tab eventKey="productos" title="Productos">
-                <ProductManagement />
+                <div className="p-3">
+                    <ProductManagement />
+                </div>
             </Tab>
             <Tab eventKey="categorias" title="Categorías">
-                <CategoryManagement />
+                <div className="p-3">
+                    <CategoryManagement />
+                </div>
             </Tab>
             <Tab eventKey="parametros" title="Parámetros">
                 <ParameterManagement />

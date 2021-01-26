@@ -1,4 +1,4 @@
-import { Producto } from "models/Products/ProductsModels";
+import { Producto } from "models/Products/Product";
 
 export interface Categoria {
     
