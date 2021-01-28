@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,7 +38,7 @@ public class SistemaController {
 		if(sistemaData.isPresent()) {
 			Sistema sistemaActualizado = sistemaData.get();
 			sistemaActualizado.setCorreo(sistema.getCorreo());
-			sistemaActualizado.setDireccion(sistemaActualizado.getDireccion());
+			sistemaActualizado.setDireccion(sistema.getDireccion());
 			sistemaActualizado.setFacebook(sistema.getFacebook());
 			sistemaActualizado.setInstagram(sistema.getInstagram());
 			sistemaActualizado.setTelefono(sistema.getTelefono());
@@ -46,6 +47,21 @@ public class SistemaController {
 			return new ResponseEntity<>("Parametros actualizados correctamente", HttpStatus.OK);
 		}else {
 			return new ResponseEntity<>("No se encontraron parametros", HttpStatus.NOT_FOUND);
+		}
+		
+		
+	}
+	
+	@GetMapping("/sistema")
+	public ResponseEntity<Sistema>  obtenerSistema() {
+		
+		
+		Optional<Sistema> sistemaData = sistemaRepository.findById(1L);
+		if(sistemaData.isPresent()) {
+		
+			return new ResponseEntity<>(sistemaData.get(), HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
 		}
 		
 		
