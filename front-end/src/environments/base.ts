@@ -1,2 +1,2 @@
-export const apiURL = process.env.NODE_ENV === "development" ? 'http://localhost:8080' : 'http://localhost:8080'; 
-export const imagesURL = process.env.NODE_ENV === "development" ? 'http://localhost:8080/images/' : 'http://localhost:8080/images/'; 
+export const apiURL = process.env.NODE_ENV === "development" ? 'http://localhost:8081' : 'http://localhost:8080'; 
+export const imagesURL = process.env.NODE_ENV === "development" ? 'http://localhost:8081/images/' : 'http://localhost:8080/images/'; 

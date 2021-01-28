@@ -26,7 +26,9 @@ export const AdminSystemManagement : FC = () => {
                 </div>
             </Tab>
             <Tab eventKey="parametros" title="Parámetros">
-                <ParameterManagement />
+                <div className="p-3">
+                    <ParameterManagement />
+                </div>
             </Tab>
         </Tabs>
     );

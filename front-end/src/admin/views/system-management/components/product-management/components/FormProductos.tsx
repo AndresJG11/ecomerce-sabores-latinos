@@ -31,7 +31,7 @@ export const FormProductos : FC<{editProducto : Producto, setEditProducto : Func
 
     useEffect(() => {
         dispatch(ProductosAction.requestProductos(Number(idCategoria)))
-    }, [idCategoria]);
+    }, [idCategoria, dispatch]);
 
     const handleGuardar = () =>{
         // Editar Producto
