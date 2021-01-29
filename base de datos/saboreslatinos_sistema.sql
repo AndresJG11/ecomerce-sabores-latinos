@@ -16,29 +16,32 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `imagen`
+-- Table structure for table `sistema`
 --
 
-DROP TABLE IF EXISTS `imagen`;
+DROP TABLE IF EXISTS `sistema`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `imagen` (
-  `id_imagen` bigint NOT NULL,
-  `ruta` varchar(255) DEFAULT NULL,
-  `id_producto` bigint DEFAULT NULL,
-  PRIMARY KEY (`id_imagen`),
-  KEY `FK9dyo71xan9pt3b8gvtlou5n2w` (`id_producto`),
-  CONSTRAINT `FK9dyo71xan9pt3b8gvtlou5n2w` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
+CREATE TABLE `sistema` (
+  `id_parametro` bigint NOT NULL,
+  `correo` varchar(255) DEFAULT NULL,
+  `direccion` varchar(255) DEFAULT NULL,
+  `facebook` varchar(255) DEFAULT NULL,
+  `instagram` varchar(255) DEFAULT NULL,
+  `telefono` varchar(255) DEFAULT NULL,
+  `whatsapp` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_parametro`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `imagen`
+-- Dumping data for table `sistema`
 --
 
-LOCK TABLES `imagen` WRITE;
-/*!40000 ALTER TABLE `imagen` DISABLE KEYS */;
-/*!40000 ALTER TABLE `imagen` ENABLE KEYS */;
+LOCK TABLES `sistema` WRITE;
+/*!40000 ALTER TABLE `sistema` DISABLE KEYS */;
+INSERT INTO `sistema` VALUES (1,'string','direccion','string','string','string','string');
+/*!40000 ALTER TABLE `sistema` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 

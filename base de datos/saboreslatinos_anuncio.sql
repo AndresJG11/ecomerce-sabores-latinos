@@ -16,29 +16,29 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `imagen`
+-- Table structure for table `anuncio`
 --
 
-DROP TABLE IF EXISTS `imagen`;
+DROP TABLE IF EXISTS `anuncio`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!50503 SET character_set_client = utf8mb4 */;
-CREATE TABLE `imagen` (
-  `id_imagen` bigint NOT NULL,
+CREATE TABLE `anuncio` (
+  `id_anuncio` bigint NOT NULL,
+  `enlace` varchar(255) DEFAULT NULL,
   `ruta` varchar(255) DEFAULT NULL,
-  `id_producto` bigint DEFAULT NULL,
-  PRIMARY KEY (`id_imagen`),
-  KEY `FK9dyo71xan9pt3b8gvtlou5n2w` (`id_producto`),
-  CONSTRAINT `FK9dyo71xan9pt3b8gvtlou5n2w` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`)
+  `titulo` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id_anuncio`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `imagen`
+-- Dumping data for table `anuncio`
 --
 
-LOCK TABLES `imagen` WRITE;
-/*!40000 ALTER TABLE `imagen` DISABLE KEYS */;
-/*!40000 ALTER TABLE `imagen` ENABLE KEYS */;
+LOCK TABLES `anuncio` WRITE;
+/*!40000 ALTER TABLE `anuncio` DISABLE KEYS */;
+INSERT INTO `anuncio` VALUES (9,'www.yahoo.com','descarga.jpg','Holaaa');
+/*!40000 ALTER TABLE `anuncio` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -50,4 +50,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2021-01-28 19:14:47
+-- Dump completed on 2021-01-28 19:14:46

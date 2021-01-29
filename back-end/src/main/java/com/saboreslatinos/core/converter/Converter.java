@@ -5,9 +5,11 @@ import java.util.List;
 
 import org.springframework.stereotype.Component;
 
+import com.saboreslatinos.core.dto.AnuncioDto;
 import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ProductoDto;
+import com.saboreslatinos.core.entity.Anuncio;
 import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.entity.Imagen;
 import com.saboreslatinos.core.entity.Producto;
@@ -54,6 +56,17 @@ public List<ProductoDto> convertirListaProductos(List<Producto> productosEntity)
 			imagenesDto.add(new ImagenDto(imagenEntity));
 		}
 		return imagenesDto;
+	}
+	
+	
+	
+	public List<AnuncioDto> convertirListaAnunciosDto(List<Anuncio> anunciosEntity){
+		
+		List<AnuncioDto> anunciosDto= new ArrayList<>();
+		for (Anuncio anuncioEntity : anunciosEntity) {
+			anunciosDto.add(new AnuncioDto(anuncioEntity));
+		}
+		return anunciosDto;
 	}
 	
 	
