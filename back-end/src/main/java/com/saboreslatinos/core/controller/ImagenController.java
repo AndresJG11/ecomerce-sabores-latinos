@@ -81,7 +81,7 @@ public class ImagenController {
 	
 	
 	@DeleteMapping("/imagen/producto/{id}")
-	public boolean eliminarCategoria(@PathVariable("id") long  id) {
+	public boolean eliminarImagen(@PathVariable("id") long  id) {
 		return imagenService.eliminar(id);
 	}
 	
