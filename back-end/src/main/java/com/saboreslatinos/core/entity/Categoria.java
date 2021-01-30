@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
@@ -53,13 +55,18 @@ import com.saboreslatinos.core.dto.ProductoDto;
 				  }
 				  )
 		)
+@NamedQueries({
 
+	@NamedQuery(name = Categoria.GET_CATEGORIAS_PAGINADAS, query = "select c from Categoria c ")
+
+})
 @Table(name="categoria")
 @Entity
 public class Categoria implements Serializable {
 	
 	public static final String GET_CATEGORIAS_HOME = "GET_CATEGORIAS_HOME";
 	public static final String GET_PRODUCTOS_HOME = "GET_PRODUCTOS_HOME";
+	public static final String GET_CATEGORIAS_PAGINADAS = "GET_CATEGORIAS_PAGINADAS";
 	
 	public Categoria() {
 		

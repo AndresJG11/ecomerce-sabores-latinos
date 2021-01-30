@@ -6,12 +6,18 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.Entity;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -29,6 +35,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.dto.ProductoDto;
@@ -95,11 +103,33 @@ public class CategoriaController {
 	
 	
 	@GetMapping("/categoria")
-	public ResponseEntity<List<CategoriaDto>> obtenerCategorias() {
-		return  new ResponseEntity<List<CategoriaDto>>(categoriaService.obtener(), HttpStatus.OK);
+	public ResponseEntity<HashMap<String, Object>> obtenerCategorias(@RequestParam("pageSize") int pageSize,
+			@RequestParam("actualPage") int actualPage) {
+		
+		List<CategoriaDto> listaCategoria = categoriaService.obtener();
+	
+		if (actualPage == 0|| pageSize == 0) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("total", listaCategoria.size());
+			map.put("categorias", listaCategoria);
+		 
+			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+		}else {
+			
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("total", listaCategoria.size());
+			map.put("categorias", 
+					categoriaService.obtenerCategoriasPaginadas(pageSize, actualPage));
+		 
+			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+		}
+		
+		
+		
+		
 	}
 	
-
+	
 	
 	@PostMapping("/categoria")
 	public ResponseEntity<String>  agregarCategoria(@RequestParam("file") MultipartFile imagen, @RequestParam("nombre") String nombre) {
