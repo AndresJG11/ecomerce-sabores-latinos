@@ -13,6 +13,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -58,7 +59,6 @@ public class Producto implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 	
-	
 	@Column(name = "precio")
 	private int precio;
 	
@@ -81,6 +81,9 @@ public class Producto implements Serializable {
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "producto")
 	private List<Imagen> imagenes;
+	
+	@OneToOne(mappedBy = "producto")
+    private DetalleVenta detalleVenta;
 
 	public long getId() {
 		return id;

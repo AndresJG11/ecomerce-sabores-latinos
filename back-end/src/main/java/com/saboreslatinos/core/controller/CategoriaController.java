@@ -103,29 +103,28 @@ public class CategoriaController {
 	
 	
 	@GetMapping("/categoria")
-	public ResponseEntity<HashMap<String, Object>> obtenerCategorias(@RequestParam("pageSize") int pageSize,
-			@RequestParam("actualPage") int actualPage) {
+	public ResponseEntity<HashMap<String, Object>> obtenerCategorias(@RequestParam("pageSize") String pageSize,
+			@RequestParam("actualPage") String actualPage) {
 		
 		List<CategoriaDto> listaCategoria = categoriaService.obtener();
 	
-		if (actualPage == 0|| pageSize == 0) {
+		if (actualPage.equals("null") || pageSize.equals("null")) {
 			HashMap<String, Object> map = new HashMap<>();
-			map.put("total", listaCategoria.size());
+			map.put("paginas", 1);
 			map.put("categorias", listaCategoria);
 		 
 			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
 		}else {
 			
 			HashMap<String, Object> map = new HashMap<>();
-			map.put("total", listaCategoria.size());
+			double paginas =(double) listaCategoria.size()/Integer.parseInt(pageSize);
+			
+			map.put("paginas", Math.round(paginas));
 			map.put("categorias", 
-					categoriaService.obtenerCategoriasPaginadas(pageSize, actualPage));
+					categoriaService.obtenerCategoriasPaginadas(Integer.parseInt(pageSize), Integer.parseInt(actualPage)));
 		 
 			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
 		}
-		
-		
-		
 		
 	}
 	
