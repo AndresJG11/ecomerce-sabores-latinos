@@ -1,0 +1,14 @@
+.paginator-container .sr-only{
+    display: none;
+}
+
+.paginator-container .active .page-link{
+    background-color: #ffb200;
+    color: #ffffff!important;
+    border: #ffffff;
+    font-weight: bold;
+}
+
+.paginator-container .disabled .page-link{
+    background-color: #f0f0f0;
+}

@@ -23,7 +23,7 @@ export const NavBar = () => {
         {titulo: 'Carrito', url: Routes.carrito},
     ]
 
-    const listaCategorias : Array<CategoriaListItem> = useSelector((state: any) => state.CategoriasReducer.listaCategorias);
+    const listaCategorias : CategoriaListItem = useSelector((state: any) => state.CategoriasReducer.listaCategorias);
 
     const {push} = useHistory();
 
@@ -49,7 +49,7 @@ export const NavBar = () => {
                 )}
                         <NavDropdown title="Categorías" id="basic-nav-dropdown">
                             {
-                                listaCategorias && listaCategorias.map( ({nombre, idCategoria} : CategoriaListItem ) => 
+                                listaCategorias?.categorias && listaCategorias.categorias.map( ({nombre, idCategoria} ) => 
                                     <Item 
                                         as='span' 
                                         key={idCategoria}

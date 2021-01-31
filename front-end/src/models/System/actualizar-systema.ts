@@ -1,4 +1,4 @@
-export interface ActualizarSistema {
+export interface Sistema {
 
     readonly correo : string,
 

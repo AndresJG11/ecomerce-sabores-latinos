@@ -1,10 +1,9 @@
 import { apiURL } from "environments/base";
-import { ActualizarSistema } from "models/System";
+import { Sistema } from "models/System";
 
 export class SistemaEffect {
 
-
-    static async requestActualizarProducto( actualizarSistema : ActualizarSistema) {
+    static async requestActualizarSistema( actualizarSistema : Sistema) {
     
         const response = await fetch(`${apiURL}/v1/sistema`,
             {
@@ -19,4 +18,21 @@ export class SistemaEffect {
         return response
 
     }
+
+    static async requestObtenerSistema( ) {
+    
+        const response = await fetch(`${apiURL}/v1/sistema`,
+            {
+                method: 'GET',
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+            }
+        );
+    
+        const data = await response.json()
+
+        return data
+    }
+
 }

@@ -17,9 +17,13 @@ interface FormCategoryProps {
 
     readonly cancelSelect: VoidFunction
 
+    readonly actualPage : number
+
+    readonly pageSize : number
+
 }
 
-export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect }) => {
+export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect, actualPage, pageSize }) => {
 
     const { register, handleSubmit, errors, setValue, clearErrors } = useForm({ mode: 'onBlur' });
 
@@ -69,16 +73,16 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect })
             if( Categoria?.idCategoria ){
                 /* Actualizar Categoría */
 
-                dispatch( CategoriasAction.requestActualizarCategoria(nombre, Categoria.idCategoria) )
+                dispatch( CategoriasAction.requestActualizarCategoria(nombre, Categoria.idCategoria, {actualPage, pageSize}) )
 
                 typeof newFile !== 'string' &&  
-                    dispatch( CategoriasAction.requestActualizarCategoriaImagen(formData, Categoria.idCategoria) )
+                    dispatch( CategoriasAction.requestActualizarCategoriaImagen(formData, Categoria.idCategoria, {actualPage, pageSize}) )
 
             }else{
                 /* Crear Categoría */
 
                 newFile &&
-                    dispatch(CategoriasAction.requestAgregarCategoria(formData, nombre as string))
+                    dispatch(CategoriasAction.requestAgregarCategoria(formData, nombre as string, {actualPage, pageSize}))
             }
 
             handleCancel()

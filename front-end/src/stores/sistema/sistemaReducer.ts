@@ -15,6 +15,9 @@ export class SistemaReducer {
       switch (action.type) {
 
         case SistemaAction.REQUEST_ACTUALIZAR_SISTEMA_FINISHED:
+          return state
+
+        case SistemaAction.REQUEST_OBTENER_SISTEMA_FINISHED:
           return {
             ...state,
             parametrosSistema: action.payload,

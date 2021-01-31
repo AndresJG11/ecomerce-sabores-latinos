@@ -1,34 +1,40 @@
 import {useEffect, FC, useState} from 'react'
 import CategoriasAction from "stores/categorias/categoriasAction"
 import { useDispatch } from 'react-redux'
-import { Categoria as CategoriaType } from "models";
+import { CategoriaListItem, Categoria } from "models";
 import { useSelector } from "react-redux";
 import { CRUDTable } from 'admin/components/crud-table';
 import { getRowsTable } from 'utilities/getRowsTable';
 import { FormCategory } from './components';
+import { Paginator } from 'views';
+
+const listHeader = [ 'ID', 'Nombre' ]
+const rowItems = [ 'idCategoria', 'nombre' ]
 
 export const CategoryManagement : FC<{}> = () => {
 
     const dispatch = useDispatch()
 
-    //TODO: Cambiar para paginación
-    const categorias : Array<CategoriaType> = useSelector((state: any) => state.CategoriasReducer.categoriasHome);
+    const paginacionCategorias : CategoriaListItem = useSelector((state: any) => state.CategoriasReducer.paginacionCategorias);
 
-    const [categoria, setCategoria] = useState<CategoriaType | null>(null)
+    const [categoria, setCategoria] = useState<Categoria | null>(null)
 
-    const listHeader = [ 'ID', 'Nombre' ]
-    const rowItems = [ 'idCategoria', 'nombre' ]
+    const [actualPage, setActualPage] = useState<number>(1);
+
+    const pageSize = 1
+
+    const pagesToShow = 2
 
     useEffect(() => {
-        dispatch(CategoriasAction.requestCategoriasHome())
-    }, [dispatch]);
+        dispatch(CategoriasAction.requestObtenerCategoriasPaginadas({actualPage, pageSize}))
+    }, [dispatch, actualPage]);
     
     
     const onEdit = (event : React.MouseEvent<HTMLButtonElement>) =>{
         
         const { currentTarget : { id } } = event
         
-        setCategoria( categorias[Number(id)] )
+        setCategoria( paginacionCategorias.categorias[Number(id)] )
         
     }
     
@@ -36,7 +42,7 @@ export const CategoryManagement : FC<{}> = () => {
 
         const { currentTarget : { id } } = event
         
-        dispatch(CategoriasAction.requestDeleteCategoria(categorias[Number(id)].idCategoria))        
+        dispatch(CategoriasAction.requestDeleteCategoria(paginacionCategorias.categorias[Number(id)].idCategoria, {actualPage, pageSize}) )        
     }
 
     return (
@@ -47,15 +53,24 @@ export const CategoryManagement : FC<{}> = () => {
                     <FormCategory 
                         Categoria = {categoria}
                         cancelSelect={ () => setCategoria(null) }
+                        actualPage={actualPage}
+                        pageSize={pageSize}
                     />
                 </div>
                 <div className="col-6">
                     <CRUDTable 
                         listHeader={listHeader}
-                        listRow={ getRowsTable(categorias, rowItems) }
+                        listRow={ getRowsTable(paginacionCategorias?.categorias || {}, rowItems) }
                         action={true}
                         onEdit={onEdit}
                         onDelete={onDelete}
+                    />
+                    <Paginator 
+                        setActualPage={setActualPage}
+                        actualPage={actualPage}
+                        totalPages={paginacionCategorias?.paginas || actualPage}
+                        pagesToShow={pagesToShow}
+                        className="justify-content-center"
                     />
                 </div>
             </div>        

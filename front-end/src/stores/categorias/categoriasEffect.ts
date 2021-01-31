@@ -12,9 +12,9 @@ export default class CategoriasEffect {
 
     }
 
-    static async requestCategoriasLista() {
+    static async requestObtenerCategorias({actualPage, pageSize} : {actualPage : number | null, pageSize : number | null}) {
 
-        const response = await fetch(`${apiURL}/v1/categoria`);
+        const response = await fetch(`${apiURL}/v1/categoria?actualPage=${actualPage}&pageSize=${pageSize}`);
 
         const data = await response.json();
 

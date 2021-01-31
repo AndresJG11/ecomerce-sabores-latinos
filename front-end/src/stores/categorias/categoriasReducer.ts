@@ -2,8 +2,9 @@ import CategoriasAction from "./categoriasAction";
 
 export class CategoriasReducer {
     static initialState = {
-        categoriasHome : [],
-        listaCategorias : []
+        categoriasHome : null,
+        paginacionCategorias : null,
+        listaCategorias : null,
     };
   
     static reducer(state = CategoriasReducer.initialState, action : any) {
@@ -24,6 +25,12 @@ export class CategoriasReducer {
           return {
             ...state,
             listaCategorias: action.payload,
+          };
+
+        case CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS_FINISHED:
+          return {
+            ...state,
+            paginacionCategorias: action.payload,
           };
 
         default:

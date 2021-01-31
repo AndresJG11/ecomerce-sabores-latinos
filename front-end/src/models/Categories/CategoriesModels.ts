@@ -13,12 +13,8 @@ export interface Categoria {
 
 export interface CategoriaListItem {
 
-    readonly idCategoria : number,
+    readonly paginas : number,
 
-    readonly nombre : string,
-
-    readonly icono : string,
-
-    readonly productos : null
+    readonly categorias : Array<Categoria>
 
 }

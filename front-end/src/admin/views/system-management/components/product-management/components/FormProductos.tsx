@@ -16,18 +16,24 @@ const initProduct : Producto = {
     stock: null,
     imagenes: [],
 }
-
+//ToDo: Implementar paginación en productos
 export const FormProductos : FC<{editProducto : Producto, setEditProducto : Function}> = ({editProducto, setEditProducto}) => {
 
     const dispatch = useDispatch()
 
-    const categorias: Array<CategoriaListType> = useSelector((state: any) => state.CategoriasReducer.categoriasHome);
+    const listaCategorias: CategoriaListType | null = useSelector((state: any) => state.CategoriasReducer.listaCategorias);
 
     const [idCategoria, setIdCategoria] = useState<number | "">("")
 
+    // eslint-disable-next-line
+    const [actualPage, setActualPage] = useState<number>(1);
+
+    // eslint-disable-next-line
+    const pageSize = 5
+
     useEffect(() => {
-        dispatch(CategoriasAction.requestCategoriasLista())
-    }, [dispatch]);
+        dispatch(CategoriasAction.requestObtenerCategoriasLista())
+    }, [dispatch, actualPage]);
 
     useEffect(() => {
         dispatch(ProductosAction.requestProductos(Number(idCategoria)))
@@ -68,7 +74,7 @@ export const FormProductos : FC<{editProducto : Producto, setEditProducto : Func
                         >
                             <option value="" disabled>Seleccione</option>
                             {
-                                categorias && categorias.map(({ idCategoria, nombre }) =>
+                                listaCategorias?.categorias && listaCategorias.categorias.map(({ idCategoria, nombre }) =>
                                     <option key={idCategoria} value={idCategoria}>{nombre}</option>
                                 )
                             }

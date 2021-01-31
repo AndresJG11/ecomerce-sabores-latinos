@@ -11,7 +11,6 @@ export const HomePage = () => {
 
   useEffect(() => {
     dispatch(CategoriasAction.requestCategoriasHome())
-    dispatch(CategoriasAction.requestCategoriasLista())
   }, [dispatch]);
 
   return (
