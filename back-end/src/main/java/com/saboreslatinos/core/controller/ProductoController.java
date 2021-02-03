@@ -1,9 +1,11 @@
 package com.saboreslatinos.core.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -15,6 +17,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -26,6 +29,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.saboreslatinos.core.converter.Converter;
+import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ProductoDto;
 import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.entity.Imagen;
@@ -130,12 +134,43 @@ public class ProductoController {
 			}else {
 				return new ResponseEntity<>("Algun id provisto no corresponde a una entidad", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
-		}else {
+		}else { 
 			return new ResponseEntity<>("El id del producto es incorrecto ", HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	
 	}
 	
+	
+	@DeleteMapping("/producto/{id}")
+	public ResponseEntity<String>  eliminarProducto(@PathVariable("id") long  id) {
+		
+		Optional<Producto> productoEntity = productoService.obtenerProductoPorId(id);
+		
+		if (productoEntity.isPresent()) {
+			
+			List<ImagenDto> imagenes = productoService.obtenerImagenesProducto(id);
+			
+			for (ImagenDto imagenDto : imagenes) {
+				
+				File imagenData = new File("src//main//resources//static/images//"+imagenDto.getImagen());
+				if(imagenData.exists()) {
+					imagenData.delete();
+				}
+			}
+			
+			if(productoService.eliminar(id)) {
+				return new ResponseEntity<>("Producto eliminado con exito", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("No se pudo eliminar el produco", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+		}else {
+			return new ResponseEntity<>("El producto con el id "+id+" no existe", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
+		
+		
+	}
 	
 	
 	

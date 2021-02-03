@@ -141,7 +141,8 @@ public class AnuncioController {
 	
 	
 	@GetMapping("/anuncio")
-	public ResponseEntity<List<AnuncioDto>> obtenerCategorias() {
+	public ResponseEntity<List<AnuncioDto>> obtenerCategorias(@RequestParam("pageSize") String pageSize,
+			@RequestParam("actualPage") String actualPage) {
 		return  new ResponseEntity<List<AnuncioDto>>(anuncioService.obtener(), HttpStatus.OK);
 	}
 

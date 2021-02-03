@@ -57,6 +57,15 @@ public class ProductoService {
 		}
 	}
 	
+	public boolean eliminar(long id) {
+		try {
+			productoRepositorio.deleteById(id);
+			return true;
+		} catch (Exception e) {
+			return false;
+		}
+	}
+	
 	public Optional<Producto> obtenerProductoPorId(long idProducto){
 		return productoRepositorio.findById(idProducto);
 	}

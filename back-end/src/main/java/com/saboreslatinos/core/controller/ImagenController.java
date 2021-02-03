@@ -1,5 +1,6 @@
 package com.saboreslatinos.core.controller;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
@@ -81,8 +82,30 @@ public class ImagenController {
 	
 	
 	@DeleteMapping("/imagen/producto/{id}")
-	public boolean eliminarImagen(@PathVariable("id") long  id) {
-		return imagenService.eliminar(id);
+	public ResponseEntity<String>  eliminarImagen(@PathVariable("id") long  id) {
+		
+		
+		Optional<Imagen> imagenEntity = imagenService.obtenerImagenPorId(id);
+		
+		if (imagenEntity.isPresent()) {
+			
+			File imagenData = new File("src//main//resources//static/images//"+imagenEntity.get().getRuta());
+			if(imagenData.exists()) {
+				imagenData.delete();
+			}
+			
+			if (imagenService.eliminar(id)) {
+				
+				return new ResponseEntity<>("Imagen elimina con exito", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("No se pudo eliminar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+		}else {
+			return new ResponseEntity<>("La imagen con el id "+id+" no existe", HttpStatus.NO_CONTENT);
+			
+		}
+ 		
 	}
 	
 	

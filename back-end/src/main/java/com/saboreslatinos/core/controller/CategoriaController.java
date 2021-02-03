@@ -219,8 +219,26 @@ public class CategoriaController {
 	}
 	
 	@DeleteMapping("/categoria/{id}")
-	public boolean eliminarCategoria(@PathVariable("id") long  id) {
-		return categoriaService.eliminar(id);
+	public ResponseEntity<String>  eliminarCategoria(@PathVariable("id") long  id) {
+		
+		Optional<Categoria> categoriaEntity = categoriaService.obtenerCategoriaPorId(id);
+		if (categoriaEntity.isPresent()) {
+			
+			File imagenAntigua = new File("src//main//resources//static/images//"+categoriaEntity.get().getIcono());
+			if(imagenAntigua.exists()) {
+				imagenAntigua.delete();
+			}
+			
+			if(categoriaService.eliminar(id)) {
+				return new ResponseEntity<>("Categoria elimina con exito", HttpStatus.OK);
+			}else {
+				return new ResponseEntity<>("No se pudo eliminar la categoria", HttpStatus.INTERNAL_SERVER_ERROR);
+			}
+			
+		}else {
+			return new ResponseEntity<>("La categoria con el id"+id+" no existe", HttpStatus.NO_CONTENT);
+		}
+		
 	}
 	
 	

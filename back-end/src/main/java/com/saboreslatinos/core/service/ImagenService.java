@@ -1,9 +1,12 @@
 package com.saboreslatinos.core.service;
 
+import java.util.Optional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.entity.Imagen;
 import com.saboreslatinos.core.repository.ImagenRepository;
 
@@ -35,4 +38,11 @@ public class ImagenService {
 			return false;
 		}
 	}
+	
+	public Optional<Imagen> obtenerImagenPorId(long idImagen) {
+		return imagenRepositorio.findById(idImagen);
+	}
+	
+	
+	
 }
