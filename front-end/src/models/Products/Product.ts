@@ -12,6 +12,6 @@ export interface Producto {
 
     readonly stock : number | null,
 
-    readonly imagenes : Array<string>,
+    readonly imagenes : Array<{ idImagen: number, imagen : string}>
     
 }

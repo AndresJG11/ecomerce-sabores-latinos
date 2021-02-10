@@ -1,10 +1,9 @@
 import { FC } from 'react'
 import { Card } from 'react-bootstrap'
 import PriceTag from 'assets/icons/price-tag.svg'
-
-import './category-card-styles.css'
 import { Link } from 'react-router-dom'
 import { Routes } from 'constantes'
+import './category-card-styles.css'
 
 interface CategoryCardProps {
 
@@ -20,7 +19,7 @@ export const CategoryCard : FC<CategoryCardProps> = ({image, nombre, precio}) =>
     return (
         <Link to={Routes.carrito} className="no-link" >
             <Card className="tarjeta-producto">
-                <Img src={image} variant="top" />
+                <Img src={image} variant="top" style={{width: '250px'}} />
                 <Body>
                     <Title>{nombre}</Title>
                     <div className="tarjeta-producto--precio">

@@ -1,26 +1,13 @@
 .tarjeta-producto{
-    width: 300px;
+    width: fit-content;
 }
 
 .tarjeta-producto .card-title{
-    /* height: 50px; */
     overflow: hidden;
     text-overflow: ellipsis;
     display: -webkit-box;
     -webkit-line-clamp: 3;
-    -webkit-box-orient: vertical;
-    /* white-space: nowrap; */
-    
-}
-
-.tarjeta-producto .card-body{
-    /* height: 200px; */
-    /* overflow-y: scroll; */
-}
-
-.tarjeta-producto--precio{
-    /* display: none; */
-    /* visibility: hidden; */
+    -webkit-box-orient: vertical;    
 }
 
 .tarjeta-producto--precio img{
@@ -41,7 +28,6 @@
 }
 
 .tarjeta-producto:hover .tarjeta-producto--precio{
-    /* display: block; */
     visibility: visible;
 }
 

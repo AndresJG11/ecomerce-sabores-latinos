@@ -1,1 +1,2 @@
-export * from './FormProductos'
+export * from './form-productos'
+export * from './crud-imagenes'

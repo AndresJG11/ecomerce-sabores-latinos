@@ -2,7 +2,7 @@ import {Dispatch} from 'redux'
 
 export default class ActionUtility {
 
-    static createAction(type : string | number, payload = undefined, error = false, meta = null) {
+    static createAction(type : string | number, payload : any = undefined, error = false, meta = null) {
       return { type, payload, error, meta };
     }
 

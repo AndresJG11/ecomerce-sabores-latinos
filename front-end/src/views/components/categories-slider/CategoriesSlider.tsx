@@ -2,11 +2,12 @@ import { useRef, useState, FC, useLayoutEffect } from 'react'
 import { CategoryCard } from "views/components"
 import ChevronRight from 'assets/icons/chevron-right.svg'
 import ChevronLeft from 'assets/icons/chevron-left.svg'
-import './category-slider-styles.css'
 import { Producto } from 'models/Products/Product'
+import { imagesURL } from 'environments/base'
+import './category-slider-styles.css'
 
-export const CategoriesSlider: FC<any> = ({ productos }) => {
-
+export const CategoriesSlider: FC<{productos : Array<Producto>}> = ({ productos }) => {
+    
     const sliderRef = useRef<any>()
 
     const [chevrons, setChevrons] = useState<any>({ leftVisibility: 'd-none', rightVisibility: 'd-none' })
@@ -43,7 +44,8 @@ export const CategoriesSlider: FC<any> = ({ productos }) => {
 
         setChevrons(chev)
 
-    }, [productos?.length, chevrons]);
+        // eslint-disable-next-line 
+    }, [productos]);
 
     return (
         <div className="categories-slider--wraper">
@@ -52,10 +54,10 @@ export const CategoriesSlider: FC<any> = ({ productos }) => {
             </div>
             <div ref={sliderRef} onScroll={handleScroll} className="d-flex w-100 categories-slider">
                 {
-                    productos && productos.map(({ precio, nombre }: Producto, i: number) =>
+                    productos && productos.map(({ precio, nombre, imagenes }: Producto, i: number) =>
                         <div className="category-item" key={i} >
                             <CategoryCard
-                                image={'//img-s-msn-com.akamaized.net/tenant/amp/entityid/BB19xtUs?w=300&h=174&q=60&m=6&f=jpg&u=t'}
+                                image={ imagenes?.length > 0 ? imagesURL + imagenes[0].imagen : '//img-s-msn-com.akamaized.net/tenant/amp/entityid/BB19xtUs?w=300&h=174&q=60&m=6&f=jpg&u=t'}
                                 nombre={nombre}
                                 precio={precio!}
                             />
