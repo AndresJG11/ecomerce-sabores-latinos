@@ -1,0 +1,7 @@
+.tabla-banner-texto{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: inline-block;
+    max-width: 10rem;
+}

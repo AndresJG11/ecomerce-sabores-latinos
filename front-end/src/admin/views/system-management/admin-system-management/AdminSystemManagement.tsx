@@ -12,7 +12,7 @@ export const AdminSystemManagement : FC = () => {
         <Tabs
             id="controlled-tab-example"
             activeKey={key}
-            className="system-manager--tabs"
+            className="admin-manager--tabs"
             onSelect={(k) => setKey(k)}
         >
             <Tab eventKey="productos" title="Productos">

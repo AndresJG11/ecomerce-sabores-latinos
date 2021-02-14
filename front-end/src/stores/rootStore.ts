@@ -1,6 +1,6 @@
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
-import {CategoriasReducer, ProductosReducer} from 'stores'
+import {CategoriasReducer, ProductosReducer, AnuncioReducer} from 'stores'
 import { SistemaReducer } from './sistema'
 
 const reducers = combineReducers(
@@ -8,6 +8,7 @@ const reducers = combineReducers(
         CategoriasReducer: CategoriasReducer.reducer, 
         ProductosReducer: ProductosReducer.reducer,
         SistemaReducer: SistemaReducer.reducer,
+        AnuncioReducer: AnuncioReducer.reducer
     })
     
 export const rootStore = () => {

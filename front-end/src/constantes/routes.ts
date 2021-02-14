@@ -11,4 +11,5 @@ export const Routes = {
     adminCustomerManagement: '/admin/customer-management',
     adminOrdersManagement: '/admin/orders-management',
     adminSystemManagement: '/admin/system-management',
+    adminPageManagement: '/admin/page-management',
 }

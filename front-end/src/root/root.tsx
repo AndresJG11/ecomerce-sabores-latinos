@@ -9,7 +9,7 @@ import {
 import { 
     AdminLogin, AdminLadingPage, AdminLayout, 
     SalesReport, AdminCustomerManagement, OrdersManagement, 
-    AdminSystemManagement } from 'admin'
+    AdminSystemManagement, AdminPageManagement } from 'admin'
 
 import 'assets/styles/global.css'
 import 'fonts.css'
@@ -27,6 +27,7 @@ export const Root = () => {
                         <Route exact path={Routes.adminCustomerManagement} component={AdminCustomerManagement} />
                         <Route exact path={Routes.adminOrdersManagement} component={OrdersManagement} />
                         <Route exact path={Routes.adminSystemManagement} component={AdminSystemManagement} />
+                        <Route exact path={Routes.adminPageManagement} component={AdminPageManagement} />
                     </AdminLayout>
 
                 } />
