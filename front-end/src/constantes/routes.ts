@@ -2,6 +2,7 @@ export const Routes = {
     homePage: '/',
     pageNotFound: '/pagina-no-encontrada',
     detailCategory: '/categoria/:id',
+    detailProduct: '/detalle-producto/:idCategory/:idProduct',
     nosotros: '/nosotros',
     contacto: '/contacto',
     carrito: '/carrito',

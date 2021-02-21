@@ -14,7 +14,6 @@ interface CRUDImagenesProps {
 
 }
 
-//ToDo: Administrar imagenes
 export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, eliminarImagen }) => {
 
     const [selected, setSelected] = useState<number>(0);
@@ -36,7 +35,6 @@ export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, e
             <div className="col-3">
                 <ul className="imagenes-lista" style={{height: listHeight}}>
                     {
-                        imagenes && imagenes.length > 0 &&
                         <li className="mb-0">
                             <label>
                                 <input type="file" id="file" style={{ display: 'none' }} onChange={agregarImagen} accept="image/*" />

@@ -1,25 +1,32 @@
 import { imagesURL } from 'environments/base';
-import { FC, useState } from 'react'
+import { FC, useState, useRef, useLayoutEffect } from 'react'
 import './product-images-styles.css'
 
 interface ProductImagesProps {
     readonly imagenes: Array<string> | null
 }
 
-// const imagenes = [
-//     "https://www.banderasvdk.com/blog/wp-content/uploads/Bandera-Suiza.jpg",
-//     "https://lh3.googleusercontent.com/proxy/3VT1RB1eZAvM8Opsz9ECNIMQQy6dDWsHOjDG8pqKbwmd2-dT64l8-k4uhKLiKrlNho8d4cozGSsyfy17XfxpNs-jcqnCPzK1y65t_kk57Wr9DjEpW7c",
-//     "https://simages.ericdress.com/Upload/Image/2019/051/watermark/c4852529-36a5-45b9-aed4-cd4748f31d8d.jpg",
-// ]
 
 export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
 
     const [selected, setSelected] = useState<number>(0);
 
+    const [listHeight, setListHeight] = useState<number>(300);
+
+    const refImagen = useRef< HTMLImageElement >(null)
+
+    useLayoutEffect(() => {
+        
+        const {current} = refImagen
+
+        setListHeight(current?.clientWidth || 300)
+
+    }, [refImagen])
+
     return (
         <div className="row">
-            <div className="col-2">
-                <ul className="imagenes-lista">
+            <div className="col-3">
+                <ul className="imagenes-lista" style={{height: listHeight}}>
                     {
                         imagenes && imagenes.map( (imagen, idx: number) =>
                             <li key={idx}>
@@ -29,10 +36,10 @@ export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
                     }
                 </ul>
             </div>
-            <div className="col-10">
+            <div className="col-9">
                 {
-                    imagenes && 
-                        <img src={ imagesURL + imagenes[selected]} alt="" className="imagen-producto--selected" />
+                    imagenes &&
+                        <img ref={refImagen} src={ imagesURL + imagenes[selected]} alt="" className="detalle-imagen-producto--selected" style={{height: refImagen?.current?.width }} />
                 }
             </div>
         </div>

@@ -1,4 +1,5 @@
 import {Dispatch} from 'redux'
+import AlertaAction from 'stores/alerta/alertaAction';
 
 export default class ActionUtility {
 
@@ -10,10 +11,18 @@ export default class ActionUtility {
         dispatch(ActionUtility.createAction(actionType));
     
         const model = await effect(...args);
-        // const isError = model instanceof HttpErrorResponse;
-        const isError = false
-    
-        dispatch(ActionUtility.createAction(`${actionType}_FINISHED`, model, isError));
+
+        //ToDo: Manejar errores HTTP
+        const isError = false;
+
+        const isResponse = model instanceof Response;
+
+        if(isResponse){
+          const message =  await model.text()
+          dispatch( AlertaAction.setAlerta( {show: true, message, variant: model.status === 200 ? 'success' : 'danger'} ) )
+        }
+
+        dispatch( ActionUtility.createAction(`${actionType}_FINISHED`, model, isError) );
     
         return model;
       }

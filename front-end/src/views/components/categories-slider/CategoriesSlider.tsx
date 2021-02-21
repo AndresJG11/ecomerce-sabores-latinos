@@ -3,10 +3,9 @@ import { CategoryCard } from "views/components"
 import ChevronRight from 'assets/icons/chevron-right.svg'
 import ChevronLeft from 'assets/icons/chevron-left.svg'
 import { Producto } from 'models/Products/Product'
-import { imagesURL } from 'environments/base'
 import './category-slider-styles.css'
 
-export const CategoriesSlider: FC<{productos : Array<Producto>}> = ({ productos }) => {
+export const CategoriesSlider: FC<{productos : Array<Producto>, idCategoria: number}> = ({ productos, idCategoria }) => {
     
     const sliderRef = useRef<any>()
 
@@ -54,12 +53,14 @@ export const CategoriesSlider: FC<{productos : Array<Producto>}> = ({ productos 
             </div>
             <div ref={sliderRef} onScroll={handleScroll} className="d-flex w-100 categories-slider">
                 {
-                    productos && productos.map(({ precio, nombre, imagenes }: Producto, i: number) =>
+                    productos && productos.map(({ precio, nombre, imagenes, idProducto }: Producto, i: number) =>
                         <div className="category-item" key={i} >
                             <CategoryCard
-                                image={ imagenes?.length > 0 ? imagesURL + imagenes[0].imagen : '//img-s-msn-com.akamaized.net/tenant/amp/entityid/BB19xtUs?w=300&h=174&q=60&m=6&f=jpg&u=t'}
+                                imagenes={imagenes}
                                 nombre={nombre}
                                 precio={precio!}
+                                idProducto={idProducto!}
+                                idCategoria={idCategoria}
                             />
                         </div>
                     )

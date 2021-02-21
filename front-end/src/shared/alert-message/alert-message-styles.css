@@ -1,0 +1,8 @@
+.wrapper-alert-message{
+    position: fixed;
+    top: 1%;
+    right: 1%;
+    width: fit-content;
+    padding: 0px;
+    z-index: 100000;
+}

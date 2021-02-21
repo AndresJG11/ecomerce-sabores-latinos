@@ -14,8 +14,9 @@ export const ContainerCategories = () => {
                 categorias && categorias.slice(0, numCategorias).map((categoria: Categoria, i: number) =>
                     <div key={i}>
                         <WrapperCategory
-                            title={`Conoce más productos de ${categoria.nombre}`}
+                            title={`${categoria.nombre}`}
                             productos={categoria.productos}
+                            idCategoria={ categoria.idCategoria }
                         />
                     </div>)
             }

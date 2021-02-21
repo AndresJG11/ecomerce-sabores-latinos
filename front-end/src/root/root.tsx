@@ -4,7 +4,7 @@ import { Switch, Route } from 'react-router-dom'
 import { Routes } from '../constantes'
 import {
     HomePage, CategoryDetail, Contacto,
-    Nosotros, Carrito, UserLayout,
+    Nosotros, Carrito, UserLayout, ProductDetail
 } from 'views'
 import { 
     AdminLogin, AdminLadingPage, AdminLayout, 
@@ -13,11 +13,17 @@ import {
 
 import 'assets/styles/global.css'
 import 'fonts.css'
+import { AlertMessage } from 'shared'
+import { AlertMessageType } from 'shared/alert-message/models'
+import { useSelector } from 'react-redux'
 
 export const Root = () => {
 
+    const { show } : AlertMessageType = useSelector((state: any) => state.AlertaReducer);
+
     return (
         <>
+            { show && <AlertMessage /> }
             <Switch>
                 <Route path={Routes.admin} component={() =>
                     <AdminLayout>
@@ -35,6 +41,7 @@ export const Root = () => {
                     <UserLayout>
                         <Route exact path={Routes.homePage} component={HomePage} />
                         <Route exact path={Routes.detailCategory} component={CategoryDetail} />
+                        <Route exact path={Routes.detailProduct} component={ProductDetail} />
                         <Route exact path={Routes.carrito} component={Carrito} />
                         <Route exact path={Routes.contacto} component={Contacto} />
                         <Route exact path={Routes.nosotros} component={Nosotros} />
