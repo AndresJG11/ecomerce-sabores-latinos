@@ -64,6 +64,12 @@ import com.saboreslatinos.core.dto.ProductoDto;
 @Entity
 public class Categoria implements Serializable {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	
 	public static final String GET_CATEGORIAS_HOME = "GET_CATEGORIAS_HOME";
 	public static final String GET_PRODUCTOS_HOME = "GET_PRODUCTOS_HOME";
 	public static final String GET_CATEGORIAS_PAGINADAS = "GET_CATEGORIAS_PAGINADAS";
@@ -128,7 +134,4 @@ public class Categoria implements Serializable {
 	}
 	
 	
-	
-	
-
 }

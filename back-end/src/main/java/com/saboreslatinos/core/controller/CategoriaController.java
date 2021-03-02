@@ -214,7 +214,7 @@ public class CategoriaController {
 			}
 		
 		}
-		return new ResponseEntity<>("No existe una categoria con el id"+id, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("No existe una categoria con el id"+id, HttpStatus.NO_CONTENT);
 		
 	}
 	
@@ -230,13 +230,13 @@ public class CategoriaController {
 			}
 			
 			if(categoriaService.eliminar(id)) {
-				return new ResponseEntity<>("Categoria elimina con exito", HttpStatus.OK);
+				return new ResponseEntity<>("Categoria eliminada con exito", HttpStatus.OK);
 			}else {
 				return new ResponseEntity<>("No se pudo eliminar la categoria", HttpStatus.INTERNAL_SERVER_ERROR);
 			}
 			
 		}else {
-			return new ResponseEntity<>("La categoria con el id"+id+" no existe", HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("No existe una categoria con el id"+id, HttpStatus.NO_CONTENT);
 		}
 		
 	}

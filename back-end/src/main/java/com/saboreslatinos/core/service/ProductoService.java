@@ -100,4 +100,16 @@ public class ProductoService {
 	
 	}
 	
+	public List<ProductoDto> obtenerProductoCategoriaPaginados(long idCategoria,int pageSize, int actualPage) {
+		
+		List<ProductoDto> productos = new ArrayList<>();
+		TypedQuery<ProductoDto> queryProductos= entityManager.createNamedQuery(Categoria.GET_PRODUCTOS_HOME,ProductoDto.class);
+		queryProductos.setParameter(1, idCategoria);
+		queryProductos.setFirstResult((actualPage-1)*pageSize);
+		queryProductos.setMaxResults(pageSize);
+		productos = queryProductos.getResultList();
+		return productos;
+		
+	}
+	
 }

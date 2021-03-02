@@ -6,6 +6,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
@@ -68,9 +69,43 @@ public class ProductoController {
 	
 	
 	@GetMapping("/producto/categoria/{idCategoria}")
-	public List<ProductoDto> obtenerProductos(@PathVariable("idCategoria") long  id) {
+	public ResponseEntity<HashMap<String, Object>> obtenerProductos(@PathVariable("idCategoria") long  id,
+			@RequestParam("pageSize") String pageSize,
+			@RequestParam("actualPage") String actualPage) {
 	
-		return productoService.obtenerProductoCategoria(id);
+		List<ProductoDto> listaProductos =  productoService.obtenerProductoCategoria(id);
+		Optional<Categoria> categoria = categoriaService.obtenerCategoriaPorId(id);
+		String nombreCategoria = "" ;
+		if(categoria.isPresent()) {
+			nombreCategoria = categoria.get().getNombre();
+		}
+		
+		
+		if (actualPage.equals("null") || pageSize.equals("null")) {
+			HashMap<String, Object> map = new HashMap<>();
+			for (ProductoDto productoDto : listaProductos) {
+				productoDto.setImagenes(productoService.obtenerImagenesProducto(productoDto.getIdProducto()));
+			}
+			map.put("paginas", 1);
+			map.put("nombreCategoria", nombreCategoria);
+			map.put("categorias", listaProductos);
+			
+			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+		}else {
+			HashMap<String, Object> map = new HashMap<>();
+			double paginas =(double) listaProductos.size()/Integer.parseInt(pageSize);
+			
+			List<ProductoDto> listaProductosResultado = 
+					productoService.obtenerProductoCategoriaPaginados(id, Integer.parseInt(pageSize), Integer.parseInt(actualPage));
+			for (ProductoDto productoDto : listaProductosResultado) {
+				productoDto.setImagenes(productoService.obtenerImagenesProducto(productoDto.getIdProducto()));
+			}
+			map.put("paginas", Math.round(paginas));
+			map.put("nombreCategoria", nombreCategoria);
+			map.put("categorias", listaProductosResultado);
+			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+			
+		}
 	}
 	
 	@GetMapping("/producto/{idProducto}")
