@@ -1,10 +1,16 @@
 package com.saboreslatinos.core.entity;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -18,6 +24,8 @@ public class Cliente implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
+	public static final String GET_CLIENTE_POR_ID = "GET_CLIENTE_POR_ID";
+	
 	@GeneratedValue
 	@Id
 	@Column(name = "idCliente")
@@ -35,8 +43,12 @@ public class Cliente implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 	
-	@OneToOne(mappedBy = "cliente")
-    private Venta venta;
+	
+
+	@OneToMany(fetch = FetchType.LAZY,mappedBy = "cliente")
+	private List<Venta> ventas;
+	
+	
 
 	public long getId() {
 		return id;

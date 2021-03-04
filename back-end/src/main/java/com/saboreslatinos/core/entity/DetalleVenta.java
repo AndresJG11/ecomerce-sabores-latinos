@@ -56,6 +56,16 @@ public class DetalleVenta {
 	public void setProducto(Producto producto) {
 		this.producto = producto;
 	}
+
+	public Venta getVenta() {
+		return venta;
+	}
+
+	public void setVenta(Venta venta) {
+		this.venta = venta;
+	}
+	
+	
 	
 	
 

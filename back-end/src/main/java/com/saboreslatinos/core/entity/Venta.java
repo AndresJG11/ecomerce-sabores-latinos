@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -37,9 +38,10 @@ public class Venta {
 	@Column(name = "estado")
 	private int estado;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cliente_id")
-    private Cliente cliente;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "idCliente")
+	private Cliente cliente;
 
 	public long getId() {
 		return id;

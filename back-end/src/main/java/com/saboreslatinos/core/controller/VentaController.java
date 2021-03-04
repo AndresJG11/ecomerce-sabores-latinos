@@ -22,6 +22,7 @@ import com.saboreslatinos.core.entity.DetalleVenta;
 import com.saboreslatinos.core.entity.Producto;
 import com.saboreslatinos.core.entity.Venta;
 import com.saboreslatinos.core.service.ClienteService;
+import com.saboreslatinos.core.service.DetalleVentaService;
 import com.saboreslatinos.core.service.ProductoService;
 import com.saboreslatinos.core.service.VentaService;
 
@@ -41,6 +42,10 @@ public class VentaController {
 	@Autowired
 	@Qualifier("producto_servicio")
 	private ProductoService productoService;
+	
+	@Autowired
+	@Qualifier("detalleventa_servicio")
+	private DetalleVentaService detalleVentaService;
 	
 	@PostMapping("/venta") 
 	public ResponseEntity<String>  agregarVenta(@RequestBody AgregarVentaDto venta) {
@@ -77,8 +82,11 @@ public class VentaController {
 		
 		
 		
-		
+		 
 		List<DetalleVentaDto> listaDetalleVentaDto = venta.getDetallesVenta();
+		
+		ventaService.agregar(ventaEntidad);
+		
 		
 		for (DetalleVentaDto detalleVentaDto : listaDetalleVentaDto) {
 			
@@ -86,29 +94,14 @@ public class VentaController {
 			detalleVentaEntidad.setCantidad(detalleVentaDto.getCantidad());
 			
 			Optional<Producto> productoEntidad = productoService.obtenerProductoPorId(detalleVentaDto.getIdProducto());
-			if (!productoEntidad.isPresent()) {
-				
-			}
 			
 			detalleVentaEntidad.setProducto(productoEntidad.get());
-			listaDetallesVentaEntidad.add(detalleVentaEntidad);
+			detalleVentaEntidad.setVenta(ventaEntidad);
+			detalleVentaService.agregar(detalleVentaEntidad);
 			
 		}
 		
-		ventaEntidad.setDetalleVentas(listaDetallesVentaEntidad);
-		
-		if (ventaService.agregar(ventaEntidad)) {
-			return new ResponseEntity<>("Venta agregada con exito", HttpStatus.OK);
-		}else {
-			return new ResponseEntity<>("Ocurrio un error al agregar la venta", HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-		
-		
-
-		
-		
-		
-	}
+		return new ResponseEntity<>("Venta agregada con exito", HttpStatus.OK);
 	
-
+	}
 }
