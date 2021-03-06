@@ -7,6 +7,7 @@ import ProductosAction from 'stores/productos/productosAction';
 import { ProductoDto, ActualizarProducto } from 'models/Products';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { CRUDImagenes } from '../crud-imagenes';
+import { FormProductosProps } from './FormProductosProps';
 
 //ToDo: Implementar paginación en productos
 //ToDo: Administrar imagenes  
@@ -17,7 +18,7 @@ const ValidationSchema: Record<string, RegisterOptions> = {
     descripcion: { required: 'Debes ingresar una descripción breve del producto' },
 }
 
-export const FormProductos: FC<{idCategoria : number | "", setIdCategoria : Function}> = ({idCategoria, setIdCategoria }) => {
+export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategoria, paginatorHandler }) => {
 
     const dispatch = useDispatch()
 
@@ -29,12 +30,6 @@ export const FormProductos: FC<{idCategoria : number | "", setIdCategoria : Func
 
     // eslint-disable-next-line
     const [imagenesCrear, setImagenesCrear] = useState< Array<any> | null>(null);
-
-    // eslint-disable-next-line
-    const [actualPage, setActualPage] = useState<number>(1);
-
-    // eslint-disable-next-line
-    const pageSize = 5
 
     const handleCancelar = () => {
         dispatch(ProductosAction.setEditarProducto(null))
@@ -100,16 +95,16 @@ export const FormProductos: FC<{idCategoria : number | "", setIdCategoria : Func
     useEffect(() => {
         dispatch(CategoriasAction.requestObtenerCategoriasLista())
         // eslint-disable-next-line
-    }, [actualPage]);
+    }, []);
 
     useEffect(() => {
 
         if(!idCategoria) return
 
-        dispatch(ProductosAction.requestProductos(Number(idCategoria)))
+        dispatch(ProductosAction.requestProductos(Number(idCategoria), paginatorHandler.pageSize, paginatorHandler.actualPage))
         dispatch(ProductosAction.setEditarProducto(null))
         // eslint-disable-next-line
-    }, [idCategoria]);
+    }, [idCategoria, paginatorHandler.actualPage]);
 
     useEffect(() => {
         if(editProducto){

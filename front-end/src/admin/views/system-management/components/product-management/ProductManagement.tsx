@@ -3,24 +3,31 @@ import { FC, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { getRowsTable } from 'utilities/getRowsTable';
 import { FormProductos } from './components';
-import { Producto } from 'models/Products/Product';
 import ProductosAction from 'stores/productos/productosAction';
+import { ProductsByIdCategory } from 'models/Products';
+import { Paginator } from 'views';
 
 const listHeader = ['Nombre', 'Descripción', 'Precio']
 const rowItems = ['nombre', 'descripcion', 'precio']
 
 export const ProductManagement : FC<{}> = () => {
 
-    const productos : Array<Producto> = useSelector((state: any) => state.ProductosReducer.productosPorCategoria);
+    const productos : ProductsByIdCategory = useSelector((state: any) => state.ProductosReducer.productosPorCategoria);
 
     const [idCategoria, setIdCategoria] = useState<number | "">("")
 
     const dispatch = useDispatch()
 
+    const [actualPage, setActualPage] = useState<number>(1);
+
+    const pageSize = 2
+
+    const pagesToShow = 5
+
     const onEdit = (event : React.MouseEvent<HTMLButtonElement>) =>{
         const { currentTarget : { id } } = event
         
-        const { idProducto } = productos[Number(id)] 
+        const { idProducto } = productos?.categorias[Number(id)] 
         
         idProducto &&
             dispatch(ProductosAction.requestObtenerProducto(idProducto))
@@ -29,7 +36,7 @@ export const ProductManagement : FC<{}> = () => {
     const onDelete = (event : React.MouseEvent<HTMLButtonElement>) =>{
         const { currentTarget : { id } } = event
         
-        const { idProducto } = productos[Number(id)] 
+        const { idProducto } = productos.categorias[Number(id)] 
 
         dispatch(ProductosAction.requestEliminarProducto(Number(idProducto), Number(idCategoria)))
     }
@@ -41,15 +48,23 @@ export const ProductManagement : FC<{}> = () => {
                     <FormProductos 
                         idCategoria={idCategoria}
                         setIdCategoria={setIdCategoria}
+                        paginatorHandler = { {pageSize, actualPage, setActualPage} }
                     />
                 </div> 
                 <div className="container mt-4 row">
                     <CRUDTable
                         listHeader={listHeader}
-                        listRow={ getRowsTable(productos || [], rowItems) }
+                        listRow={ getRowsTable(productos?.categorias || [], rowItems) }
                         action={true}
                         onEdit={onEdit}
                         onDelete={onDelete}
+                    />
+                    <Paginator 
+                        setActualPage={setActualPage}
+                        actualPage={actualPage}
+                        totalPages={productos?.paginas || actualPage}
+                        pagesToShow={pagesToShow}
+                        className="justify-content-center"
                     />
                 </div> 
         </div>

@@ -21,9 +21,9 @@ export const CategoryManagement : FC<{}> = () => {
 
     const [actualPage, setActualPage] = useState<number>(1);
 
-    const pageSize = 1
+    const pageSize = 6
 
-    const pagesToShow = 2
+    const pagesToShow = 5
 
     useEffect(() => {
         dispatch(CategoriasAction.requestObtenerCategoriasPaginadas({actualPage, pageSize}))

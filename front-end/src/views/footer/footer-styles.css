@@ -1,6 +1,8 @@
 footer
 {
     overflow: hidden;
+    clear: both;
+    position: relative;
 }
 
 .footer-items

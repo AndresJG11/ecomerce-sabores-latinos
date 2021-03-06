@@ -1,5 +1,5 @@
 import {FC} from 'react'
-import { NavBar, Footer } from 'views'
+import { NavBar } from 'views'
 
 export const UserLayout : FC<{children : any}> = ({children}) => {
     return (
@@ -8,7 +8,7 @@ export const UserLayout : FC<{children : any}> = ({children}) => {
 
             {children}  
             
-            <Footer/>  
+            {/* <Footer/>   */}
         </>
     )
 }

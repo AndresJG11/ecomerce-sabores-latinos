@@ -11,7 +11,7 @@ export const CategoriesSlider: FC<{productos : Array<Producto>, idCategoria: num
 
     const [chevrons, setChevrons] = useState<any>({ leftVisibility: 'd-none', rightVisibility: 'd-none' })
 
-    const elementWidth = 320
+    const elementWidth = 272
 
     const handleSliderScroll = (direction: "left" | "right") => {
         const { current } = sliderRef

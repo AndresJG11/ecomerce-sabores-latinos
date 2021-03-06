@@ -2,11 +2,13 @@ import { Routes } from "constantes"
 import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import SaboresLatinosIcono from 'assets/icons/icono_sabores_latinos.png'
+import ShoppingCart from 'assets/icons/shopping-cart.svg'
+import { CategoriaListItem } from "models"
+import { useSelector, useDispatch } from "react-redux"
+import { useEffect } from "react"
+import CategoriasAction from "stores/categorias/categoriasAction"
 
 import './navbar-styles.css'
-import { CategoriaListItem } from "models"
-import { useSelector } from "react-redux"
-
 const {
     Brand,
 } = Navbar
@@ -29,6 +31,13 @@ export const NavBar = () => {
 
     const location = useLocation();
 
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+      dispatch(CategoriasAction.requestObtenerCategoriasLista())
+      // eslint-disable-next-line
+    }, []);
+
     return (
         <Navbar expand="lg" className="navbar--yellow">
 
@@ -40,13 +49,12 @@ export const NavBar = () => {
 
             <Navbar.Collapse id="basic-navbar-nav">
             
-                <Nav className="mr-auto">
-
-                {
-                    listaTitulos.map( ({titulo, url}) =>
-                        <Nav.Link id="basic-navbar-nav" className={location.pathname === url ? 'active' : ''} key={titulo} onClick = {() => push(url) } >  {titulo}  </Nav.Link>
-                    
-                )}
+                <Nav className="mr-auto w-100">
+                    {
+                        listaTitulos.map( ({titulo, url}) =>
+                            <Nav.Link id="basic-navbar-nav" className={location.pathname === url ? 'active' : ''} key={titulo} onClick = {() => push(url) } >  {titulo}  </Nav.Link>
+                        
+                    )}
                         <NavDropdown title="Categorías" id="basic-nav-dropdown">
                             {
                                 listaCategorias?.categorias && listaCategorias.categorias.map( ({nombre, idCategoria} ) => 
@@ -56,7 +64,7 @@ export const NavBar = () => {
                                     > 
                                         <Link 
                                             className="no-link" 
-                                            to={Routes.detailCategory.replace(':id', idCategoria.toString())}
+                                            to={Routes.detailCategory.replace(':idCategory', idCategoria.toString())}
                                         >  
                                             {nombre} 
                                         </Link> 
@@ -64,6 +72,9 @@ export const NavBar = () => {
                                 )
                             }
                         </NavDropdown>
+                        <Nav.Link id="basic-navbar-nav" className="navbar-shopping-cart--wrapper" onClick = {() => push(Routes.carrito) } >
+                            <img src={ShoppingCart} alt="" className="navbar-shopping-cart--icon"/>
+                        </Nav.Link>
                 </Nav>
     
                 </Navbar.Collapse>

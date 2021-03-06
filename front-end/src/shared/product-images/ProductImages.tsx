@@ -1,5 +1,5 @@
 import { imagesURL } from 'environments/base';
-import { FC, useState, useRef, useLayoutEffect } from 'react'
+import { FC, useState, useRef, useLayoutEffect, useEffect } from 'react'
 import './product-images-styles.css'
 
 interface ProductImagesProps {
@@ -23,6 +23,10 @@ export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
 
     }, [refImagen])
 
+    useEffect(() => {
+        setSelected(0)
+    }, [imagenes])
+
     return (
         <div className="row">
             <div className="col-3">
@@ -39,7 +43,8 @@ export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
             <div className="col-9">
                 {
                     imagenes &&
-                        <img ref={refImagen} src={ imagesURL + imagenes[selected]} alt="" className="detalle-imagen-producto--selected" style={{height: refImagen?.current?.width }} />
+                        !!imagenes[selected]  &&
+                            <img ref={refImagen} src={ imagesURL + imagenes[selected] } alt="" className="detalle-imagen-producto--selected" style={{height: refImagen?.current?.width }} />
                 }
             </div>
         </div>

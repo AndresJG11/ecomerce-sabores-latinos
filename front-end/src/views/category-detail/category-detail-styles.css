@@ -1,0 +1,15 @@
+.detalle-categoria--productos-container{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+}
+
+.detalle-categoria--producto{
+    width: 50%;
+    padding: 0 2%;
+    margin: 10px 0px;
+}
+.detalle-categoria--producto img{
+    width: 100%;
+    object-fit: cover;
+}

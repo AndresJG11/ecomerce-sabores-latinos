@@ -22,7 +22,7 @@ export const NavBarCategories = () => {
             {
                 listaCategorias?.categorias && listaCategorias.categorias.map( category  =>
                     <Link 
-                        to={`${Routes.detailCategory.replace(':id', category.idCategoria.toString())}` } 
+                        to={`${Routes.detailCategory.replace(':idCategory', category.idCategoria.toString())}` } 
                         style={{textDecoration: 'none'}} 
                         key={category.idCategoria}
                     >

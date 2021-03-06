@@ -35,9 +35,9 @@ export default class ProductosAction {
     };
   }
 
-  static requestProductos(idCategoria : number) {
+  static requestProductos(idCategoria : number, pageSize : number | null = null, actualPage : number | null = null) {
     return async (dispatch: Dispatch, getState: any) => {
-      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, idCategoria);
+      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, {idCategoria, pageSize, actualPage});
     };
   }
   

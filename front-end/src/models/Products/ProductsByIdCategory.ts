@@ -2,8 +2,10 @@ import { Producto } from "./Product";
 
 export interface ProductsByIdCategory{
     
-    readonly idCategoria : number,
+    readonly categorias : Array<Producto>
 
-    readonly productos : Array<Producto>
+    readonly paginas : number
+
+    readonly nombreCategoria : string
 
 }

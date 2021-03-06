@@ -10,6 +10,11 @@
     -webkit-box-orient: vertical;    
 }
 
+.tarjeta-producto--foto{
+    width: 100%;
+    object-fit: cover;
+}
+
 .tarjeta-producto--precio img{
     float: right;
 }

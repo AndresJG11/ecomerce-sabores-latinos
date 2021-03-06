@@ -12,14 +12,14 @@ const ValidationSchema: Record<string, RegisterOptions> = {
     telefono: {
         required: false,
         pattern: {
-            value: /^[0.9]+$/,
+            value: /^[0-9]+$/,
             message: 'Debe ingresar un número valido'
         }
     },
     whatsapp: {
         required: false,
         pattern: {
-            value: /^[0.9]+$/,
+            value: /^[0-9]+$/,
             message: 'Debe ingresar un número valido'
         }
     },

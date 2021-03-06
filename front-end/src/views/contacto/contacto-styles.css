@@ -1,0 +1,52 @@
+.contacto-red-social{
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+}
+.contacto-red-social img{
+    width: 40px;
+}
+
+.contacto-redes{
+    border-radius: 10px;
+    margin: auto;
+    text-align: center;
+}
+.contacto-redes-wrapper{
+    display: flex;
+    justify-content: space-between;
+}
+.container-metodos-contacto{
+    text-align: center;
+    margin-top: 30px;
+}
+.metodo-contacto{
+    margin: 20px 0px;
+}
+.header-contacto{
+    text-align: center;
+    background-image: url('assets/images/background-contacto.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    margin-top: 10px;
+    filter: grayscale(25%);
+    height: 25vh;
+}
+.header-contacto h1, h4{
+    color: white!important;
+}
+.header-texto{
+    background-color: #0000005F;
+}
+
+@media (min-width: 576px) {
+    .header-contacto{
+        width: 75%;
+        margin: 10px auto;
+    }
+    .contacto-redes-wrapper{
+        justify-content: space-around;
+    }
+ }
