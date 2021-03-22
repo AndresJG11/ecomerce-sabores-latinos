@@ -9,7 +9,6 @@ import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { CRUDImagenes } from '../crud-imagenes';
 import { FormProductosProps } from './FormProductosProps';
 
-//ToDo: Implementar paginación en productos
 //ToDo: Administrar imagenes  
 
 const ValidationSchema: Record<string, RegisterOptions> = {
@@ -37,7 +36,7 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
     }
 
     const handleGuardar : SubmitHandler<Record<string, any>> = (data) => {
-        // Crear Productof
+        // Crear Producto
         if (!editProducto?.idProducto) {
 
             const agregarProducto: ActualizarProducto = {

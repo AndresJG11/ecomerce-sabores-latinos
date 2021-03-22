@@ -1,4 +1,4 @@
-import {useEffect, FC, useState} from 'react'
+import {useEffect, VFC, useState} from 'react'
 import CategoriasAction from "stores/categorias/categoriasAction"
 import { useDispatch } from 'react-redux'
 import { CategoriaListItem, Categoria } from "models";
@@ -11,7 +11,7 @@ import { Paginator } from 'views';
 const listHeader = [ 'ID', 'Nombre' ]
 const rowItems = [ 'idCategoria', 'nombre' ]
 
-export const CategoryManagement : FC<{}> = () => {
+export const CategoryManagement : VFC = () => {
 
     const dispatch = useDispatch()
 

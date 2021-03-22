@@ -74,9 +74,7 @@ export default class CategoriasEffect {
             }
             );
 
-        const data = await response.json();
-
-        return data;
+        return response;
         
     }
 }

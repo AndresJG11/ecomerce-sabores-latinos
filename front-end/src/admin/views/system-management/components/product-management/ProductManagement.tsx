@@ -20,7 +20,7 @@ export const ProductManagement : FC<{}> = () => {
 
     const [actualPage, setActualPage] = useState<number>(1);
 
-    const pageSize = 2
+    const pageSize = 5
 
     const pagesToShow = 5
 

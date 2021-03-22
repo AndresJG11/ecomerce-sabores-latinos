@@ -50,7 +50,7 @@ export default class CategoriasAction {
       const args = {formData, nombre}
       const pagination = {pageSize, actualPage}
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_SAVE, CategoriasEffect.requestAgregarCategoria, args);
-      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_LISTA, CategoriasEffect.requestObtenerCategorias, pagination);
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS, CategoriasEffect.requestObtenerCategorias, pagination);
     };
   }
 
@@ -59,7 +59,7 @@ export default class CategoriasAction {
       const args = {nombre, id}
       const pagination = {pageSize, actualPage}
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_EDIT, CategoriasEffect.requestActualizarCategoria, args);
-      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_LISTA, CategoriasEffect.requestObtenerCategorias, pagination);
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS, CategoriasEffect.requestObtenerCategorias, pagination);
     };
   }
 
@@ -67,7 +67,7 @@ export default class CategoriasAction {
     return async (dispatch: Dispatch, getState: any) => {
       const pagination = {pageSize, actualPage}
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_ACTUALIZAR_IMAGEN, CategoriasEffect.requestActualizarImagenCategoria, {formData, id});
-      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_LISTA, CategoriasEffect.requestObtenerCategorias, pagination);
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS, CategoriasEffect.requestObtenerCategorias, pagination);
     };
   }
 
@@ -75,7 +75,7 @@ export default class CategoriasAction {
     return async (dispatch: Dispatch, getState: any) => {
       const pagination = {pageSize, actualPage}
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_DELETE, CategoriasEffect.requestEliminarCategoria, id);
-      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_LISTA, CategoriasEffect.requestObtenerCategorias, pagination);
+      await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS, CategoriasEffect.requestObtenerCategorias, pagination);
     };
   }
 
