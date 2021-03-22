@@ -1,6 +1,7 @@
 import {createStore, applyMiddleware, compose, combineReducers} from 'redux'
 import thunk from 'redux-thunk'
 import {CategoriasReducer, ProductosReducer, AnuncioReducer, AlertaReducer} from 'stores'
+import { CarritoReducer } from './carrito/carritoReducer'
 import { SistemaReducer } from './sistema'
 
 const reducers = combineReducers(
@@ -10,6 +11,7 @@ const reducers = combineReducers(
         SistemaReducer: SistemaReducer.reducer,
         AnuncioReducer: AnuncioReducer.reducer,
         AlertaReducer: AlertaReducer.reducer,
+        CarritoReducer: CarritoReducer.reducer,
     })
     
 export const rootStore = () => {

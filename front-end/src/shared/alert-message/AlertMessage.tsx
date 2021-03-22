@@ -9,25 +9,27 @@ export const AlertMessage: VFC = () => {
 
     const dispatch = useDispatch()
 
-    const {title, message, variant} : AlertMessageType = useSelector((state: any) => state.AlertaReducer);
+    const {title, message, variant, show} : AlertMessageType = useSelector((state: any) => state.AlertaReducer);
 
     useEffect(() => {
-        setTimeout( () => {
-            dispatch( AlertaAction.setAlerta( {show: false, message: '', variant: ''} ) )
-        }, 5000 )
-        // eslint-disable-next-line
-    }, []);
+        show === true &&
+            setTimeout( () => {
+                dispatch( AlertaAction.setAlerta( {show: false, message: '', variant: ''} ) )
+            }, 3000 )    
+    }, [show, dispatch]);
     
     return (
-        <div className="wrapper-alert-message">
-            <Alert variant={variant} >
-                <Alert.Heading>
-                    {title}
-                </Alert.Heading>
-                <span>
-                    {message}
-                </span>
-            </Alert>
-        </div>
+        show ?
+            <div className="wrapper-alert-message">
+                <Alert variant={variant} >
+                    <Alert.Heading>
+                        {title}
+                    </Alert.Heading>
+                    <span>
+                        {message}
+                    </span>
+                </Alert>
+            </div>
+        : <></>
     )
 }

@@ -3,12 +3,13 @@ import { Nav, Navbar, NavDropdown } from "react-bootstrap"
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import SaboresLatinosIcono from 'assets/icons/icono_sabores_latinos.png'
 import ShoppingCart from 'assets/icons/shopping-cart.svg'
-import { CategoriaListItem } from "models"
+import { CategoriaListItem, productoCarrito } from "models"
 import { useSelector, useDispatch } from "react-redux"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import CategoriasAction from "stores/categorias/categoriasAction"
 
 import './navbar-styles.css'
+import CarritoAction from "stores/carrito/carritoAction"
 const {
     Brand,
 } = Navbar
@@ -27,16 +28,34 @@ export const NavBar = () => {
 
     const listaCategorias : CategoriaListItem = useSelector((state: any) => state.CategoriasReducer.listaCategorias);
 
-    const {push} = useHistory();
+    const productosCarrito : Array<productoCarrito> = useSelector((state: any) => state.CarritoReducer.productosCarrito);
+
+    const { push } = useHistory();
 
     const location = useLocation();
 
     const dispatch = useDispatch()
 
+    const [itemsCarrito, setItemsCarrito] = useState<number>(0);
+
     useEffect(() => {
-      dispatch(CategoriasAction.requestObtenerCategoriasLista())
-      // eslint-disable-next-line
-    }, []);
+
+        setItemsCarrito( productosCarrito.length )
+
+    }, [productosCarrito]);
+
+    useEffect(() => {
+
+        dispatch(CategoriasAction.requestObtenerCategoriasLista())
+
+        if( localStorage.getItem('productosCarrito') ) {
+
+        const productosCarrito = JSON.parse( localStorage.getItem('productosCarrito')! ) as Array<productoCarrito>
+
+        dispatch( CarritoAction.actualizarProductos(productosCarrito) )
+
+        }
+    }, [dispatch]);
 
     return (
         <Navbar expand="lg" className="navbar--yellow">
@@ -57,7 +76,7 @@ export const NavBar = () => {
                     )}
                         <NavDropdown title="Categorías" id="basic-nav-dropdown">
                             {
-                                listaCategorias?.categorias && listaCategorias.categorias.map( ({nombre, idCategoria} ) => 
+                                listaCategorias?.categorias && listaCategorias.categorias.map( ({nombre, idCategoria} : any ) => 
                                     <Item 
                                         as='span' 
                                         key={idCategoria}
@@ -74,6 +93,7 @@ export const NavBar = () => {
                         </NavDropdown>
                         <Nav.Link id="basic-navbar-nav" className="navbar-shopping-cart--wrapper" onClick = {() => push(Routes.carrito) } >
                             <img src={ShoppingCart} alt="" className="navbar-shopping-cart--icon"/>
+                            <span className="navbar-shopping-cart--counter">{itemsCarrito}</span>
                         </Nav.Link>
                 </Nav>
     

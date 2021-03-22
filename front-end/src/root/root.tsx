@@ -1,5 +1,4 @@
 
-import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { Routes } from '../constantes'
 import {
@@ -14,16 +13,12 @@ import {
 import 'assets/styles/global.css'
 import 'fonts.css'
 import { AlertMessage } from 'shared'
-import { AlertMessageType } from 'shared/alert-message/models'
-import { useSelector } from 'react-redux'
 
 export const Root = () => {
 
-    const { show } : AlertMessageType = useSelector((state: any) => state.AlertaReducer);
-
     return (
         <>
-            { show && <AlertMessage /> }
+            <AlertMessage />
             <Switch>
                 <Route path={Routes.admin} component={() =>
                     <AdminLayout>

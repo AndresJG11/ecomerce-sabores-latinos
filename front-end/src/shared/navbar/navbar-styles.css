@@ -1,0 +1,26 @@
+.navbar--yellow{
+    background-color: #fff705;
+    padding-left: 6%;
+}
+
+.navbar-shopping-cart--wrapper{
+    margin-left: auto;
+    margin-right: 50px;
+    position: relative;
+}
+
+.navbar-shopping-cart--icon{
+    width: 30px;
+}
+
+.navbar-shopping-cart--counter{
+    background-color: red;
+    color: white!important;
+    border-radius: 1rem;
+    padding: 0 0.5rem;
+    font-weight: bold;
+    position: absolute;
+    top: 0;
+    right: 0;
+    z-index: 1;
+}

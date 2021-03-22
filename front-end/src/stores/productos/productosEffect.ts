@@ -13,9 +13,9 @@ export class ProductosEffect {
 
     }
 
-    static async requestObtenerProductos( {idCategoria, actualPage, pageSize}: {idCategoria : number, actualPage : number | null, pageSize  : number | null}) {
+    static async requestObtenerProductos( {idCategoria, actualPage, pageSize}: {idCategoria : number, actualPage ? : number | null, pageSize ? : number | null}) {
     
-        const response = await fetch(`${apiURL}/v1/producto/categoria/${idCategoria}?actualPage=${actualPage}&pageSize=${pageSize}`);
+        const response = await fetch(`${apiURL}/v1/producto/categoria/${idCategoria}?actualPage=${actualPage || null}&pageSize=${pageSize || null}`);
 
         const data = await response.json();
     

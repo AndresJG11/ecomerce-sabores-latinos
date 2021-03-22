@@ -1,26 +1,31 @@
-import {VFC, useEffect} from 'react'
+import {VFC, useEffect, useState} from 'react'
 import { ProductoDto, ProductsByIdCategory } from 'models/Products';
-import { useDispatch, useSelector } from 'react-redux';
 import { ProductImages } from 'shared'
-import ProductosAction from 'stores/productos/productosAction';
 import { useParams } from 'react-router-dom';
 import { CategoriesSlider } from 'views/components';
 import { InfoProducto } from './components';
+import { ProductosEffect } from 'stores/productos/productosEffect';
 
 export const ProductDetail : VFC = () => {
 
-    const dispatch = useDispatch()
+    const [producto, setProducto] = useState<ProductoDto | null>(null)
 
-    const producto : ProductoDto | null = useSelector((state: any) => state.ProductosReducer.editarProducto);
-
-    const productos : ProductsByIdCategory = useSelector((state: any) => state.ProductosReducer.productosPorCategoria);
+    const [productos, setProductos] = useState<ProductsByIdCategory | null>(null)
 
     const {idProduct, idCategory} = useParams<Record<string, any>>()
 
-    useEffect(() => {
-        dispatch(ProductosAction.requestObtenerProducto(idProduct))
-        dispatch(ProductosAction.requestProductos(idCategory))
-    }, [dispatch, idCategory, idProduct]);
+    useEffect( () => {
+        const getData = async (idCategory : number, idProduct : number) => {
+            const fetch_producto = await ProductosEffect.requestObtenerProducto(idProduct)
+            const fetch_productos = await ProductosEffect.requestObtenerProductos({idCategoria: idCategory})
+
+            setProducto(fetch_producto)
+            setProductos(fetch_productos)
+        }
+
+        getData(idCategory, idProduct);
+
+    }, [idCategory, idProduct]);
 
     return (
         <div className="container mt-5">
@@ -29,7 +34,7 @@ export const ProductDetail : VFC = () => {
                     <ProductImages imagenes={ producto?.imagenes?.map( ({imagen}) => imagen ) || [] } />
                 </div>
                 <div className="col-12 col-md-6">
-                    <InfoProducto />
+                    <InfoProducto producto={producto} />
                 </div>
             </div>
 
