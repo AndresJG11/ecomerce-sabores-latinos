@@ -2,12 +2,14 @@ package com.saboreslatinos.core.entity;
 
 import java.io.Serializable;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -35,10 +37,10 @@ public class Imagen implements Serializable {
 	}
 	
 	
-	public Imagen(long id, String ruta, Producto producto) {
+	public Imagen(long id, String imagen, Producto producto) {
 		super();
 		this.id = id;
-		this.ruta = ruta;
+		this.imagen = imagen;
 		this.producto = producto;
 	}
 
@@ -47,8 +49,9 @@ public class Imagen implements Serializable {
 	@Column(name = "idImagen")
 	private long id;
 
-	@Column(name = "ruta")
-	private String ruta;
+	@Lob @Basic(fetch = FetchType.LAZY) 
+	@Column(length=100000) 
+	private String imagen;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "idProducto")
@@ -62,12 +65,12 @@ public class Imagen implements Serializable {
 		this.id = id;
 	}
 
-	public String getRuta() {
-		return ruta;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setRuta(String ruta) {
-		this.ruta = ruta;
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	public Producto getProducto() {

@@ -16,7 +16,7 @@ public class ImagenDto {
 	
 	public ImagenDto(Imagen imagen) {
 		this.setIdImagen(imagen.getId());
-		this.imagen = imagen.getRuta();
+		this.imagen = imagen.getImagen();
 	}
 
 	

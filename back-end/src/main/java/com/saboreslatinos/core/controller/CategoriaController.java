@@ -144,6 +144,10 @@ public class CategoriaController {
 	public ResponseEntity<String>  eliminarCategoria(@PathVariable("id") long  id) {
 		
 		Optional<Categoria> categoriaEntity = categoriaService.obtenerCategoriaPorId(id);
+		
+		if (productoService.obtenerProductoCategoria(id).size() > 0 ) {
+			return new ResponseEntity<>("No se puede eliminar la categoria porque hay productos asociados a esta", HttpStatus.OK);
+		}
 		if (categoriaEntity.isPresent()) {
 			
 			if(categoriaService.eliminar(id)) {
@@ -153,7 +157,7 @@ public class CategoriaController {
 			}
 			
 		}else {
-			return new ResponseEntity<>("No existe una categoria con el id"+id, HttpStatus.NO_CONTENT);
+			return new ResponseEntity<>("No existe una categoria con el id: "+id, HttpStatus.NOT_FOUND);
 		}
 		
 	}
