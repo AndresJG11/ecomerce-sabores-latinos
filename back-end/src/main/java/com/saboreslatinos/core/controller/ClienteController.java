@@ -40,7 +40,7 @@ public class ClienteController {
 			
 			
 		}else {
-			ClienteDto clienteDto = new ClienteDto("","","","");
+			ClienteDto clienteDto = new ClienteDto(0,"","","","");
 			return new ResponseEntity<>(clienteDto,HttpStatus.OK);
 		}
 		

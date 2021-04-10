@@ -7,7 +7,6 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -22,11 +21,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
-
 import com.saboreslatinos.core.dto.AnuncioDto;
-import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.entity.Anuncio;
-import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.service.AnuncioService;
 
 @CrossOrigin(origins = "*")
@@ -73,7 +69,7 @@ public class AnuncioController {
 		
 	}
 	
-	@PutMapping("/anunucio/{id}")
+	@PutMapping("/anuncio/{id}")
 	public ResponseEntity<String>  actualizarAnuncio(@RequestParam("enlace") String enlace,
 			@RequestParam("titulo") String titulo,
 			@PathVariable("id") long  id) {
@@ -141,7 +137,7 @@ public class AnuncioController {
 	
 	
 	@GetMapping("/anuncio")
-	public ResponseEntity<List<AnuncioDto>> obtenerCategorias(@RequestParam("pageSize") String pageSize,
+	public ResponseEntity<List<AnuncioDto>> obtenerAnuncios(@RequestParam("pageSize") String pageSize,
 			@RequestParam("actualPage") String actualPage) {
 		return  new ResponseEntity<List<AnuncioDto>>(anuncioService.obtener(), HttpStatus.OK);
 	}

@@ -2,21 +2,24 @@ package com.saboreslatinos.core.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.saboreslatinos.core.dto.AgregarVentaDto;
 import com.saboreslatinos.core.dto.ClienteDto;
 import com.saboreslatinos.core.dto.DetalleVentaDto;
+import com.saboreslatinos.core.dto.VentaDto;
 import com.saboreslatinos.core.entity.Cliente;
 import com.saboreslatinos.core.entity.DetalleVenta;
 import com.saboreslatinos.core.entity.Producto;
@@ -79,10 +82,7 @@ public class VentaController {
 			ventaEntidad.setCliente(cliente);
 		}
 		
-		
-		
-		
-		 
+	
 		List<DetalleVentaDto> listaDetalleVentaDto = venta.getDetallesVenta();
 		
 		ventaService.agregar(ventaEntidad);
@@ -104,4 +104,67 @@ public class VentaController {
 		return new ResponseEntity<>("Venta agregada con exito", HttpStatus.OK);
 	
 	}
+	
+
+	
+	@GetMapping("/venta")
+	public ResponseEntity<HashMap<String, Object>> obtenerVentas(@RequestParam("estado") int estado,@RequestParam("pageSize") String pageSize,
+			@RequestParam("actualPage") String actualPage) {
+		
+		List<VentaDto> listaVentas = ventaService.obtenerVentas(estado);
+	
+		if (actualPage.equals("null") || pageSize.equals("null")) {
+			HashMap<String, Object> map = new HashMap<>();
+			map.put("paginas", 1);
+			map.put("ventas", listaVentas);
+		 
+			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+		}else {
+			
+			HashMap<String, Object> map = new HashMap<>();
+			double paginas =(double) listaVentas.size()/Integer.parseInt(pageSize);
+			
+			map.put("paginas", Math.round(paginas));
+			map.put("ventas", 
+					ventaService.obtenerVentasPaginadas(Integer.parseInt(pageSize), Integer.parseInt(actualPage),estado));
+		 
+			return  new ResponseEntity<HashMap<String, Object>>(map, HttpStatus.OK);
+		}
+		
+	}
+	
+	@PostMapping("/venta/cerrarventa")
+	public ResponseEntity<String> cerrarVenta(@RequestParam("idVenta") long idVenta){
+		
+		Optional<Venta> ventaEntity = ventaService.obtenerVentaPorId(idVenta);
+		if (ventaEntity.isPresent()) {
+			Venta venta = ventaEntity.get();
+			venta.setEstado(1);
+			ventaService.agregar(venta);
+			return  new ResponseEntity<String>("Venta cerrada con exito", HttpStatus.OK);
+		}else {
+			return  new ResponseEntity<String>("No se encuentra una venta con el id "+ idVenta, HttpStatus.NOT_FOUND);
+		}
+	}
+	
+//	@GetMapping("/venta/detalleventa")
+//	public ResponseEntity<String> obtenerDetalleVnta(@RequestParam("idVenta") long idVenta){
+//		
+//		ClienteDto cliente = ventaService.obtenerClientePorIdVenta(idVenta);
+//		if (cliente != null) {
+//			
+//		}else {
+//			
+//		}
+//		
+//		
+////		if (ventaEntity.isPresent()) {
+////			Venta venta = ventaEntity.get();
+////			venta.setEstado(1);
+////			ventaService.agregar(venta);
+////			return  new ResponseEntity<String>("Venta cerrada con exito", HttpStatus.OK);
+////		}else {
+////			return  new ResponseEntity<String>("No se encuentra una venta con el id "+ idVenta, HttpStatus.NOT_FOUND);
+////		}
+//	}
 }

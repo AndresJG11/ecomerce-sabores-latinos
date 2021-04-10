@@ -11,14 +11,12 @@ import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ProductoDto;
 import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.entity.Imagen;
 import com.saboreslatinos.core.entity.Producto;
-import com.saboreslatinos.core.model.ProductoModel;
 import com.saboreslatinos.core.repository.ProductoRepository;
 
 @Service("producto_servicio")

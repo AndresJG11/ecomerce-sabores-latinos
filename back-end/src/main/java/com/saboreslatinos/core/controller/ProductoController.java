@@ -164,7 +164,7 @@ public class ProductoController {
 				productoActualizado.setPrecio(producto.getPrecio());
 				productoActualizado.setStock(producto.getStock());
 				productoService.agregar(productoActualizado);
-				return new ResponseEntity<>("Producto agregado con exito", HttpStatus.OK);
+				return new ResponseEntity<>("Producto actualizado con exito", HttpStatus.OK);
 				
 			}else {
 				return new ResponseEntity<>("Algun id provisto no corresponde a una entidad", HttpStatus.INTERNAL_SERVER_ERROR);

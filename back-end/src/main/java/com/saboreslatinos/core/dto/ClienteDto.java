@@ -27,9 +27,10 @@ public class ClienteDto {
 	
 	
 
-	public ClienteDto(String documento, String telefono, String direccion, String nombre) {
+	public ClienteDto(long idCLiente,String documento, String telefono, String direccion, String nombre) {
 		super();
 	
+		this.id = idCLiente;
 		this.documento = documento;
 		this.telefono = telefono;
 		this.direccion = direccion;
