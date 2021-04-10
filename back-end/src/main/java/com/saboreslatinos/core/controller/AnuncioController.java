@@ -1,10 +1,6 @@
 package com.saboreslatinos.core.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
+
 import java.util.List;
 import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -72,8 +68,14 @@ public class AnuncioController {
 	}
 	
 	@DeleteMapping("/anuncio/{id}")
-	public boolean eliminarAnuncio(@PathVariable("id") long  id) {
-		return anuncioService.eliminar(id);
+	public ResponseEntity<String>   eliminarAnuncio(@PathVariable("id") long  id) {
+
+		if (anuncioService.eliminar(id)) {
+			return new ResponseEntity<>("Anuncio eliminado con exito", HttpStatus.OK);
+		}else {
+			return new ResponseEntity<>("No se pudo eliminar el anuncio", HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+		
 	}
 	
 	

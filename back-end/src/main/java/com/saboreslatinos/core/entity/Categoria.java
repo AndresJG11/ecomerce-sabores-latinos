@@ -2,6 +2,8 @@ package com.saboreslatinos.core.entity;
 
 import java.io.Serializable;
 import java.util.List;
+
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.ColumnResult;
 import javax.persistence.ConstructorResult;
@@ -9,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -95,7 +98,8 @@ public class Categoria implements Serializable {
 	@Column(name = "nombre")
 	private String nombre;
 	
-	@Column(name = "icono")
+	@Lob @Basic(fetch = FetchType.LAZY) 
+	@Column(length=100000) 
 	private String icono;
 	
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "categoria")

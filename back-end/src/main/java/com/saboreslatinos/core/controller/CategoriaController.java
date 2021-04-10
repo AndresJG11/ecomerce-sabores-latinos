@@ -1,10 +1,5 @@
 package com.saboreslatinos.core.controller;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -14,16 +9,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.dto.ProductoDto;
@@ -115,30 +111,13 @@ public class CategoriaController {
 	
 	
 	@PostMapping("/categoria")
-	public ResponseEntity<String>  agregarCategoria(@RequestParam("file") MultipartFile imagen, @RequestParam("nombre") String nombre) {
+	public ResponseEntity<String>  agregarCategoria(@RequestBody @Validated Categoria categoria) {
 		
-		Categoria categoria = new Categoria();
-		categoria.setNombre(nombre);
+		if(!categoria.getIcono().isEmpty()) {
 		
-		
-		if(!imagen.isEmpty()) {
-			Path directorioImagenes = Paths.get("src//main//resources//static/images");
-			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-			
-			byte[] bytesImg;
-			
-			try {
-				bytesImg = imagen.getBytes();
-				Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+imagen.getOriginalFilename());
-				Files.write(rutaCompleta, bytesImg);
-				categoria.setIcono(imagen.getOriginalFilename());
-				categoriaService.agregar(categoria);
-				return new ResponseEntity<>("Categoria creada  con exito", HttpStatus.OK);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return new ResponseEntity<>("Ha ocurrido un errro al guardar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
-			}
-				
+			categoriaService.agregar(categoria);
+			return new ResponseEntity<>("Categoria creada  con exito", HttpStatus.OK);
+	
 		}else {
 			return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
 		}
@@ -146,59 +125,18 @@ public class CategoriaController {
 	}
 	
 	@PutMapping("/categoria/{id}")
-	public ResponseEntity<String>  actualizarCategoria(@RequestParam("nombre") String nombre,@PathVariable("id") long  id) {
-		Optional<Categoria> categoriaEntidad = categoriaService.obtenerCategoriaPorId(id);
+	public ResponseEntity<String>  actualizarCategoria(@RequestBody @Validated Categoria categoria) {
+		Optional<Categoria> categoriaEntidad = categoriaService.obtenerCategoriaPorId(categoria.getId());
 		
 		if (categoriaEntidad.isPresent()) {
 			Categoria categoriaActualizada = categoriaEntidad.get();
-			categoriaActualizada.setNombre(nombre);
+			categoriaActualizada.setNombre(categoria.getNombre());
+			categoriaActualizada.setIcono(categoria.getIcono());
+		
 			categoriaService.actualizar(categoriaActualizada);
 			return new ResponseEntity<>("Categoria actualizada con exito", HttpStatus.OK);
 		}
-		return new ResponseEntity<>("No existe una categoria con el id: "+id, HttpStatus.NOT_FOUND);
-		
-	}
-	
-	
-	@PutMapping("/categoria/imagen/{id}")
-	public ResponseEntity<String>  actualizarImagenCategoria(@RequestParam("file") MultipartFile imagen,@PathVariable("id") long  id) {
-		
-	
-		Optional<Categoria> categoriaEntidad = categoriaService.obtenerCategoriaPorId(id);
-		if (categoriaEntidad.isPresent()) {
-			
-			Categoria categoriaActualizada = categoriaEntidad.get();
-			
-			if(!imagen.isEmpty()) {
-				
-				File imagenAntigua = new File("src//main//resources//static/images//"+categoriaActualizada.getIcono());
-				if(imagenAntigua.exists()) {
-					imagenAntigua.delete();
-				}
-				
-				Path directorioImagenes = Paths.get("src//main//resources//static/images");
-				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-				
-				byte[] bytesImg;
-				
-				try {
-					bytesImg = imagen.getBytes();
-					Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+imagen.getOriginalFilename());
-					Files.write(rutaCompleta, bytesImg);
-					categoriaActualizada.setIcono(imagen.getOriginalFilename());
-					categoriaService.actualizar(categoriaActualizada);
-					return new ResponseEntity<>("Imagen actualizada con exito", HttpStatus.OK);
-				} catch (IOException e) {
-					e.printStackTrace();
-					return new ResponseEntity<>("Ha ocurrido un errro al guardar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-					
-			}else {
-				return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
-			}
-		
-		}
-		return new ResponseEntity<>("No existe una categoria con el id"+id, HttpStatus.NO_CONTENT);
+		return new ResponseEntity<>("No existe una categoria con el id: "+categoria.getId(), HttpStatus.NOT_FOUND);
 		
 	}
 	
@@ -207,11 +145,6 @@ public class CategoriaController {
 		
 		Optional<Categoria> categoriaEntity = categoriaService.obtenerCategoriaPorId(id);
 		if (categoriaEntity.isPresent()) {
-			
-			File imagenAntigua = new File("src//main//resources//static/images//"+categoriaEntity.get().getIcono());
-			if(imagenAntigua.exists()) {
-				imagenAntigua.delete();
-			}
 			
 			if(categoriaService.eliminar(id)) {
 				return new ResponseEntity<>("Categoria eliminada con exito", HttpStatus.OK);
@@ -224,8 +157,5 @@ public class CategoriaController {
 		}
 		
 	}
-	
-	
-	
 	
 }
