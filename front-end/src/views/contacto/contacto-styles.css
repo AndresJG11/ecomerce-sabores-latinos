@@ -34,7 +34,7 @@
     filter: grayscale(25%);
     height: 25vh;
 }
-.header-contacto h1, h4{
+.header-contacto h1, .header-contacto h4{
     color: white!important;
 }
 .header-texto{

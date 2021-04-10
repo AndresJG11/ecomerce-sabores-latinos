@@ -9,7 +9,7 @@ const SideBarOptions : Array<{title: string, link: string}> =
 [
     {title: 'Menu Principal', link: Routes.adminHome},
     {title: 'Reporte de ventas', link: Routes.adminSalesReport},
-    {title: 'Reporte de clientes', link: Routes.adminCustomerManagement},
+    // {title: 'Reporte de clientes', link: Routes.adminCustomerManagement},
     {title: 'Gestión de pedidos', link: Routes.adminOrdersManagement},
     {title: 'Gestión del sistema', link: Routes.adminSystemManagement},
     {title: 'Gestión de la página', link: Routes.adminPageManagement},

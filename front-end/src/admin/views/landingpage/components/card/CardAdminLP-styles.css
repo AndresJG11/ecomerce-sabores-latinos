@@ -1,0 +1,29 @@
+.container-card-LP{
+    display: block;
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #d0d0d0;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: transform .2s; /* Animation */
+}
+
+.container-card-LP:hover{
+    border: 1px solid #000;
+    transform: scale(1.05);
+}
+
+.container-card-LP h5{
+    text-align: center;
+    text-transform: uppercase;
+    margin-bottom: 10px;
+}
+
+.container-card-LP img{
+    width: 120px;
+    object-fit: cover;
+    margin: auto;
+}
