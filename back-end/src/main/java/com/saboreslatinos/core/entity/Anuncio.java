@@ -40,7 +40,7 @@ public class Anuncio implements Serializable {
 	
 	@Lob @Basic(fetch = FetchType.LAZY) 
 	@Column(length=100000) 
-	private byte[] picture;
+	private String picture;
 
 
 	public long getId() {
@@ -79,13 +79,15 @@ public class Anuncio implements Serializable {
 		return serialVersionUID;
 	}
 
-	public byte[] getPicture() {
+	public String getPicture() {
 		return picture;
 	}
 
-	public void setPicture(byte[] picture) {
+	public void setPicture(String picture) {
 		this.picture = picture;
 	}
+
+	
 	
 	
 	

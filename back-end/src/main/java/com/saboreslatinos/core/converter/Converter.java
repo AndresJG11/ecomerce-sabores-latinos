@@ -15,8 +15,7 @@ import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.entity.Imagen;
 import com.saboreslatinos.core.entity.Producto;
 import com.saboreslatinos.core.entity.Venta;
-import com.saboreslatinos.core.model.CategoriaModel;
-import com.saboreslatinos.core.model.ProductoModel;
+
 
 @Component("converter")
 public class Converter {

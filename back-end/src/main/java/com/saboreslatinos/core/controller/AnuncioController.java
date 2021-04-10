@@ -37,7 +37,7 @@ public class AnuncioController {
 	
 	
 	@PostMapping("/anuncio")
-	public ResponseEntity<String>  agregarAnuncio(@RequestParam("file") MultipartFile imagen,
+	public ResponseEntity<String>  agregarAnuncio(@RequestParam("file") String imagen,
 			@RequestParam("titulo") String titulo, @RequestParam("enlace") String enlace ) {
 		
 		Anuncio anuncio = new Anuncio();
@@ -46,23 +46,11 @@ public class AnuncioController {
 		
 	
 		if(!imagen.isEmpty()) {
-			Path directorioImagenes = Paths.get("src//main//resources//static/images");
-			String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-			
-			byte[] bytesImg;
-			
-			try {
-				bytesImg = imagen.getBytes();
-				Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+imagen.getOriginalFilename());
-				Files.write(rutaCompleta, bytesImg);
-				anuncio.setRuta(imagen.getOriginalFilename());
-				anuncio.setPicture(bytesImg);
-				anuncioService.agregar(anuncio);
-				return new ResponseEntity<>("Anuncio creado con exito", HttpStatus.OK);
-			} catch (IOException e) {
-				e.printStackTrace();
-				return new ResponseEntity<>("Ha ocurrido un errro al guardar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
-			}
+		
+			anuncio.setRuta("ruta");
+			anuncio.setPicture(imagen);
+			anuncioService.agregar(anuncio);
+			return new ResponseEntity<>("Anuncio creado con exito", HttpStatus.OK);
 				
 		}else {
 			return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);

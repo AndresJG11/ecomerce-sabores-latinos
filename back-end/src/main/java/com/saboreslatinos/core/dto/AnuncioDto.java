@@ -23,7 +23,7 @@ public class AnuncioDto {
 		this.titulo = anuncio.getTitulo();
 		this.ruta = anuncio.getRuta();
 		this.enlace = anuncio.getEnlace();
-		this.imagen = Base64.getEncoder().encodeToString(anuncio.getPicture());
+		this.imagen = anuncio.getPicture();
 	}
 	
 
