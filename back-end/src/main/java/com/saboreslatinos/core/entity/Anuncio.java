@@ -17,8 +17,6 @@ import javax.persistence.Table;
 public class Anuncio implements Serializable {
 	
 	
-
-	
 	/**
 	 * 
 	 */
@@ -32,15 +30,13 @@ public class Anuncio implements Serializable {
 	@Column(name = "titulo")
 	private String titulo;
 	
-	@Column(name = "ruta")
-	private String ruta;
-	
+
 	@Column(name = "enlace")
 	private String enlace;
 	
 	@Lob @Basic(fetch = FetchType.LAZY) 
 	@Column(length=100000) 
-	private String picture;
+	private String imagen;
 
 
 	public long getId() {
@@ -59,13 +55,6 @@ public class Anuncio implements Serializable {
 		this.titulo = titulo;
 	}
 
-	public String getRuta() {
-		return ruta;
-	}
-
-	public void setRuta(String ruta) {
-		this.ruta = ruta;
-	}
 
 	public String getEnlace() {
 		return enlace;
@@ -79,12 +68,12 @@ public class Anuncio implements Serializable {
 		return serialVersionUID;
 	}
 
-	public String getPicture() {
-		return picture;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setPicture(String picture) {
-		this.picture = picture;
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 
 	

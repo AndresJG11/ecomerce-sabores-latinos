@@ -11,16 +11,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 import com.saboreslatinos.core.dto.AnuncioDto;
 import com.saboreslatinos.core.entity.Anuncio;
 import com.saboreslatinos.core.service.AnuncioService;
@@ -37,18 +37,13 @@ public class AnuncioController {
 	
 	
 	@PostMapping("/anuncio")
-	public ResponseEntity<String>  agregarAnuncio(@RequestParam("file") String imagen,
-			@RequestParam("titulo") String titulo, @RequestParam("enlace") String enlace ) {
-		
-		Anuncio anuncio = new Anuncio();
-		anuncio.setEnlace(enlace);
-		anuncio.setTitulo(titulo);
+	
+	public ResponseEntity<String>  agregarAnuncio(@RequestBody @Validated Anuncio anuncio ) {
 		
 	
-		if(!imagen.isEmpty()) {
-		
-			anuncio.setRuta("ruta");
-			anuncio.setPicture(imagen);
+		if(!anuncio.getImagen().isEmpty()) {
+			
+			
 			anuncioService.agregar(anuncio);
 			return new ResponseEntity<>("Anuncio creado con exito", HttpStatus.OK);
 				
@@ -59,21 +54,20 @@ public class AnuncioController {
 	}
 	
 	@PutMapping("/anuncio/{id}")
-	public ResponseEntity<String>  actualizarAnuncio(@RequestParam("enlace") String enlace,
-			@RequestParam("titulo") String titulo,
-			@PathVariable("id") long  id) {
+	public ResponseEntity<String>  actualizarAnuncio(@RequestBody @Validated Anuncio anuncio ) {
 		
 		
-		Optional<Anuncio> anuncioEntidad = anuncioService.obtenerAnuncioPorId(id);
+		Optional<Anuncio> anuncioEntidad = anuncioService.obtenerAnuncioPorId(anuncio.getId());
 		
 		if (anuncioEntidad.isPresent()) {
 			Anuncio anuncioActualizado = anuncioEntidad.get();
-			anuncioActualizado.setEnlace(enlace);
-			anuncioActualizado.setTitulo(titulo);
+			anuncioActualizado.setEnlace(anuncio.getEnlace());
+			anuncioActualizado.setTitulo(anuncio.getTitulo());
+			anuncioActualizado.setImagen(anuncio.getImagen());
 			anuncioService.actualizar(anuncioActualizado);
 			return new ResponseEntity<>("Anuncio actualizado con exito", HttpStatus.OK);
 		}
-		return new ResponseEntity<>("No existe una anunucio con el id: "+id, HttpStatus.NOT_FOUND);
+		return new ResponseEntity<>("No existe una anunucio con el id: "+anuncio.getId(), HttpStatus.NOT_FOUND);
 		
 	}
 	
@@ -82,53 +76,9 @@ public class AnuncioController {
 		return anuncioService.eliminar(id);
 	}
 	
-	@PutMapping("/anuncio/imagen/{id}")
-	public ResponseEntity<String>  actualizarImagenAnuncio(@RequestParam("file") MultipartFile imagen,@PathVariable("id") long  id) {
-		
-	
-		Optional<Anuncio> anuncioEntidad = anuncioService.obtenerAnuncioPorId(id);
-		if (anuncioEntidad.isPresent()) {
-			
-			Anuncio anuncioActualizado = anuncioEntidad.get();
-			
-			if(!imagen.isEmpty()) {
-				
-				File imagenAntigua = new File("src//main//resources//static/images//"+anuncioActualizado.getRuta());
-				if(imagenAntigua.exists()) {
-					imagenAntigua.delete();
-				}
-				
-				Path directorioImagenes = Paths.get("src//main//resources//static/images");
-				String rutaAbsoluta = directorioImagenes.toFile().getAbsolutePath();
-				
-				byte[] bytesImg;
-				
-				try {
-					bytesImg = imagen.getBytes();
-					Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+imagen.getOriginalFilename());
-					Files.write(rutaCompleta, bytesImg);
-					anuncioActualizado.setRuta(imagen.getOriginalFilename());
-					anuncioService.actualizar(anuncioActualizado);
-					return new ResponseEntity<>("Imagen actualizada con exito", HttpStatus.OK);
-				} catch (IOException e) {
-					e.printStackTrace();
-					return new ResponseEntity<>("Ha ocurrido un errro al guardar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
-				}
-					
-			}else {
-				return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
-			}
-		
-		}
-		return new ResponseEntity<>("No existe un anuncio con el id"+id, HttpStatus.NOT_FOUND);
-		
-	}
-	
 	
 	@GetMapping("/anuncio")
-	public ResponseEntity<List<AnuncioDto>> obtenerAnuncios(@RequestParam("pageSize") String pageSize,
-			@RequestParam("actualPage") String actualPage) {
-		
+	public ResponseEntity<List<AnuncioDto>> obtenerAnuncios() {
 		
 		return  new ResponseEntity<List<AnuncioDto>>(anuncioService.obtener(), HttpStatus.OK);
 	}

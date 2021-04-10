@@ -1,17 +1,11 @@
 package com.saboreslatinos.core.controller;
 
 import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
@@ -27,16 +21,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
-
 import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ProductoDto;
 import com.saboreslatinos.core.entity.Categoria;
-import com.saboreslatinos.core.entity.Imagen;
 import com.saboreslatinos.core.entity.Pais;
 import com.saboreslatinos.core.entity.Producto;
-import com.saboreslatinos.core.model.ProductoModel;
 import com.saboreslatinos.core.service.CategoriaService;
 import com.saboreslatinos.core.service.PaisService;
 import com.saboreslatinos.core.service.ProductoService;
