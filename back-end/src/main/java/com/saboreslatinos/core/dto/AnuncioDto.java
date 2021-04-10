@@ -1,5 +1,7 @@
 package com.saboreslatinos.core.dto;
 
+import java.util.Base64;
+
 import com.saboreslatinos.core.entity.Anuncio;
 
 public class AnuncioDto {
@@ -13,6 +15,7 @@ public class AnuncioDto {
 	private String ruta;
 	
 	private String enlace;
+	private String imagen;
 	
 	
 	public AnuncioDto(Anuncio anuncio) {
@@ -20,6 +23,7 @@ public class AnuncioDto {
 		this.titulo = anuncio.getTitulo();
 		this.ruta = anuncio.getRuta();
 		this.enlace = anuncio.getEnlace();
+		this.imagen = Base64.getEncoder().encodeToString(anuncio.getPicture());
 	}
 	
 
@@ -54,6 +58,18 @@ public class AnuncioDto {
 
 	public void setEnlace(String enlace) {
 		this.enlace = enlace;
+	}
+
+
+
+	public String getImagen() {
+		return imagen;
+	}
+
+
+
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
 	}
 	
 	

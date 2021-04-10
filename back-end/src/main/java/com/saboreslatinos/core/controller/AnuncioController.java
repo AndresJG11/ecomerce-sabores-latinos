@@ -56,6 +56,7 @@ public class AnuncioController {
 				Path rutaCompleta = Paths.get(rutaAbsoluta+"//"+imagen.getOriginalFilename());
 				Files.write(rutaCompleta, bytesImg);
 				anuncio.setRuta(imagen.getOriginalFilename());
+				anuncio.setPicture(bytesImg);
 				anuncioService.agregar(anuncio);
 				return new ResponseEntity<>("Anuncio creado con exito", HttpStatus.OK);
 			} catch (IOException e) {
@@ -139,6 +140,8 @@ public class AnuncioController {
 	@GetMapping("/anuncio")
 	public ResponseEntity<List<AnuncioDto>> obtenerAnuncios(@RequestParam("pageSize") String pageSize,
 			@RequestParam("actualPage") String actualPage) {
+		
+		
 		return  new ResponseEntity<List<AnuncioDto>>(anuncioService.obtener(), HttpStatus.OK);
 	}
 

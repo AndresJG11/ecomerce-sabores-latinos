@@ -3,16 +3,12 @@ package com.saboreslatinos.core.service;
 
 import java.util.List;
 import java.util.Optional;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
-
 import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.AnuncioDto;
-import com.saboreslatinos.core.dto.CategoriaDto;
 import com.saboreslatinos.core.entity.Anuncio;
-import com.saboreslatinos.core.entity.Categoria;
 import com.saboreslatinos.core.repository.AnuncioRepository;
 
 @Service("anuncio_servicio")
