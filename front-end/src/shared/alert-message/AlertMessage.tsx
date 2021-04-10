@@ -14,7 +14,7 @@ export const AlertMessage: VFC = () => {
     useEffect(() => {
         show === true &&
             setTimeout( () => {
-                dispatch( AlertaAction.setAlerta( {show: false, message: '', variant: ''} ) )
+                dispatch( AlertaAction.setAlerta( {show: false, message: '', variant: '', title:''} ) )
             }, 3000 )    
     }, [show, dispatch]);
     

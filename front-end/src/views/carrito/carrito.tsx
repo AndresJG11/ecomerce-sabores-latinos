@@ -3,6 +3,7 @@ import { productoCarrito } from 'models';
 import { useState, VFC } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ModalComprar } from 'shared/modal-comprar/ModalComprar';
+import AlertaAction from 'stores/alerta/alertaAction';
 import { getRowsTable } from 'utilities/getRowsTable';
 import { handlerCarrito } from 'utilities/handlerCarrito';
 
@@ -32,7 +33,12 @@ export const Carrito : VFC = () => {
     }
 
     const handleComprar = () => {
-        setShow(true)
+        if( productosCarrito.length > 0 ){
+            setShow(true)
+        }
+        else{
+            dispatch( AlertaAction.setAlerta( { message: 'No tienes productos en el carrito', title: 'Compra Vacia', show: true, variant: 'danger' }  ) )
+        }
     }
 
     return (

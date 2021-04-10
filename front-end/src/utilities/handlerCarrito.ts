@@ -2,6 +2,7 @@ import { productoCarrito } from "models"
 import AlertaAction from "stores/alerta/alertaAction"
 import {Dispatch} from 'redux'
 import CarritoAction from "stores/carrito/carritoAction"
+import { DetallesVenta } from "models/Ventas/VentasTypes"
 
 const agregarProducto = (nuevoProducto: productoCarrito, dispatch : Dispatch) => {
 
@@ -45,8 +46,18 @@ const eliminarProducto = (idProducto : number, dispatch : Dispatch) => {
     dispatch( AlertaAction.setAlerta( {show: true, message: 'Producto eliminado con éxito', variant: 'success' } ) )
 }
 
+const realizarCompra = (detallesVenta : DetallesVenta, dispatch : Dispatch<any>) => {
+    dispatch( CarritoAction.requestAgregarVenta( detallesVenta ) )
+
+    // dispatch( CarritoAction.actualizarProductos( [] ) )
+    // localStorage.setItem('productosCarrito', JSON.stringify([]))
+
+    dispatch( AlertaAction.setAlerta( {show: true, message: 'Compra realizada con éxito', variant: 'success' } ) )
+}
+
 export const handlerCarrito = {
     agregarProducto,
     obtenerProductos,
-    eliminarProducto
+    eliminarProducto,
+    realizarCompra
 }
