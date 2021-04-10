@@ -4,7 +4,6 @@ import {useRef, useState, useLayoutEffect, useEffect} from 'react'
 import './banner-homepage-styles.css'
 import { Anuncio } from 'models';
 import AnuncioAction from 'stores/anuncio/anuncioAction';
-import { imagesURL } from 'environments/base'
 
 export const BannerHomepage = () => {
 
@@ -43,12 +42,13 @@ export const BannerHomepage = () => {
                 indicators={!window.mobileCheck()}
             >
                 {
-                    anuncios &&
+                    anuncios && anuncios?.map &&
                         anuncios.map( (anuncio, idx) =>
                             <Carousel.Item key={idx}>
                                 <img
                                     className="d-block w-100"
-                                    src={ imagesURL + anuncio.ruta }
+                                    // src={ imagesURL + anuncio.ruta }
+                                    src={ anuncio.imagen }
                                     alt={ anuncio.titulo }
                                     title={ anuncio.titulo }
                                     style={ anuncio?.enlace ? {cursor: 'pointer'} : {} }

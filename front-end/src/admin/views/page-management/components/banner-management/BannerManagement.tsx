@@ -4,7 +4,6 @@ import { useRef, useState, useLayoutEffect, useEffect } from 'react'
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { Anuncio } from 'models';
 import AnuncioAction from 'stores/anuncio/anuncioAction';
-import { imagesURL } from 'environments/base'
 import { Table } from 'react-bootstrap'
 import DeleteIcon from 'assets/icons/eliminar.svg'
 import EditIcon from 'assets/icons/editar.svg'
@@ -26,7 +25,7 @@ const ValidationSchemaInit: Record<string, RegisterOptions> =
     },
 }
 
-const listHead = ['Nombre', 'Enlace', 'Titulo', 'Acción']
+const listHead = ['Titulo', 'Enlace', 'Acción']
 
 //ToDo: Probar Actualizar imagen
 export const BannerManagement = () => {
@@ -98,21 +97,12 @@ export const BannerManagement = () => {
             {
                 enlace: data.enlace ? data.enlace : '',
                 titulo: data.titulo,
+                imagen: prevImage || editAnuncio.imagen,
                 id: editAnuncio.id,
             }
 
-            if(data.imagen[0]){
-                const formData = new FormData();
-    
-                formData.append('file', data.imagen[0])
-
-                const actualizarImagen = { id: editAnuncio.id, formData }
-
-                dispatch(AnuncioAction.requestActualizarImagenAnuncio(actualizarImagen))
-
-            }
-
             dispatch(AnuncioAction.requestActualizarAnuncio(actualizarAnuncio))
+            handleCancel()
 
         } else {
             // Crear anuncio
@@ -124,10 +114,11 @@ export const BannerManagement = () => {
             {
                 enlace: data.enlace ? data.enlace : '',
                 titulo: data.titulo,
-                formData
+                imagen: prevImage,
             }
 
             dispatch(AnuncioAction.requestAgregarAnuncio(nuevoAnuncio))
+            setPrevImage(null)
 
         }
     }
@@ -189,7 +180,7 @@ export const BannerManagement = () => {
                                         <Carousel.Item key={idx}>
                                             <img
                                                 className="d-block w-100"
-                                                src={imagesURL + anuncio.ruta}
+                                                src={anuncio.imagen}
                                                 alt={anuncio.titulo}
                                                 title={anuncio.titulo}
                                                 style={anuncio?.enlace ? { cursor: 'pointer' } : {}}
@@ -211,7 +202,7 @@ export const BannerManagement = () => {
                                     style={editAnuncio?.enlace ? { cursor: 'pointer' } : {}}
                                     onClick={() => editAnuncio?.enlace && window.open(editAnuncio.enlace)}
                                 />
-                                <h6 className="mt-3">Vista Previa</h6>
+                                <h6 className="mt-3 text-danger">Vista Previa</h6>
                             </div>
 
                     }
@@ -234,16 +225,17 @@ export const BannerManagement = () => {
                                         anuncios &&
                                         anuncios.map((anuncio, idx) =>
                                             <tr key={idx}>
-                                                <td style={{ maxWidth: '10rem' }} title={anuncio.ruta} > <span className="tabla-banner-texto">{anuncio.ruta}</span></td>
-                                                <td ><span className="tabla-banner-texto" title={anuncio?.enlace || ''}>{anuncio?.enlace || ''}</span></td>
                                                 <td title={anuncio.titulo}>{anuncio.titulo}</td>
-                                                <td className="d-flex justify-content-center">
-                                                    <button className="btn p-0" type="button" onClick={() => handleEditar(anuncio, idx)} >
-                                                        <img title='Editar' src={EditIcon} alt="" style={{ width: '1rem', marginRight: 10 }} />
-                                                    </button>
-                                                    <button className="btn p-0 ml-3" type="button" onClick={() => handleDelete(anuncio)} >
-                                                        <img title='Eliminar' src={DeleteIcon} alt="" style={{ width: '1rem' }} />
-                                                    </button>
+                                                <td ><span className="tabla-banner-texto" title={anuncio?.enlace || ''}><a href={anuncio?.enlace || ''}>{anuncio?.enlace || ''}</a></span></td>
+                                                <td>
+                                                    <div className="d-flex justify-content-center">
+                                                        <button className="btn p-0" type="button" onClick={() => handleEditar(anuncio, idx)} >
+                                                            <img title='Editar' src={EditIcon} alt="" style={{ width: '1rem', marginRight: 10 }} />
+                                                        </button>
+                                                        <button className="btn p-0 ml-3" type="button" onClick={() => handleDelete(anuncio)} >
+                                                            <img title='Eliminar' src={DeleteIcon} alt="" style={{ width: '1rem' }} />
+                                                        </button>
+                                                    </div>
                                                 </td>
                                             </tr>
                                         )

@@ -42,9 +42,11 @@ export const CRUDTable: FC<CRUDTableProps> = ({ listHeader, listRow, action, onE
                                     }
                                     {
                                         action && 
-                                            <td className="d-flex justify-content-center">
-                                                <button id={keyRow+''} onClick={onEdit} className="btn p-0"><img src={EditIcon} alt="" style={{width: '1rem', marginRight: 5}}/></button>
-                                                <button id={keyRow+''} onClick={onDelete} className="btn p-0 ml-3"><img src={DeleteIcon} alt="" style={{width: '1rem'}}/></button>
+                                            <td>
+                                                <div className="d-flex justify-content-center">
+                                                    <button id={keyRow+''} onClick={onEdit} className="btn p-0"><img src={EditIcon} alt="" style={{width: '1rem', marginRight: 5}}/></button>
+                                                    <button id={keyRow+''} onClick={onDelete} className="btn p-0 ml-3"><img src={DeleteIcon} alt="" style={{width: '1rem'}}/></button>
+                                                </div>
                                             </td>
                                     }
                                 </tr>

@@ -12,13 +12,16 @@ export default class AnuncioEffect {
 
     }
 
-    static async requestAgregarAnuncio({formData, enlace, titulo } : {formData: FormData, enlace : string, titulo : string}) {
+    static async requestAgregarAnuncio({imagen, enlace, titulo } : {imagen: string, enlace : string, titulo : string}) {
 
         const response = await fetch(
-            `${apiURL}/v1/anuncio?enlace=${enlace}&titulo=${titulo}`,
+            `${apiURL}/v1/anuncio`,
                 {
                     method: 'POST',
-                    body: formData
+                    body: JSON.stringify( {imagen, enlace, titulo } ),
+                    headers:{ 
+                        'Content-Type': 'application/json',
+                    },
                 }
             );
 
@@ -39,12 +42,16 @@ export default class AnuncioEffect {
 
     }
 
-    static async requestActualizarAnuncio( { enlace, titulo, id } : { enlace : string, titulo : string, id : number} ) {
+    static async requestActualizarAnuncio( data : { enlace : string, titulo : string, id : number, imagen : string} ) {
 
         const response = await fetch(
-            `${apiURL}/v1/anuncio/${id}?enlace=${enlace}&titulo=${titulo}`,
+            `${apiURL}/v1/anuncio/${data.id}`,
                 {
                     method: 'PUT',
+                    body: JSON.stringify( data ),
+                    headers:{ 
+                        'Content-Type': 'application/json',
+                    }
                 }
             );
 

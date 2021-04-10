@@ -26,7 +26,7 @@ export default class AnuncioAction {
     };
   }
   
-  static requestAgregarAnuncio(data : {formData: FormData, enlace : string, titulo : string}) {
+  static requestAgregarAnuncio(data : {imagen: string, enlace : string, titulo : string}) {
     return async (dispatch: Dispatch, getState: any) => {
       await ActionUtility.createThunkEffect(dispatch, AnuncioAction.REQUEST_AGREGAR_ANUNCIO, AnuncioEffect.requestAgregarAnuncio, data);
       await ActionUtility.createThunkEffect(dispatch, AnuncioAction.REQUEST_OBTENER_ANUNCIOS, AnuncioEffect.requestObtenerAnuncios);
@@ -40,7 +40,7 @@ export default class AnuncioAction {
     };
   }
 
-  static requestActualizarAnuncio(data : {id: number, enlace : string, titulo : string}) {
+  static requestActualizarAnuncio(data : {id: number, enlace : string, titulo : string, imagen : string}) {
     return async (dispatch: Dispatch, getState: any) => {
       await ActionUtility.createThunkEffect(dispatch, AnuncioAction.REQUEST_ACTUALIZAR_ANUNCIO, AnuncioEffect.requestActualizarAnuncio, data);
       await ActionUtility.createThunkEffect(dispatch, AnuncioAction.REQUEST_OBTENER_ANUNCIOS, AnuncioEffect.requestObtenerAnuncios);
