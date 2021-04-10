@@ -22,28 +22,35 @@ export default class CategoriasEffect {
 
     }
 
-    static async requestAgregarCategoria({formData, nombre}:{formData : FormData, nombre : string}) {
+    static async requestAgregarCategoria(data:{icono : string, nombre : string}) {
 
         const response = await fetch(
-            `${apiURL}/v1/categoria?nombre=${nombre}`,
-            {
-                method: 'POST',
-                body: formData
-            }
+            `${apiURL}/v1/categoria`,
+                {
+                    method: 'POST',
+                    body: JSON.stringify(data),
+                    headers:{ 
+                        'Content-Type': 'application/json',
+                    },
+                }
             );
 
         return response;
 
     }
 
-    static async requestActualizarCategoria({nombre, id} : {nombre : string, id : number}) {
+    static async requestActualizarCategoria(data : {nombre : string, icono: string, id : number}) {
 
         const response = await fetch(
-            `${apiURL}/v1/categoria/${id}?nombre=${nombre}`,
-            {
-                method: 'PUT'
-            }
-        );
+            `${apiURL}/v1/categoria/${data.id}`,
+                {
+                    method: 'PUT',
+                    body: JSON.stringify(data),
+                    headers:{ 
+                        'Content-Type': 'application/json',
+                    },
+                }
+            );
 
         return response;
 

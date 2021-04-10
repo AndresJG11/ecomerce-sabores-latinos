@@ -45,18 +45,18 @@ export default class CategoriasAction {
     };
   }
 
-  static requestAgregarCategoria(formData : FormData, nombre : string, {actualPage, pageSize} : {actualPage : number, pageSize : number}) {
+  static requestAgregarCategoria(icono: string, nombre : string, {actualPage, pageSize} : {actualPage : number, pageSize : number}) {
     return async (dispatch: Dispatch, getState: any) => {
-      const args = {formData, nombre}
+      const args = {icono, nombre}
       const pagination = {pageSize, actualPage}
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_SAVE, CategoriasEffect.requestAgregarCategoria, args);
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS, CategoriasEffect.requestObtenerCategorias, pagination);
     };
   }
 
-  static requestActualizarCategoria(nombre : string, id : number, {actualPage, pageSize} : {actualPage : number, pageSize : number}) {
+  static requestActualizarCategoria(nombre : string, icono: string, id : number, {actualPage, pageSize} : {actualPage : number, pageSize : number}) {
     return async (dispatch: Dispatch, getState: any) => {
-      const args = {nombre, id}
+      const args = {nombre, icono, id}
       const pagination = {pageSize, actualPage}
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_EDIT, CategoriasEffect.requestActualizarCategoria, args);
       await ActionUtility.createThunkEffect(dispatch, CategoriasAction.REQUEST_CATEGORIAS_PAGINADAS, CategoriasEffect.requestObtenerCategorias, pagination);

@@ -1,10 +1,10 @@
-import { FC, useEffect, useState, useRef } from 'react'
+import { FC, useEffect, useState } from 'react'
 import { Categoria } from "models";
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { Form, FormGroup, FormControl, FormLabel } from 'react-bootstrap'
 import { useDispatch } from 'react-redux'
 import CategoriasAction from 'stores/categorias/categoriasAction';
-import { imagesURL } from 'environments/base'
+import AlertaAction from 'stores/alerta/alertaAction';
 
 const ValidationSchema: Record<string, RegisterOptions> = {
     nombre: { required: 'Debes ingresar un nombre a la categoría' },
@@ -13,7 +13,8 @@ const ValidationSchema: Record<string, RegisterOptions> = {
 
 interface FormCategoryProps {
 
-    readonly Categoria?: Partial<Categoria> | null
+    // readonly Categoria?: Partial<Categoria> | null
+    readonly Categoria : Categoria | null
 
     readonly cancelSelect: VoidFunction
 
@@ -27,11 +28,9 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect, a
 
     const { register, handleSubmit, errors, setValue, clearErrors } = useForm({ mode: 'onBlur' });
 
-    const [newFile, setNewFile] = useState<string | null | Blob>(null)
+    const [newFile, setNewFile] = useState<string | null>(null)
 
     const dispatch = useDispatch()
-
-    const imgRef = useRef<HTMLImageElement>(null)
 
     useEffect(() => {
 
@@ -39,21 +38,6 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect, a
         setNewFile(Categoria?.icono || null)
 
     }, [Categoria, setValue]);
-
-    useEffect(() => {
-        
-        const { current } = imgRef
-
-        if(typeof newFile === 'string' && current){
-            current.src = imagesURL + newFile || ''
-        } else if (newFile && current){
-            const fileReader = new FileReader()
-            fileReader.onload = () =>{
-                current.src = fileReader.result as string
-            }
-            fileReader.readAsDataURL(newFile as Blob)
-        }
-    }, [newFile]);
 
     const handleCancel = () => {
         cancelSelect()
@@ -68,33 +52,38 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect, a
 
         const formData = new FormData();
 
-            newFile && formData.append('file', newFile )
+        newFile && formData.append('file', newFile )
 
-            if( Categoria?.idCategoria ){
-                /* Actualizar Categoría */
-
-                dispatch( CategoriasAction.requestActualizarCategoria(nombre, Categoria.idCategoria, {actualPage, pageSize}) )
-
-                typeof newFile !== 'string' &&  
-                    dispatch( CategoriasAction.requestActualizarCategoriaImagen(formData, Categoria.idCategoria, {actualPage, pageSize}) )
-
-            }else{
-                /* Crear Categoría */
-
-                newFile &&
-                    dispatch(CategoriasAction.requestAgregarCategoria(formData, nombre as string, {actualPage, pageSize}))
-            }
+        if( Categoria?.idCategoria ){
+            /* Actualizar Categoría */
+            newFile &&
+                dispatch( CategoriasAction.requestActualizarCategoria(nombre, newFile, Categoria.idCategoria, {actualPage, pageSize}) )
 
             handleCancel()
-        
-
+        }else{
+            /* Crear Categoría */
+            if(newFile){
+                dispatch(CategoriasAction.requestAgregarCategoria(newFile!, nombre as string, {actualPage, pageSize}))
+                handleCancel()
+            }else{
+                dispatch( AlertaAction.setAlerta({show: true, message: 'Debe seleccionar un icono para la categoría', variant: 'danger', title:'Error'}) )
+            }
+        }
     }
 
     const onUploadIcon = (event: any) => {
 
         const { target: { files } } = event
 
-        setNewFile(files[0])
+        if (!files) return
+
+        const fileReader = new FileReader();
+
+        fileReader.onload = () => {
+            setNewFile(fileReader.result as string)
+        }
+
+        fileReader.readAsDataURL(files[0])
 
     }
 
@@ -127,9 +116,9 @@ export const FormCategory: FC<FormCategoryProps> = ({ Categoria, cancelSelect, a
 
             {
                 newFile &&
-                <div className="d-flex justify-content-center mt-3">
-                    <img ref={imgRef} alt="" style={{ width: 50 }} />
-                </div>
+                    <div className="d-flex justify-content-center mt-3">
+                        <img src={newFile} alt="" style={{ width: 100 }} />
+                    </div>
             }
 
             <div className="d-flex justify-content-around">

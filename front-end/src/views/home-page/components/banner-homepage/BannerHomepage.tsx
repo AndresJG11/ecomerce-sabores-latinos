@@ -47,7 +47,6 @@ export const BannerHomepage = () => {
                             <Carousel.Item key={idx}>
                                 <img
                                     className="d-block w-100"
-                                    // src={ imagesURL + anuncio.ruta }
                                     src={ anuncio.imagen }
                                     alt={ anuncio.titulo }
                                     title={ anuncio.titulo }

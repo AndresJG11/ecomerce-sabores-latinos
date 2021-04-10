@@ -4,7 +4,6 @@ import { CategoriaListItem } from 'models';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import CategoriasAction from "stores/categorias/categoriasAction"
-import { imagesURL } from 'environments/base'
 import './navbar-categories.css'
 
 export const NavBarCategories = () => {
@@ -27,7 +26,7 @@ export const NavBarCategories = () => {
                         key={category.idCategoria}
                     >
                         <div className="category-navbar-item d-flex flex-column justify-content-center align-items-center btn">
-                            <img src={imagesURL+category.icono} alt={`${category.nombre} icon`} className="category-navbar-item--icon" />
+                            <img src={category.icono} alt={`${category.nombre} icon`} className="category-navbar-item--icon" />
                             <p className="category-navbar-item--text" > {category.nombre} </p>
                         </div>
                     </Link>
