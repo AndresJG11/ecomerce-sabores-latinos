@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ImagenProductoDto;
@@ -65,19 +66,19 @@ public class ImagenController {
 
 	}
 
-	@DeleteMapping("/imagen/producto/{id}")
-	public ResponseEntity<String>  eliminarImagen(@PathVariable("id") long  id,@PathVariable("idProducto") long  idProducto) {
+	@DeleteMapping("/imagen/producto")
+	public ResponseEntity<String>  eliminarImagen(@RequestParam("idImagen") long idImagen,@RequestParam("idProducto") long  idProducto) {
 		
-		Optional<Imagen> imagenEntity = imagenService.obtenerImagenPorId(id);
+		Optional<Imagen> imagenEntity = imagenService.obtenerImagenPorId(idImagen);
 		
 		
 		if (imagenEntity.isPresent()) {
 			List<ImagenDto> imagenes = productoService.obtenerImagenesProducto(idProducto);
 			
 			if (imagenes.size() > 1) {
-				if (imagenService.eliminar(id)) {
+				if (imagenService.eliminar(idImagen)) {
 					
-					return new ResponseEntity<>("Imagen elimina con exito", HttpStatus.OK);
+					return new ResponseEntity<>("Imagen eliminada con exito", HttpStatus.OK);
 				}else {
 					return new ResponseEntity<>("No se pudo eliminar la imagen", HttpStatus.INTERNAL_SERVER_ERROR);
 				}
@@ -86,7 +87,7 @@ public class ImagenController {
 			}
 			
 		}else {
-			return new ResponseEntity<>("La imagen con el id "+id+" no existe", HttpStatus.NOT_FOUND);
+			return new ResponseEntity<>("La imagen con el id "+idImagen+" no existe", HttpStatus.NOT_FOUND);
 			
 		}
  		
