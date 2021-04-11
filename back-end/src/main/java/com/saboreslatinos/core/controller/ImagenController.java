@@ -38,23 +38,25 @@ public class ImagenController {
 	
 	
 	@PostMapping("/imagen/producto")
-	public ResponseEntity<String> agregarImagenProducto(@RequestBody @Validated Imagen imagen) {
+	public ResponseEntity<String> agregarImagenProducto(@RequestBody @Validated ImagenProductoDto imagen) {
 
-		Optional<Producto> producto = productoService.obtenerProductoPorId(imagen.getProducto().getId());
+		Optional<Producto> producto = productoService.obtenerProductoPorId(imagen.getIdProducto());
 
 		if (producto.isPresent()) {
 
-			if (!imagen.getImagen().isEmpty()) {
+			for (String imagenData : imagen.getImagenes()) {
 
-				Imagen imagenEntidad = new Imagen();
-				imagenEntidad.setProducto(producto.get());
-				imagenEntidad.setImagen(imagen.getImagen());
+				if (!imagenData.isEmpty()) {
 
-				imagenService.agregar(imagenEntidad);
-			} else {
-				return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
+					Imagen imagenEntidad = new Imagen();
+					imagenEntidad.setProducto(producto.get());
+					imagenEntidad.setImagen(imagenData);
+
+					imagenService.agregar(imagenEntidad);
+				} else {
+					return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
+				}
 			}
-
 			return new ResponseEntity<>("Imagenes agregadas con exito", HttpStatus.OK);
 
 		} else {
@@ -64,13 +66,13 @@ public class ImagenController {
 	}
 
 	@DeleteMapping("/imagen/producto/{id}")
-	public ResponseEntity<String>  eliminarImagen(@PathVariable("id") long  id) {
+	public ResponseEntity<String>  eliminarImagen(@PathVariable("id") long  id,@PathVariable("idProducto") long  idProducto) {
 		
 		Optional<Imagen> imagenEntity = imagenService.obtenerImagenPorId(id);
 		
 		
 		if (imagenEntity.isPresent()) {
-			List<ImagenDto> imagenes = productoService.obtenerImagenesProducto(id);
+			List<ImagenDto> imagenes = productoService.obtenerImagenesProducto(idProducto);
 			
 			if (imagenes.size() > 1) {
 				if (imagenService.eliminar(id)) {
