@@ -35,13 +35,13 @@ public class ProductoService {
 	private Converter convertidor;
 	
 	
-	public boolean agregar(Producto producto) {
+	public Producto agregar(Producto producto) {
 		try {
+		
+			return productoRepositorio.save(producto);
 			
-			productoRepositorio.save(producto);
-			return true;
 		} catch (Exception e) {
-			return false;
+			return null;
 		}
 	}
 	

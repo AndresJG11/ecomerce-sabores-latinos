@@ -25,9 +25,11 @@ import com.saboreslatinos.core.converter.Converter;
 import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ProductoDto;
 import com.saboreslatinos.core.entity.Categoria;
+import com.saboreslatinos.core.entity.Imagen;
 import com.saboreslatinos.core.entity.Pais;
 import com.saboreslatinos.core.entity.Producto;
 import com.saboreslatinos.core.service.CategoriaService;
+import com.saboreslatinos.core.service.ImagenService;
 import com.saboreslatinos.core.service.PaisService;
 import com.saboreslatinos.core.service.ProductoService;
 
@@ -49,6 +51,10 @@ public class ProductoController {
 	@Autowired
 	@Qualifier("pais_servicio")
 	private PaisService paisService;
+	
+	@Autowired
+	@Qualifier("imagen_servicio")
+	private ImagenService imagenService;
 	
 	@PersistenceContext
 	EntityManager entityManager;
@@ -122,7 +128,17 @@ public class ProductoController {
 			
 			producto.setCategoria(categoria.get());
 			producto.setPais(pais.get());
-			productoService.agregar(producto);
+			Producto productoData = productoService.agregar(producto);
+			
+			for (Imagen imagenData: producto.getImagenes() ) {
+			
+					
+					Imagen imagenEntidad = new Imagen();
+					imagenEntidad.setProducto(productoData);
+					imagenEntidad.setImagen(imagenData.getImagen());
+					
+					imagenService.agregar(imagenEntidad);
+			}
 			
 			return new ResponseEntity<>("Producto agregado con exito", HttpStatus.OK);
 			

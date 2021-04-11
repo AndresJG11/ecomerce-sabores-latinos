@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 import com.saboreslatinos.core.dto.ImagenDto;
 import com.saboreslatinos.core.dto.ImagenProductoDto;
 import com.saboreslatinos.core.entity.Imagen;
@@ -39,40 +38,35 @@ public class ImagenController {
 	
 	
 	@PostMapping("/imagen/producto")
-	public ResponseEntity<String>  agregarImagenProducto(@RequestBody @Validated ImagenProductoDto imagen ) {
-		
-		Optional<Producto> producto =  productoService.obtenerProductoPorId(imagen.getIdProducto());
+	public ResponseEntity<String> agregarImagenProducto(@RequestBody @Validated Imagen imagen) {
 
-	
-		if(producto.isPresent()){
-			
-			for (String imagenData: imagen.getImagenes() ) {
-				if(!imagenData.isEmpty()) {
-					
-					Imagen imagenEntidad = new Imagen();
-					imagenEntidad.setProducto(producto.get());
-					imagenEntidad.setImagen(imagenData);
-					
-					imagenService.agregar(imagenEntidad);
-					
-				}else {
-					return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
-				}
+		Optional<Producto> producto = productoService.obtenerProductoPorId(imagen.getProducto().getId());
+
+		if (producto.isPresent()) {
+
+			if (!imagen.getImagen().isEmpty()) {
+
+				Imagen imagenEntidad = new Imagen();
+				imagenEntidad.setProducto(producto.get());
+				imagenEntidad.setImagen(imagen.getImagen());
+
+				imagenService.agregar(imagenEntidad);
+			} else {
+				return new ResponseEntity<>("No hay contenido en la imagen", HttpStatus.PARTIAL_CONTENT);
 			}
-			
+
 			return new ResponseEntity<>("Imagenes agregadas con exito", HttpStatus.OK);
-			
-		}else {
+
+		} else {
 			return new ResponseEntity<>("El producto no existe", HttpStatus.PARTIAL_CONTENT);
 		}
-		
+
 	}
-	
+
 	@DeleteMapping("/imagen/producto/{id}")
 	public ResponseEntity<String>  eliminarImagen(@PathVariable("id") long  id) {
 		
 		Optional<Imagen> imagenEntity = imagenService.obtenerImagenPorId(id);
-		
 		
 		
 		if (imagenEntity.isPresent()) {

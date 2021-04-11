@@ -153,6 +153,16 @@ public class Producto implements Serializable {
 	public void setPais(Pais pais) {
 		this.pais = pais;
 	}
+
+
+	public List<Imagen> getImagenes() {
+		return imagenes;
+	}
+
+	public void setImagenes(List<Imagen> imagenes) {
+		this.imagenes = imagenes;
+	}
+	
 	
 	
 	
