@@ -8,6 +8,8 @@ import { ProductoDto, ActualizarProducto } from 'models/Products';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form'
 import { CRUDImagenes } from '../crud-imagenes';
 import { FormProductosProps } from './FormProductosProps';
+import AlertaAction from 'stores/alerta/alertaAction';
+import { CrearProducto } from 'models/Products/CrearProducto';
 
 //ToDo: Administrar imagenes  
 
@@ -27,11 +29,13 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
 
     const { register, handleSubmit, errors, setValue, reset } = useForm({ mode: 'onBlur' });
 
-    // eslint-disable-next-line
-    const [imagenesCrear, setImagenesCrear] = useState< Array<any> | null>(null);
+    const [imagenesCrear, setImagenesCrear] = useState<Array<{ idImagen ? : number, imagen: string }> | null>(null);
 
     const handleCancelar = () => {
         dispatch(ProductosAction.setEditarProducto(null))
+        dispatch(ProductosAction.setProductosPorCategoria(null))
+        setIdCategoria("")
+        setImagenesCrear(null)
         reset()
     }
 
@@ -39,18 +43,19 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
         // Crear Producto
         if (!editProducto?.idProducto) {
 
-            const agregarProducto: ActualizarProducto = {
+            const agregarProducto: CrearProducto = {
                 categoria: { id: idCategoria || 0 },
                 descripcion: data?.descripcion || '',
                 descuento: data?.descuento || 0,
-                id: 0,
                 nombre: data?.nombre || '',
                 pais: { id: 1, nombre: 'string' },
                 precio: data?.precio || 0,
-                stock: data?.stock || 0
+                stock: data?.stock || 0,
+                imagenes: imagenesCrear!.map( ({imagen} : any)=> ({imagen})  )
             }
                 
             dispatch(ProductosAction.requestAgregarProducto(agregarProducto, idCategoria || 0))
+            handleCancelar()
         } else {
             // Editar Producto
             const actualizarProducto: ActualizarProducto = {
@@ -63,25 +68,38 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
                 precio: data.precio || 0,
                 stock: editProducto?.stock || 0
             }
-
+            
             dispatch(ProductosAction.requestActualizarProducto(actualizarProducto, idCategoria || 0))
         }
     }
 
-    const agregarImagen = (e : React.ChangeEvent<HTMLInputElement>) => {
+    const agregarImagen = async (event : React.ChangeEvent<HTMLInputElement>) => {
 
-        if(!e.target.files) return
+        const readFile = (fileSource : File) => {
+            return new Promise((resolve, reject) => {
+
+              const fileReader = new FileReader();
+
+              fileReader.onerror = () => reject(fileReader.error);
+
+              fileReader.onload = () => resolve({imagen: fileReader.result});
+
+              fileReader.readAsDataURL(fileSource);
+            });
+          }
+
+        const { target: { files } } = event
+
+        if (!files) return
+
+        const filesBase64 = await Promise.all( Array.from(files).map(file => readFile(file)) );
+
         
-        const file = e.target.files[0]
-
-        const formData = new FormData();
-
-        formData.append('file', file )
-
         if(editProducto?.idProducto){
-            dispatch(ProductosAction.requestAgregarImagenProducto( formData, editProducto.idProducto ) )
+            const imagenes = Array.from(filesBase64).map( ({imagen} : any)=> (imagen)  )
+            dispatch(ProductosAction.requestAgregarImagenProducto( editProducto.idProducto, imagenes ) )
         } else {
-            setImagenesCrear( [ file ] )
+            setImagenesCrear(filesBase64 as Array<{imagen: string}>)
         }
         
     }
@@ -93,17 +111,16 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
 
     useEffect(() => {
         dispatch(CategoriasAction.requestObtenerCategoriasLista())
-        // eslint-disable-next-line
-    }, []);
+    }, [dispatch]);
 
     useEffect(() => {
 
         if(!idCategoria) return
 
+        console.log('aja')
         dispatch(ProductosAction.requestProductos(Number(idCategoria), paginatorHandler.pageSize, paginatorHandler.actualPage))
         dispatch(ProductosAction.setEditarProducto(null))
-        // eslint-disable-next-line
-    }, [idCategoria, paginatorHandler.actualPage]);
+    }, [idCategoria, paginatorHandler.pageSize, paginatorHandler.actualPage , dispatch]);
 
     useEffect(() => {
         if(editProducto){
@@ -111,26 +128,24 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
             setValue('precio', editProducto.precio)
             setValue('descripcion', editProducto.descripcion)
         }
-        // eslint-disable-next-line
-    }, [editProducto]);
+    }, [editProducto, setValue]);
 
-    // const validarSubmit = (e : any) => {
-    //     e.preventDefault() 
-    //     e.returnValue = false;
-    //     if(editProducto?.idProducto){
-    //         handleSubmit(handleGuardar)()
-    //     }
-    //     else if( imagenesCrear && imagenesCrear?.length > 0 ){
-    //         handleSubmit(handleGuardar)()
-    //     }else{
-    //         alert('Debe ingresar una imagen')
-    //     }
+    const validarSubmit = (e : any) => {
+        e.preventDefault()
+        if(editProducto?.idProducto){
+            handleSubmit(handleGuardar)()
+        }
+        else if( imagenesCrear && imagenesCrear?.length > 0 ){
+            handleSubmit(handleGuardar)()
+        }else{
+            dispatch( AlertaAction.setAlerta({show: true, message: 'Debe ingresar al menos una imagen', variant: 'danger', title:'Error'}) )
+        }
 
-    // }
+    }
 
     return (
         <>
-            <Form onSubmit={handleSubmit(handleGuardar)}>
+            <Form onSubmit={validarSubmit}>
                 <div className="row">
 
                     <div className="col-6">
@@ -190,15 +205,19 @@ export const FormProductos: FC<FormProductosProps> = ({idCategoria, setIdCategor
                     <div className="col-6">
                         <h6>Imágenes</h6>
                         <CRUDImagenes
-                            imagenes={editProducto?.imagenes || null}
+                            imagenes={editProducto?.imagenes || imagenesCrear || null}
                             agregarImagen={agregarImagen}
                             eliminarImagen={eliminarImagen}
                         />
+                        {
+                            !editProducto?.idProducto && imagenesCrear &&
+                                <p className="text-danger" style={{textAlign: 'right'}}>Vista Previa</p>
+                        }
                     </div>
 
                     <div className="col-12 d-flex justify-content-around align-items-center mt-3">
                         <button type="button" className="btn btn-secondary text-white w-25" onClick={handleCancelar} > Cancelar </button>
-                        <button type="submit" className="btn btn-admin--yellow w-25"> Guardar </button>
+                        <button type="submit" className="btn btn-admin--yellow w-25"> {!editProducto?.idProducto ? 'Crear' : 'Editar'} </button>
                     </div>
 
                 </div>

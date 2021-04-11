@@ -70,12 +70,15 @@ export class ProductosEffect {
 
     }
 
-    static async requestAgregarImagenProducto( {formData, idProducto} : {formData : FormData, idProducto : number} ) {
+    static async requestAgregarImagenProducto( data : {imagenes : Array<string>, idProducto : number} ) {
     
-        const response = await fetch(`${apiURL}/v1/imagen/producto?idProducto=${idProducto}`,
+        const response = await fetch(`${apiURL}/v1/imagen/producto`,
             {
                 method: 'POST',
-                body: formData
+                headers:{
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify( data ),
             }
         );
     
@@ -83,9 +86,9 @@ export class ProductosEffect {
 
     }
 
-    static async requestEliminarImagenProducto( idImagen : number ) {
+    static async requestEliminarImagenProducto( {idImagen, idProducto}: {idImagen : number, idProducto : number} ) {
     
-        const response = await fetch(`${apiURL}/v1/imagen/producto/${idImagen}`,
+        const response = await fetch(`${apiURL}/v1/imagen/producto?idImagen=${idImagen}&idProducto=${idProducto}`,
             {
                 method: 'DELETE',
             }

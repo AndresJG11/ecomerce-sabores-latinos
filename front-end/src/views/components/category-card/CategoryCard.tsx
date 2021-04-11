@@ -1,10 +1,9 @@
-import { FC, useRef, useLayoutEffect } from 'react'
+import { FC, useRef, useEffect } from 'react'
 import { Card } from 'react-bootstrap'
 import PriceTag from 'assets/icons/price-tag.svg'
 import { Link } from 'react-router-dom'
 import { Routes } from 'constantes'
 import './category-card-styles.css'
-import { imagesURL } from 'environments/base'
 
 interface CategoryCardProps {
 
@@ -21,7 +20,7 @@ export const CategoryCard : FC<CategoryCardProps> = ({ nombre, precio, imagenes,
 
     const imgRef = useRef<HTMLImageElement>(null)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
 
         const {current} = imgRef 
 
@@ -38,7 +37,7 @@ export const CategoryCard : FC<CategoryCardProps> = ({ nombre, precio, imagenes,
         >
             <Card className="tarjeta-producto">
                 <Body>
-                    <img ref={imgRef} className="tarjeta-producto--foto" src={ imagenes?.length > 0 ? imagesURL + imagenes[0].imagen : '' }  alt="" />
+                    <img ref={imgRef} className="tarjeta-producto--foto" src={ imagenes?.length > 0 ?  imagenes[0].imagen : '' }  alt="" />
                     <Title>{nombre}</Title>
                     <div className="tarjeta-producto--precio">
                         <span>{precio}$ CL</span>

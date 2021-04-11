@@ -1,12 +1,11 @@
 import { FC, useState, useRef, useLayoutEffect } from 'react'
-import { imagesURL } from 'environments/base';
 import AgregarImagen from 'assets/images/agregar_imagen.png'
 import EliminarIcono from 'assets/icons/eliminar.svg'
 import './crud-imagenes-styles.css'
 
 interface CRUDImagenesProps {
 
-    readonly imagenes: Array<{ idImagen: number, imagen: string }> | null
+    readonly imagenes: Array<{ idImagen ? : number, imagen: string }> | null
 
     agregarImagen: (e: React.ChangeEvent<HTMLInputElement>) => void
 
@@ -18,7 +17,7 @@ export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, e
 
     const [selected, setSelected] = useState<number>(0);
 
-    const refImagen = useRef< HTMLDivElement >(null)
+    const refImagen = useRef< HTMLImageElement >(null)
 
     const [listHeight, setListHeight] = useState<number>(300);
 
@@ -27,8 +26,8 @@ export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, e
         const {current} = refImagen
 
         setListHeight(current?.clientWidth || 300)
-
-    }, [refImagen])
+        
+    }, [refImagen?.current?.width])
 
     return (
         <div className="row">
@@ -37,7 +36,7 @@ export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, e
                     {
                         <li className="mb-0">
                             <label>
-                                <input type="file" id="file" style={{ display: 'none' }} onChange={agregarImagen} accept="image/*" />
+                                <input type="file" multiple id="file" style={{ display: 'none' }} onChange={agregarImagen} accept="image/*" />
                                 <img src={AgregarImagen} alt="" className='imagen-producto--lista' title="Agregar Imagen" />
                             </label >
                         </li>
@@ -46,7 +45,7 @@ export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, e
                     {
                         imagenes && imagenes.length > 0 && imagenes.map(({ imagen }, idx: number) =>
                             <li key={idx}>
-                                <img src={imagesURL + imagen} alt="" className={`imagen-producto--lista ${idx === selected && 'active'}`} onMouseEnter={() => setSelected(idx)} />
+                                <img src={imagen} alt="" className={`imagen-producto--lista ${idx === selected && 'active'}`} onMouseEnter={() => setSelected(idx)} />
                             </li>
                         )
                     }
@@ -54,11 +53,12 @@ export const CRUDImagenes: FC<CRUDImagenesProps> = ({ imagenes, agregarImagen, e
             </div>
             <div className="col-9">
                 {
-                    imagenes && imagenes.length > 0 &&
-                        <div className="imagen-producto-selected--container" ref={refImagen}>
-                            <img src={imagesURL + imagenes[selected].imagen} alt="" className="imagen-producto--selected" />
-                            <img src={EliminarIcono} alt="" className="imagen-producto--delete" title="Eliminar imagen" onClick={() => eliminarImagen(imagenes[selected].idImagen)} />
-                        </div>
+                    imagenes &&
+                        !!imagenes[selected]?.imagen  &&
+                            <div className="imagen-producto-selected--container">
+                                <img ref={refImagen} src={imagenes[selected]?.imagen} alt="" className="imagen-producto--selected" style={{height: refImagen?.current?.width }} />
+                                <img src={EliminarIcono} alt="" className="imagen-producto--delete" title="Eliminar imagen" onClick={() => eliminarImagen(imagenes[selected]?.idImagen || 0)} />
+                            </div>
                 }
             </div>
         </div>

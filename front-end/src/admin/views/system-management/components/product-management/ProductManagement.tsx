@@ -25,6 +25,7 @@ export const ProductManagement : FC<{}> = () => {
     const pagesToShow = 5
 
     const onEdit = (event : React.MouseEvent<HTMLButtonElement>) =>{
+
         const { currentTarget : { id } } = event
         
         const { idProducto } = productos?.categorias[Number(id)] 
@@ -34,6 +35,7 @@ export const ProductManagement : FC<{}> = () => {
     }
         
     const onDelete = (event : React.MouseEvent<HTMLButtonElement>) =>{
+
         const { currentTarget : { id } } = event
         
         const { idProducto } = productos.categorias[Number(id)] 

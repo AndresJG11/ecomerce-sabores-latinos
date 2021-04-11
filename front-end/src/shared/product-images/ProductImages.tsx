@@ -1,5 +1,4 @@
-import { imagesURL } from 'environments/base';
-import { FC, useState, useRef, useLayoutEffect, useEffect } from 'react'
+import { FC, useState, useRef, useEffect } from 'react'
 import './product-images-styles.css'
 
 interface ProductImagesProps {
@@ -15,13 +14,13 @@ export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
 
     const refImagen = useRef< HTMLImageElement >(null)
 
-    useLayoutEffect(() => {
+    useEffect(() => {
         
         const {current} = refImagen
 
         setListHeight(current?.clientWidth || 300)
 
-    }, [refImagen])
+    }, [refImagen?.current?.width])
 
     useEffect(() => {
         setSelected(0)
@@ -34,7 +33,7 @@ export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
                     {
                         imagenes && imagenes.map( (imagen, idx: number) =>
                             <li key={idx}>
-                                <img src={ imagesURL + imagen} alt="" className={`imagen-producto--lista ${idx===selected && 'active'}`} onMouseEnter={() => setSelected(idx)} />
+                                <img src={imagen} alt="" className={`imagen-producto--lista ${idx===selected && 'active'}`} onMouseEnter={() => setSelected(idx)} />
                             </li>
                         )
                     }
@@ -44,7 +43,7 @@ export const ProductImages: FC<ProductImagesProps> = ({ imagenes }) => {
                 {
                     imagenes &&
                         !!imagenes[selected]  &&
-                            <img ref={refImagen} src={ imagesURL + imagenes[selected] } alt="" className="detalle-imagen-producto--selected" style={{height: refImagen?.current?.width }} />
+                            <img ref={refImagen} src={ imagenes[selected] } alt="" className="detalle-imagen-producto--selected" style={{height: refImagen?.current?.width }} />
                 }
             </div>
         </div>

@@ -1,5 +1,6 @@
-import { ProductoDto } from 'models/Products';
+import { ProductoDto, ProductsByIdCategory } from 'models/Products';
 import { ActualizarProducto } from 'models/Products/ActualizarProducto';
+import { CrearProducto } from 'models/Products/CrearProducto';
 import { Dispatch } from 'redux'
 import ActionUtility from 'utilities/ActionUtility';
 import { ProductosEffect } from './productosEffect';
@@ -28,6 +29,7 @@ export default class ProductosAction {
   static REQUEST_ELIMINAR_PRODUCTO_FINISHED = 'ProductosAction.REQUEST_ELIMINAR_PRODUCTO_FINISHED';
 
   static SET_EDITAR_PRODUCTO = 'ProductosAction.SET_EDITAR_PRODUCTO';
+  static SET_PRODUCTOS_POR_CATEGORIA = 'ProductosAction.SET_PRODUCTOS_POR_CATEGORIA';
 
   static requestObtenerProducto(idProducto : number) {
     return async (dispatch: Dispatch, getState: any) => {
@@ -44,20 +46,20 @@ export default class ProductosAction {
   static requestActualizarProducto(actualizarProducto : ActualizarProducto, idCategoria : number) {
     return async (dispatch: Dispatch, getState: any) => {
       await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_ACTUALIZAR_PRODUCTOS, ProductosEffect.requestActualizarProducto, actualizarProducto);
-      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, idCategoria);
+      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, {idCategoria});
     };
   }
   
-  static requestAgregarProducto(agregarProducto : ActualizarProducto, idCategoria : number) {
+  static requestAgregarProducto(agregarProducto : CrearProducto, idCategoria : number) {
     return async (dispatch: Dispatch, getState: any) => {
       await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_AGREGAR_PRODUCTOS, ProductosEffect.requestAgregarProducto, agregarProducto);
-      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, idCategoria);
+      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, {idCategoria});
     };
   }
 
-  static requestAgregarImagenProducto(formData : FormData, idProducto : number) {
+  static requestAgregarImagenProducto(idProducto : number, imagenes: Array<string>) {
     return async (dispatch: Dispatch, getState: any) => {
-      const args = {formData, idProducto}
+      const args = {imagenes, idProducto}
       await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_AGREGAR_IMAGEN_PRODUCTO, ProductosEffect.requestAgregarImagenProducto, args);
       await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTO, ProductosEffect.requestObtenerProducto, idProducto);
     };
@@ -65,7 +67,7 @@ export default class ProductosAction {
   
   static requestEliminarImagenProducto(idImagen : number, idProducto : number) {
     return async (dispatch: Dispatch, getState: any) => {
-      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_ELIMINAR_IMAGEN_PRODUCTO, ProductosEffect.requestEliminarImagenProducto, idImagen);
+      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_ELIMINAR_IMAGEN_PRODUCTO, ProductosEffect.requestEliminarImagenProducto, {idImagen, idProducto});
       await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTO, ProductosEffect.requestObtenerProducto, idProducto);
     };
   }
@@ -73,12 +75,16 @@ export default class ProductosAction {
   static requestEliminarProducto(idProducto : number, idCategoria : number) {
     return async (dispatch: Dispatch, getState: any) => {
       await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_ELIMINAR_PRODUCTO, ProductosEffect.requestEliminarProducto, idProducto);
-      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, idCategoria);
+      await ActionUtility.createThunkEffect(dispatch, ProductosAction.REQUEST_OBTENER_PRODUCTOS, ProductosEffect.requestObtenerProductos, {idCategoria});
     };
   }
 
   static setEditarProducto(producto : ProductoDto | null) {
     return ActionUtility.createAction(ProductosAction.SET_EDITAR_PRODUCTO, producto);
+  }
+
+  static setProductosPorCategoria(productos : ProductsByIdCategory | null) {
+    return ActionUtility.createAction(ProductosAction.SET_PRODUCTOS_POR_CATEGORIA, productos);
   }
 
 }

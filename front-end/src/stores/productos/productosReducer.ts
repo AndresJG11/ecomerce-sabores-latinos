@@ -21,6 +21,12 @@ export class ProductosReducer {
             editarProducto: action.payload,
           };
 
+        case ProductosAction.SET_PRODUCTOS_POR_CATEGORIA:
+          return {
+            ...state,
+            productosPorCategoria: action.payload
+          }
+
         case ProductosAction.REQUEST_OBTENER_PRODUCTOS_FINISHED:
           return {
             ...state,
