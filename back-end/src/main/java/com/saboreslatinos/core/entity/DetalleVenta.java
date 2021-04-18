@@ -29,7 +29,7 @@ public class DetalleVenta {
 	@Column(name = "cantidad")
 	private int cantidad;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinColumn(name = "producto_id")
     private Producto producto;
 	

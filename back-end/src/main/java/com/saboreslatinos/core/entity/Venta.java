@@ -18,6 +18,8 @@ import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.NamedNativeQueries;
 import org.hibernate.annotations.NamedNativeQuery;
 import com.saboreslatinos.core.dto.ClienteDto;
@@ -86,6 +88,8 @@ public class Venta implements Serializable {
 	private List<DetalleVenta> detalleVentas;
 	
 
+	@CreationTimestamp
+	@Column(name = "fecha")
 	@Temporal(TemporalType.TIMESTAMP)
     private Date fecha;
 	

@@ -2,6 +2,8 @@ package com.saboreslatinos.core.controller;
 
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
@@ -59,7 +61,8 @@ public class VentaController {
 		
 		Venta ventaEntidad = new Venta();
 		ventaEntidad.setEstado(0);
-		List<DetalleVenta> listaDetallesVentaEntidad = new ArrayList<>();
+		ventaEntidad.setFecha(new Date());
+	
 		
 		// Si el cliente no esta creado se crea
 		if (clienteEntidad.isPresent()) {

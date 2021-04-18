@@ -83,7 +83,7 @@ public class Producto implements Serializable {
 	@OneToMany(fetch = FetchType.LAZY,mappedBy = "producto",cascade={CascadeType.REMOVE})
 	private List<Imagen> imagenes;
 	
-	@OneToOne(mappedBy = "producto")
+	@OneToOne(mappedBy = "producto",cascade = CascadeType.ALL, orphanRemoval = true)
     private DetalleVenta detalleVenta;
 
 	public long getId() {
