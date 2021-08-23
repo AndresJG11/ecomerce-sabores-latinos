@@ -3,6 +3,7 @@ import thunk from 'redux-thunk'
 import {CategoriasReducer, ProductosReducer, AnuncioReducer, AlertaReducer} from 'stores'
 import { CarritoReducer } from './carrito/carritoReducer'
 import { SistemaReducer } from './sistema'
+import { VentaReducer } from './venta'
 
 const reducers = combineReducers(
     {
@@ -12,6 +13,7 @@ const reducers = combineReducers(
         AnuncioReducer: AnuncioReducer.reducer,
         AlertaReducer: AlertaReducer.reducer,
         CarritoReducer: CarritoReducer.reducer,
+        VentaReducer: VentaReducer.reducer,
     })
     
 export const rootStore = () => {

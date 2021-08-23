@@ -26,3 +26,17 @@ export interface DetallesVenta {
     readonly detallesVenta : Array<ItemDetalleVenta>
 
 } 
+
+export interface ItemVenta {
+    readonly idVenta : number,
+    readonly estado : number,
+    readonly fecha : string,
+    readonly telefono : string,
+    readonly nombreCliente : string,
+    readonly precioTotal : number
+}
+
+export interface VentasPaginadas {
+    readonly ventas : ItemVenta[],
+    readonly paginas : number
+}
