@@ -49,8 +49,8 @@ const eliminarProducto = (idProducto : number, dispatch : Dispatch) => {
 const realizarCompra = (detallesVenta : DetallesVenta, dispatch : Dispatch<any>) => {
     dispatch( CarritoAction.requestAgregarVenta( detallesVenta ) )
 
-    // dispatch( CarritoAction.actualizarProductos( [] ) )
-    // localStorage.setItem('productosCarrito', JSON.stringify([]))
+    dispatch( CarritoAction.actualizarProductos( [] ) )
+    localStorage.setItem('productosCarrito', JSON.stringify([]))
 
     dispatch( AlertaAction.setAlerta( {show: true, message: 'Compra realizada con éxito', variant: 'success' } ) )
 }

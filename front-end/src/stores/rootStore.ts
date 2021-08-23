@@ -4,6 +4,7 @@ import {CategoriasReducer, ProductosReducer, AnuncioReducer, AlertaReducer} from
 import { CarritoReducer } from './carrito/carritoReducer'
 import { SistemaReducer } from './sistema'
 import { VentaReducer } from './venta'
+import { ClienteReducer } from './cliente'
 
 const reducers = combineReducers(
     {
@@ -14,6 +15,7 @@ const reducers = combineReducers(
         AlertaReducer: AlertaReducer.reducer,
         CarritoReducer: CarritoReducer.reducer,
         VentaReducer: VentaReducer.reducer,
+        ClienteReducer: ClienteReducer.reducer,
     })
     
 export const rootStore = () => {

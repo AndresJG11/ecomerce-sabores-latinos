@@ -13,13 +13,16 @@ export default class ActionUtility {
         const model = await effect(...args);
 
         //ToDo: Manejar errores HTTP
-        const isError = false;
+        const isError = !(model?.status >= 200 && model?.status <= 299)
 
         const isResponse = model instanceof Response;
 
         if(isResponse){
           const message =  await model.text()
           dispatch( AlertaAction.setAlerta( {show: true, message, variant: model.status === 200 ? 'success' : 'danger'} ) )
+        } else if(isError){
+          const message = "Ha ocurrido un error x_x"
+          dispatch( AlertaAction.setAlerta( {show: true, message, variant: 'danger'} ) )
         }
 
         dispatch( ActionUtility.createAction(`${actionType}_FINISHED`, model, isError) );
