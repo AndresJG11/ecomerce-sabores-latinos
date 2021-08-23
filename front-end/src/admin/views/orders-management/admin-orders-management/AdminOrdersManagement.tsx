@@ -10,7 +10,7 @@ export const OrdersManagement : VFC = () => {
 
     const ventasPaginadas : VentasPaginadas | null = useSelector((state: any) => state.VentaReducer.ventasPaginadas);
 
-    const listHeader : string[] = ['', 'ID Venta', 'Fecha', 'Nombre', 'Teléfono', 'Total', 'Estado']
+    const listHeader : string[] = ['', 'ID del Pedido', 'Fecha', 'Nombre', 'Teléfono', 'Total', 'Estado']
 
     const [actualPage, setActualPage] = useState<number>(1);
     const [selectedItems, setSelectedItems] = useState<ItemVenta[]>([]);
@@ -53,7 +53,7 @@ export const OrdersManagement : VFC = () => {
                     <div className="d-flex flex-column align-items-center">
                         <span>{selectedItems.length} Seleccionados</span>
                         <div className="d-flex justify-content-between">
-                            <button disabled={selectedItems.length === 0} className="btn btn-danger text-white mx-1"> Eliminar Ventas </button>
+                            <button disabled={selectedItems.length === 0} className="btn btn-danger text-white mx-1"> Eliminar Pedidos </button>
                             <button onClick={handlerCerrarVenta} disabled={selectedItems.length === 0} className="btn btn-success text-white mx-1"> Marcar como vendido </button>
                         </div>
                     </div>
